@@ -60,11 +60,37 @@
     color: var(--ink) !important;
     font-size: 1.02rem;
     padding: 0.7rem 1.1rem;
+    border-bottom-color: transparent;
+  }
+
+  .site-nav__link[aria-current="page"] {
+    color: var(--ink) !important;
+    border-bottom-color: rgba(26, 29, 35, 0.4);
   }
 
   .site-nav__reserve {
     margin-left: 0;
-    margin-top: 0.6rem;
+    margin-top: 0.85rem;
+    min-height: 48px;
+    padding: 0.75rem 1.6rem !important;
+  }
+
+  /* 開いたメニュー上は常に濃い文字＋枠のみ（透明ヘッダーの白文字を打ち消す） */
+  body.is-menu-open .site-nav .site-nav__link.site-nav__reserve,
+  body.is-menu-open .site-header.is-transparent .site-nav__link.site-nav__reserve,
+  body.is-menu-open .site-header.is-solid .site-nav__link.site-nav__reserve,
+  body.is-menu-open .site-nav .site-nav__link.site-nav__reserve:hover,
+  body.is-menu-open .site-header.is-transparent .site-nav__link.site-nav__reserve:hover,
+  body.is-menu-open .site-header.is-solid .site-nav__link.site-nav__reserve:hover {
+    color: var(--ink) !important;
+    background: transparent !important;
+    border: 1px solid rgba(26, 29, 35, 0.5) !important;
+    opacity: 1;
+  }
+
+  body.is-menu-open .site-nav__reserve[aria-current="page"] {
+    border-color: rgba(26, 29, 35, 0.55) !important;
+    box-shadow: none;
   }
 
   .nav-toggle {
@@ -570,13 +596,26 @@
 }
 
 @media (max-width: 640px) {
-  .shop-collage__row {
+  /* 店内・アクセスなど通常のコラージュは縦積み */
+  .shop-collage:not(.scene-collage) .shop-collage__row {
     flex-direction: column;
   }
 
-  .shop-collage__row figure {
+  .shop-collage:not(.scene-collage) .shop-collage__row figure {
     flex: none !important;
     width: 100%;
+  }
+
+  /* 普段の一杯はスマホでも横並びコラージュを維持 */
+  .scene-collage .shop-collage__row {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .scene-collage .shop-collage__row figure {
+    flex: var(--ar, 1) 1 0% !important;
+    width: auto;
+    min-width: 0;
   }
 
   .lightbox {

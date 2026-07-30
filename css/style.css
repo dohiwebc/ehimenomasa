@@ -437,22 +437,46 @@ main > .section:nth-of-type(even):not(.section--photo):not(.section--flush):not(
 }
 .site-nav__list { display: flex; align-items: center; gap: 0.1rem; }
 .site-nav__link {
-  display: block;
+  display: inline-block;
   padding: 0.45rem 0.65rem;
   font-size: 0.8rem;
   letter-spacing: 0.1em;
   font-weight: 500;
+  border-bottom: 1px solid transparent;
+  transition:
+    color 0.25s var(--ease),
+    border-color 0.25s var(--ease),
+    opacity 0.25s var(--ease);
 }
 .site-header.is-transparent .site-nav__link { color: rgba(255,255,255,0.92); }
 .site-header.is-solid .site-nav__link { color: var(--ink); }
-.site-nav__link:hover,
-.site-nav__link[aria-current="page"] { color: var(--ember) !important; }
+
+.site-nav__link:hover {
+  opacity: 0.78;
+}
+
+/* 現在ページは朱色ではなく細い下線 */
+.site-nav__link[aria-current="page"] {
+  color: inherit;
+  border-bottom-color: currentColor;
+  opacity: 1;
+}
+.site-header.is-transparent .site-nav__link[aria-current="page"] {
+  color: rgba(255, 255, 255, 0.96);
+  border-bottom-color: rgba(255, 255, 255, 0.7);
+}
+.site-header.is-solid .site-nav__link[aria-current="page"] {
+  color: var(--ink);
+  border-bottom-color: rgba(26, 29, 35, 0.45);
+}
+
 .site-nav__reserve {
   margin-left: 0.55rem;
   min-height: 40px;
   padding: 0.55rem 1.15rem !important;
   background: transparent !important;
   border: 1px solid currentColor;
+  border-bottom-width: 1px;
   color: inherit !important;
   letter-spacing: 0.16em;
 }
@@ -467,9 +491,26 @@ main > .section:nth-of-type(even):not(.section--photo):not(.section--flush):not(
 .site-nav__reserve:hover,
 .site-header.is-transparent .site-nav__reserve:hover,
 .site-header.is-solid .site-nav__reserve:hover {
-  background: var(--ember) !important;
-  border-color: var(--ember) !important;
+  background: var(--indigo) !important;
+  border-color: var(--indigo) !important;
   color: #fff !important;
+  opacity: 1;
+}
+.site-nav__reserve[aria-current="page"] {
+  border-bottom-color: currentColor;
+}
+
+/* ハンバーガー展開時：クリーム背景なので白文字・塗りを使わない */
+body.is-menu-open .site-nav__reserve,
+body.is-menu-open .site-header.is-transparent .site-nav__reserve,
+body.is-menu-open .site-header.is-solid .site-nav__reserve,
+body.is-menu-open .site-nav__reserve:hover,
+body.is-menu-open .site-header.is-transparent .site-nav__reserve:hover,
+body.is-menu-open .site-header.is-solid .site-nav__reserve:hover {
+  color: var(--ink) !important;
+  background: transparent !important;
+  border: 1px solid rgba(26, 29, 35, 0.45) !important;
+  opacity: 1;
 }
 
 
