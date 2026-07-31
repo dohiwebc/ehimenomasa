@@ -21,7 +21,6 @@
     position: fixed;
     inset: 0;
     z-index: 1001;
-    background: rgba(242, 240, 236, 0.98);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -29,16 +28,40 @@
     visibility: hidden;
     pointer-events: none;
     transition: opacity 0.3s ease, visibility 0.3s ease;
+    /* 店前写真 */
+    background-color: var(--bg);
+    background-image: url("../assets/images/site/store-exterior.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  /* 文字が読めるよう半透明のクリームを重ねる（写真は透けて見える） */
+  .site-nav::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(242, 240, 236, 0.78) 0%,
+        rgba(242, 240, 236, 0.86) 45%,
+        rgba(242, 240, 236, 0.9) 100%
+      );
   }
 
   body.is-menu-open {
     overflow: hidden;
+    touch-action: none;
   }
 
   body.is-menu-open .site-nav {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
+    touch-action: manipulation;
   }
 
   body.is-menu-open .site-header.is-transparent .site-logo img,
@@ -51,6 +74,8 @@
   }
 
   .site-nav__list {
+    position: relative;
+    z-index: 1;
     flex-direction: column;
     text-align: center;
     gap: 0.3rem;
@@ -59,13 +84,17 @@
   .site-nav__link {
     color: var(--ink) !important;
     font-size: 1.02rem;
-    padding: 0.7rem 1.1rem;
-    border-bottom-color: transparent;
+    font-weight: 500;
+    padding: 0.55rem 1.1rem;
+    text-shadow: 0 0 12px rgba(242, 240, 236, 0.9);
   }
 
   .site-nav__link[aria-current="page"] {
     color: var(--ink) !important;
-    border-bottom-color: rgba(26, 29, 35, 0.4);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.34em;
+    text-decoration-color: rgba(26, 29, 35, 0.5);
   }
 
   .site-nav__reserve {
@@ -90,11 +119,33 @@
 
   body.is-menu-open .site-nav__reserve[aria-current="page"] {
     border-color: rgba(26, 29, 35, 0.55) !important;
-    box-shadow: none;
+    box-shadow: inset 0 -1px 0 rgba(26, 29, 35, 0.45);
+    text-decoration: none !important;
   }
 
   .nav-toggle {
     display: inline-block;
+  }
+
+  .takeout-layout {
+    grid-template-columns: 1fr;
+    gap: 2.2rem;
+  }
+
+  .takeout-layout__form {
+    padding: 0;
+    border-right: 0;
+    border-bottom: 0;
+  }
+
+  .takeout-layout__side,
+  .takeout-aside {
+    position: static;
+    top: auto;
+  }
+
+  .takeout-side {
+    position: static;
   }
 
   .hero-split {
@@ -143,17 +194,46 @@
 
   .notice-rail__list {
     grid-template-columns: 1fr;
-    gap: 1.15rem;
+    gap: 0.55rem;
   }
 
   .notice-rail__list > li {
-    padding-bottom: 1.05rem;
+    display: grid;
+    grid-template-columns: 1.7em minmax(0, 1fr);
+    column-gap: 0.5rem;
+    align-items: start;
+    padding-top: 0;
+    padding-bottom: 0.55rem;
     border-bottom: 1px solid var(--line);
   }
 
   .notice-rail__list > li:last-child {
     padding-bottom: 0;
     border-bottom: 0;
+  }
+
+  .notice-rail,
+  .notice-rail--compact {
+    margin-bottom: 1.5rem;
+    padding: 0.85rem 0;
+  }
+
+  .notice-rail--compact {
+    margin-bottom: 1.35rem;
+  }
+
+  .notice-rail__index {
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    margin-bottom: 0;
+    line-height: 1.55;
+    padding-top: 0.05rem;
+  }
+
+  .notice-rail__text {
+    font-size: 0.74rem;
+    line-height: 1.55;
+    letter-spacing: 0.02em;
   }
 
   .meibutsu-row--flip .meibutsu-row__media,
@@ -180,22 +260,43 @@
   .course-line,
   .course-card {
     grid-template-columns: 1fr;
-    gap: 0.4rem;
+    gap: 0.25rem;
+    padding: 0.85rem 0.9rem;
   }
 
   .course-line--with-photo {
-    grid-template-columns: 96px 1fr;
-    gap: 0.85rem;
+    grid-template-columns: 72px 1fr;
+    gap: 0.55rem 0.7rem;
+    padding: 0.75rem 0.85rem;
+    align-items: center;
   }
 
   .course-line--with-photo .course-line__thumb {
-    width: 96px;
+    width: 72px;
     height: auto;
     grid-row: 1 / span 2;
   }
 
   .course-line--with-photo .course-line__price {
     grid-column: 2;
+  }
+
+  .course-line__name,
+  .course-card__name {
+    font-size: 1.02rem;
+    line-height: 1.35;
+  }
+
+  .course-line__desc,
+  .course-card__desc {
+    font-size: 0.78rem;
+    line-height: 1.45;
+  }
+
+  .course-line__price,
+  .course-card__price {
+    font-size: 1.12rem;
+    line-height: 1.2;
   }
 
   .gallery-spread,
@@ -234,6 +335,37 @@
     overflow-y: visible;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
+    /* 固定ヘッダー帯の下から写真を開始 */
+    padding-top: var(--header-h);
+  }
+
+  /* 最初から通常のヘッダー帯（透明・すりガラスなし）＋唐揚げ線画 */
+  .site-header.site-header--on-hero,
+  .site-header.site-header--on-hero.is-transparent {
+    background: rgba(242, 240, 236, 0.97);
+    border-bottom-color: var(--line);
+  }
+
+  .site-header.site-header--on-hero::before,
+  .site-header.site-header--on-hero.is-transparent::before {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: var(--pattern-chicken);
+    background-size: var(--pattern-chicken-size);
+    background-repeat: repeat;
+    opacity: 0.32;
+  }
+
+  .site-header.site-header--on-hero.is-transparent .site-logo img {
+    filter: none;
+  }
+
+  .site-header.site-header--on-hero.is-transparent .nav-toggle span {
+    background: var(--ink);
   }
 
   /* PC用の写真オーバーレイ線画はオフ。テキスト帯側で表示 */
@@ -393,28 +525,9 @@
     color: var(--ink);
   }
 
+  /* スマホFVの導線ボタンは非表示（ヘッダー／下部ナビで案内） */
   .hero-nav {
-    width: 100%;
-    max-width: 100%;
-    gap: 0.45rem 0.4rem;
-  }
-
-  .hero-nav__link {
-    min-height: 2.75rem;
-    padding: 0.7rem 0.35rem;
-    font-size: 0.74rem;
-    letter-spacing: 0.08em;
-    color: var(--ink);
-    border-color: rgba(26, 29, 35, 0.18);
-    background: rgba(255, 255, 255, 0.55);
-    min-width: 0;
-  }
-
-  .hero-nav__link:hover,
-  .hero-nav__link:focus-visible {
-    color: var(--ink);
-    border-color: rgba(26, 29, 35, 0.4);
-    background: rgba(255, 255, 255, 0.9);
+    display: none;
   }
 
   .hero__access {
@@ -530,6 +643,12 @@
     margin-left: 0;
   }
 
+  .nomihoudai-panel {
+    grid-template-columns: minmax(0, 1fr) minmax(140px, 180px);
+    gap: 1.25rem;
+    padding: 1.45rem 1.2rem 1.35rem;
+  }
+
   .course-detail--nomihoudai {
     grid-template-columns: 1fr 120px;
     gap: 1rem;
@@ -546,6 +665,16 @@
 
   .page-hero {
     min-height: 36vh;
+  }
+
+  .page-recruit .page-hero {
+    min-height: 0;
+    padding: calc(var(--header-h) + 1.6rem) 0 0.85rem;
+  }
+
+  .page-recruit .page-hero + .section {
+    padding-top: 0.9rem;
+    padding-bottom: 4.2rem;
   }
 
   .ig-grid,
@@ -578,9 +707,14 @@
   }
 
   .takeout-panel > div:first-child,
-  .form-panel,
+  .form-panel:not(.form-panel--takeout),
   .course-detail {
     padding: 1.4rem 1.1rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
   }
 
   .company-table th,
@@ -596,23 +730,13 @@
 }
 
 @media (max-width: 640px) {
-  /* 店内・アクセスなど通常のコラージュは縦積み */
-  .shop-collage:not(.scene-collage) .shop-collage__row {
-    flex-direction: column;
-  }
-
-  .shop-collage:not(.scene-collage) .shop-collage__row figure {
-    flex: none !important;
-    width: 100%;
-  }
-
-  /* 普段の一杯はスマホでも横並びコラージュを維持 */
-  .scene-collage .shop-collage__row {
+  /* shop.html も PC と同じ横並びコラージュを維持 */
+  .shop-collage .shop-collage__row {
     flex-direction: row;
     align-items: flex-start;
   }
 
-  .scene-collage .shop-collage__row figure {
+  .shop-collage .shop-collage__row figure {
     flex: var(--ar, 1) 1 0% !important;
     width: auto;
     min-width: 0;
@@ -641,6 +765,68 @@
 
   .lightbox__img {
     max-height: 68vh;
+  }
+
+  /* 採用：冒頭見出しをコンパクトに（文字は大きめを維持） */
+  .page-recruit .page-hero {
+    padding-bottom: 0.7rem;
+  }
+
+  .page-recruit .page-hero + .section {
+    padding-top: 0.75rem;
+  }
+
+  .page-recruit .page-hero__lead {
+    margin-top: 0.35rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .recruit-intro {
+    max-width: none;
+  }
+
+  .recruit-intro__lead {
+    margin: 0 0 0.75rem;
+    gap: 0.28rem;
+  }
+
+  .recruit-intro__lead-main {
+    font-size: 1.55rem;
+    letter-spacing: 0.06em;
+    line-height: 1.25;
+  }
+
+  .recruit-intro__lead-sub {
+    font-size: 1.05rem;
+    letter-spacing: 0.08em;
+    line-height: 1.35;
+  }
+
+  .recruit-intro > p {
+    max-width: none;
+    font-size: 0.88rem;
+    line-height: 1.65;
+  }
+
+  .recruit-intro__br {
+    display: inline;
+  }
+
+  .recruit-intro .recruit-points {
+    margin-top: 1.1rem;
+    max-width: none;
+  }
+
+  .recruit-exp-note {
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: rgba(74, 79, 89, 0.78);
+  }
+
+  .recruit-subhead {
+    margin: 1.35rem 0 0.45rem;
+    font-size: 0.95rem;
   }
 }
 
@@ -677,6 +863,21 @@
     grid-template-columns: 1fr;
   }
 
+  .nomihoudai-panel {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    padding: 1.35rem 1.05rem 1.25rem;
+  }
+
+  .nomihoudai-panel__price-main {
+    font-size: 1.85rem;
+  }
+
+  .nomihoudai-panel__flyer {
+    max-width: 200px;
+    margin: 0 auto;
+  }
+
   .course-detail--nomihoudai {
     grid-template-columns: 1fr;
   }
@@ -692,6 +893,76 @@
 
   .btn-group .btn {
     width: 100%;
+  }
+
+  .confirm-overlay__actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .confirm-overlay__actions .btn {
+    width: 100%;
+  }
+
+  .form-summary__row {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+
+  .thanks-page__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .thanks-page__actions .btn {
+    width: 100%;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+  }
+
+  .recruit-apply {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .recruit-apply .btn {
+    width: 100%;
+  }
+
+  .recruit-appeal__item {
+    padding: 0.7rem 0;
+    gap: 0.2rem;
+  }
+
+  .recruit-appeal__item dt {
+    font-size: 1.05rem;
+  }
+
+  .recruit-appeal__item dd {
+    font-size: 0.82rem;
+    line-height: 1.55;
+  }
+
+  .form-row {
+    grid-template-columns: minmax(0, 1fr) 5.5rem;
+    gap: 0.55rem;
+  }
+
+  .takeout-side__links {
+    gap: 0.85rem;
+  }
+
+  .takeout-guide__links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.95rem;
   }
 
   .meibutsu-list {

@@ -30,6 +30,7 @@
 | `takeout.html` | テイクアウト案内 |
 | `shop.html` | 店内紹介・店舗情報・アクセス |
 | `about.html` | 店主あいさつ・会社概要 |
+| `recruit.html` | スタッフ募集（ホール・キッチン） |
 | `reserve.html` | 来店予約フォーム |
 
 ## ローカルでの確認方法

@@ -67,8 +67,9 @@
 
 ### その他
 
-- [ ] LINE問い合わせ導線
-  - 現行予約ページにLINE導線あり。画像取得に失敗したため、今回は未掲載
-  - LINE公式アカウントURL確定後に追加予定
-- [ ] 採用バナー（bnr_work.png）の掲載要否
+- [x] LINE問い合わせ導線（reserve.html／QR画像＋公式URLリンク）
+  - LINE ID: @ipp6981e（https://line.me/R/ti/p/@ipp6981e）
+- [x] 採用バナー（bnr_work.png）の掲載要否
+  - `recruit.html` に掲載済み（`assets/images/site/bnr-work.png`）
+  - 求人本文はIndeed掲載内容を転記（jk=aa90ccd90eaa3455）
 - [ ] OGP画像の絶対URL（正式ドメイン確定後に設定）

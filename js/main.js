@@ -29,6 +29,7 @@
     if (!header) return;
 
     var onHero = header.classList.contains("site-header--on-hero");
+    var mobileMq = window.matchMedia("(max-width: 768px)");
 
     function update() {
       var scrolled = window.scrollY > 40;
@@ -37,7 +38,8 @@
         header.classList.remove("is-transparent");
         return;
       }
-      if (scrolled) {
+      /* スマホは最初から通常の帯。PCのみヒーロー上で透過 */
+      if (mobileMq.matches || scrolled) {
         header.classList.add("is-solid");
         header.classList.remove("is-transparent");
       } else {
@@ -48,6 +50,11 @@
 
     update();
     window.addEventListener("scroll", update, { passive: true });
+    if (typeof mobileMq.addEventListener === "function") {
+      mobileMq.addEventListener("change", update);
+    } else if (typeof mobileMq.addListener === "function") {
+      mobileMq.addListener(update);
+    }
   }
 
   function initNav() {
@@ -55,15 +62,40 @@
     var nav = document.querySelector(".site-nav");
     if (!toggle || !nav) return;
 
-    function closeMenu() {
+    var scrollLockY = 0;
+
+    function lockScroll() {
+      scrollLockY = window.scrollY || window.pageYOffset || 0;
+      document.documentElement.classList.add("is-menu-open");
+      document.body.classList.add("is-menu-open");
+      document.body.style.position = "fixed";
+      document.body.style.top = "-" + scrollLockY + "px";
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+      document.body.style.width = "100%";
+    }
+
+    function unlockScroll() {
+      document.documentElement.classList.remove("is-menu-open");
       document.body.classList.remove("is-menu-open");
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.width = "";
+      window.scrollTo(0, scrollLockY);
+    }
+
+    function closeMenu() {
+      if (!document.body.classList.contains("is-menu-open")) return;
+      unlockScroll();
       toggle.setAttribute("aria-expanded", "false");
       toggle.setAttribute("aria-label", "メニューを開く");
       nav.setAttribute("aria-hidden", "true");
     }
 
     function openMenu() {
-      document.body.classList.add("is-menu-open");
+      lockScroll();
       toggle.setAttribute("aria-expanded", "true");
       toggle.setAttribute("aria-label", "メニューを閉じる");
       nav.setAttribute("aria-hidden", "false");
@@ -84,6 +116,17 @@
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape") closeMenu();
     });
+
+    /* iOSなどで背後が動くのを防ぐ */
+    document.addEventListener(
+      "touchmove",
+      function (e) {
+        if (!document.body.classList.contains("is-menu-open")) return;
+        if (nav.contains(e.target)) return;
+        e.preventDefault();
+      },
+      { passive: false }
+    );
 
     window.addEventListener("resize", function () {
       if (window.innerWidth > 1024) closeMenu();
