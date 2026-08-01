@@ -562,7 +562,7 @@
   }
 
   .site-logo img {
-    height: 36px;
+    height: 48px;
   }
 
   .hero-split__catch {
@@ -729,22 +729,14 @@
     min-height: 0;
   }
 
+  /* ホーム：テイクアウト（スマホの余白調整） */
   .takeout-split {
-    gap: 1.4rem;
+    min-height: min(88vw, 560px);
+    padding: 4rem 1.4rem;
   }
 
   .takeout-split__body {
-    padding: 0;
-    order: 1;
-  }
-
-  .takeout-split__media {
-    order: 0;
-  }
-
-  .takeout-split__media img {
-    aspect-ratio: 16 / 9;
-    min-height: 0;
+    width: 100%;
   }
 
   .takeout-panel > div:first-child,
@@ -784,28 +776,25 @@
   }
 
   .lightbox {
-    padding: 3.5rem 0.6rem 1.2rem;
+    padding: 3.5rem 0.8rem 5.2rem;
+  }
+
+  .lightbox__controls {
+    bottom: max(1rem, env(safe-area-inset-bottom));
   }
 
   .lightbox__nav {
-    top: auto;
-    bottom: 1.1rem;
-    transform: none;
-    width: 44px;
-    height: 44px;
-    font-size: 2rem;
+    width: 50px;
+    height: 42px;
   }
 
-  .lightbox__nav--prev {
-    left: 1rem;
-  }
-
-  .lightbox__nav--next {
-    right: 1rem;
+  .lightbox__nav-icon {
+    width: 1.05rem;
+    height: 1.05rem;
   }
 
   .lightbox__img {
-    max-height: 68vh;
+    max-height: 64vh;
   }
 
   /* 採用：バナー直前の余白だけ詰める */

@@ -32,7 +32,7 @@
     { src: "assets/images/site/dish-jakoten.jpg", alt: "愛媛名物 じゃこてん" },
     { src: "assets/images/site/course-mankitsu.jpg", alt: "コース料理" },
     { src: "assets/images/site/interior-dining.jpg", alt: "店内のテーブル席" },
-    { src: "assets/images/site/gallery-shop-01.jpg", alt: "店内の様子" }
+    { src: "assets/images/site/hp-table-party.jpg", alt: "店内の様子" }
   ];
 
   function ready(fn) {

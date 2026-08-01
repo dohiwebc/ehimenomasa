@@ -10,7 +10,7 @@
   "use strict";
 
   /** 外部予約サイトURL（未設定の場合は空文字） */
-  var EXTERNAL_RESERVATION_URL = "";
+  var EXTERNAL_RESERVATION_URL = "https://www.hotpepper.jp/strJ004612520/";
 
   window.MASA_CONFIG = {
     EXTERNAL_RESERVATION_URL: EXTERNAL_RESERVATION_URL
@@ -176,6 +176,8 @@
     links.forEach(function (el) {
       if (url) {
         el.setAttribute("href", url);
+        el.setAttribute("target", "_blank");
+        el.setAttribute("rel", "noopener noreferrer");
         el.removeAttribute("aria-disabled");
         el.classList.remove("btn--disabled");
         el.hidden = false;
@@ -184,6 +186,8 @@
         el.hidden = true;
         el.setAttribute("aria-disabled", "true");
         el.removeAttribute("href");
+        el.removeAttribute("target");
+        el.removeAttribute("rel");
       }
     });
   }
@@ -197,22 +201,44 @@
     root.setAttribute("aria-label", "画像プレビュー");
     root.innerHTML =
       '<div class="lightbox__backdrop" data-lightbox-close></div>' +
-      '<button type="button" class="lightbox__nav lightbox__nav--prev" aria-label="前の画像">‹</button>' +
       '<figure class="lightbox__figure">' +
       '<img class="lightbox__img" alt="">' +
       '<figcaption class="lightbox__caption" hidden></figcaption>' +
       "</figure>" +
-      '<button type="button" class="lightbox__nav lightbox__nav--next" aria-label="次の画像">›</button>' +
-      '<button type="button" class="lightbox__close" data-lightbox-close aria-label="閉じる">×</button>';
+      '<div class="lightbox__controls">' +
+      '<button type="button" class="lightbox__nav lightbox__nav--prev" aria-label="前の画像">' +
+      '<svg class="lightbox__nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+      '<path d="M14.8 5.2 8.5 12l6.3 6.8" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/>' +
+      "</svg>" +
+      "</button>" +
+      '<span class="lightbox__controls-divider" aria-hidden="true"></span>' +
+      '<button type="button" class="lightbox__nav lightbox__nav--next" aria-label="次の画像">' +
+      '<svg class="lightbox__nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+      '<path d="M9.2 5.2 15.5 12l-6.3 6.8" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/>' +
+      "</svg>" +
+      "</button>" +
+      "</div>" +
+      '<button type="button" class="lightbox__close" data-lightbox-close aria-label="閉じる">' +
+      '<svg class="lightbox__close-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+      '<path d="M6.2 6.2 17.8 17.8M17.8 6.2 6.2 17.8" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/>' +
+      "</svg>" +
+      "</button>";
     document.body.appendChild(root);
 
     var imgEl = root.querySelector(".lightbox__img");
     var capEl = root.querySelector(".lightbox__caption");
+    var controls = root.querySelector(".lightbox__controls");
     var prevBtn = root.querySelector(".lightbox__nav--prev");
     var nextBtn = root.querySelector(".lightbox__nav--next");
     var items = [];
     var index = 0;
     var lastFocus = null;
+    var closing = false;
+    var closeTimer = null;
+
+    function prefersReducedMotion() {
+      return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    }
 
     function isPreviewable(img) {
       if (!img || img.tagName !== "IMG") return false;
@@ -247,11 +273,30 @@
         capEl.hidden = true;
       }
       var multi = items.length > 1;
-      prevBtn.hidden = !multi;
-      nextBtn.hidden = !multi;
+      controls.hidden = !multi;
+      prevBtn.hidden = false;
+      nextBtn.hidden = false;
+    }
+
+    function finishClose() {
+      closing = false;
+      if (closeTimer) {
+        window.clearTimeout(closeTimer);
+        closeTimer = null;
+      }
+      root.setAttribute("hidden", "");
+      document.body.classList.remove("is-lightbox-open");
+      imgEl.removeAttribute("src");
+      items = [];
+      if (lastFocus && typeof lastFocus.focus === "function") {
+        lastFocus.focus();
+      }
     }
 
     function open(img) {
+      if (closing) {
+        finishClose();
+      }
       items = collectItems();
       var i = items.indexOf(img);
       if (i < 0) {
@@ -260,21 +305,38 @@
       }
       lastFocus = document.activeElement;
       root.removeAttribute("hidden");
-      root.classList.add("is-open");
       document.body.classList.add("is-lightbox-open");
       show(i);
+      // 初期状態から開くアニメを発火させる
+      root.classList.remove("is-open");
+      void root.offsetWidth;
+      root.classList.add("is-open");
       root.querySelector(".lightbox__close").focus();
     }
 
     function close() {
+      if (!root.classList.contains("is-open") && !closing) return;
+      closing = true;
       root.classList.remove("is-open");
-      root.setAttribute("hidden", "");
-      document.body.classList.remove("is-lightbox-open");
-      imgEl.removeAttribute("src");
-      items = [];
-      if (lastFocus && typeof lastFocus.focus === "function") {
-        lastFocus.focus();
+
+      if (prefersReducedMotion()) {
+        finishClose();
+        return;
       }
+
+      var done = false;
+      function onEnd(e) {
+        if (e.target !== root) return;
+        if (done) return;
+        done = true;
+        root.removeEventListener("transitionend", onEnd);
+        finishClose();
+      }
+      root.addEventListener("transitionend", onEnd);
+      closeTimer = window.setTimeout(function () {
+        root.removeEventListener("transitionend", onEnd);
+        finishClose();
+      }, 360);
     }
 
     function prev() {
@@ -291,6 +353,24 @@
       e.preventDefault();
       open(img);
     });
+
+    // ダブルタップ／ダブルクリックによるズームを抑止
+    document.addEventListener(
+      "dblclick",
+      function (e) {
+        if (e.target.closest(".lightbox") || (e.target.closest("main img") && isPreviewable(e.target.closest("img")))) {
+          e.preventDefault();
+        }
+      },
+      { passive: false }
+    );
+    root.addEventListener(
+      "gesturestart",
+      function (e) {
+        e.preventDefault();
+      },
+      { passive: false }
+    );
 
     root.addEventListener("click", function (e) {
       if (e.target.closest("[data-lightbox-close]")) {
