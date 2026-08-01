@@ -664,17 +664,58 @@
   }
 
   .page-hero {
-    min-height: 36vh;
+    height: clamp(250px, 40vh, 360px);
+    min-height: clamp(250px, 40vh, 360px);
+    padding: calc(var(--header-h) + 1.8rem) 0 1.8rem;
   }
 
-  .page-recruit .page-hero {
-    min-height: 0;
-    padding: calc(var(--header-h) + 1.6rem) 0 0.85rem;
+  .page-hero .kicker {
+    margin-bottom: 0.5rem;
+  }
+
+  .page-hero__lead {
+    margin-top: 0.55rem;
+    font-size: 0.88rem;
+    line-height: 1.65;
   }
 
   .page-recruit .page-hero + .section {
     padding-top: 0.9rem;
     padding-bottom: 4.2rem;
+  }
+
+  /* スマホは仕事内容横の写真のみ非表示（バナーは表示） */
+  .page-recruit .recruit-split__media {
+    display: none;
+  }
+
+  .page-recruit .recruit-split {
+    grid-template-columns: 1fr;
+  }
+
+  /* 冒頭3枚をコラージュ配置 */
+  .page-recruit .recruit-visual {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0.4rem;
+    margin-top: 1.8rem;
+    max-width: none;
+  }
+
+  .page-recruit .recruit-visual__item {
+    aspect-ratio: auto;
+    min-height: 0;
+  }
+
+  .page-recruit .recruit-visual__item:nth-child(1) {
+    grid-row: 1 / 3;
+    min-height: 260px;
+  }
+
+  .page-recruit .recruit-visual__item:nth-child(2),
+  .page-recruit .recruit-visual__item:nth-child(3) {
+    min-height: 124px;
   }
 
   .ig-grid,
@@ -767,23 +808,18 @@
     max-height: 68vh;
   }
 
-  /* 採用：冒頭見出しをコンパクトに（文字は大きめを維持） */
-  .page-recruit .page-hero {
-    padding-bottom: 0.7rem;
-  }
-
+  /* 採用：バナー直前の余白だけ詰める */
   .page-recruit .page-hero + .section {
     padding-top: 0.75rem;
   }
 
-  .page-recruit .page-hero__lead {
-    margin-top: 0.35rem;
-    font-size: 0.9rem;
-    line-height: 1.6;
-  }
-
   .recruit-intro {
     max-width: none;
+  }
+
+  .recruit-split {
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
   }
 
   .recruit-intro__lead {

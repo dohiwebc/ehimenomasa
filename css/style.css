@@ -150,6 +150,22 @@ main > .section:nth-of-type(even):not(.section--photo):not(.section--flush):not(
 .section-head--center { text-align: center; }
 .section-head--center .section-lead { margin-inline: auto; }
 
+.section-head--meibutsu {
+  margin-bottom: 2.2rem;
+}
+.section-head--meibutsu .kicker {
+  margin-bottom: 0.7rem;
+  letter-spacing: 0.22em;
+}
+.section-head--meibutsu .section-title {
+  letter-spacing: 0.1em;
+  margin-bottom: 0.85rem;
+}
+.section-head--meibutsu .meta-note {
+  margin-top: 0;
+  letter-spacing: 0.12em;
+}
+
 .meta-note {
   margin-top: 0.7rem;
   font-size: 0.76rem;
@@ -1418,12 +1434,8 @@ body.is-video-open {
   top: calc(var(--header-h) + 1rem);
 }
 
-.page-hero--quiet {
-  min-height: 34vh;
-  padding-bottom: 2.2rem;
-}
 .page-hero--quiet .page-hero__title {
-  font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
 }
 
 .cta-final { text-align: center; padding: 6.5rem 0; }
@@ -1574,7 +1586,9 @@ body.is-video-open {
 
 .footer-nav a,
 .footer-sns a {
-  display: block;
+  display: inline-block;
+  width: fit-content;
+  max-width: 100%;
   margin: 0;
   padding: 0.38rem 0;
   font-size: 0.88rem;
@@ -1629,23 +1643,43 @@ body.is-video-open {
 /* subpages */
 .page-hero {
   position: relative;
-  min-height: 42vh;
-  display: flex; align-items: flex-end;
+  /* 全下層ページで写真帯の高さを統一 */
+  height: clamp(300px, 44vh, 460px);
+  min-height: clamp(300px, 44vh, 460px);
+  display: flex;
+  align-items: flex-end;
   color: #fff;
-  background-size: cover; background-position: center;
+  background-size: cover;
+  background-position: center;
   isolation: isolate;
-  padding: calc(var(--header-h) + 3.5rem) 0 2.8rem;
+  padding: calc(var(--header-h) + 2.6rem) 0 2.6rem;
+  box-sizing: border-box;
 }
 .page-hero::before {
   content: ""; position: absolute; inset: 0;
   background: var(--overlay-2); z-index: -1;
 }
+.page-hero .kicker {
+  display: block;
+  margin: 0 0 0.65rem;
+  color: #d7c09a;
+  letter-spacing: 0.28em;
+}
 .page-hero__title {
   font-family: var(--font-serif);
   font-size: clamp(1.9rem, 4vw, 2.8rem);
-  letter-spacing: 0.12em; margin-top: 0.3rem;
+  letter-spacing: 0.12em;
+  margin: 0;
+  line-height: 1.35;
 }
-.page-hero__lead { margin-top: 0.8rem; max-width: 34em; opacity: 0.9; }
+.page-hero__lead {
+  margin: 0.7rem 0 0;
+  max-width: 34em;
+  font-size: clamp(0.9rem, 1.4vw, 1rem);
+  line-height: 1.75;
+  letter-spacing: 0.04em;
+  opacity: 0.92;
+}
 
 .menu-category { margin-bottom: 3.5rem; }
 .menu-category__title {
@@ -2408,12 +2442,9 @@ textarea.form-control {
 .page-recruit {
   --mobile-bar: 0px;
 }
-.page-recruit .page-hero {
-  min-height: 0;
-  padding: calc(var(--header-h) + 2.4rem) 0 1.2rem;
-}
-.page-recruit .page-hero__lead {
-  margin-top: 0.45rem;
+/* スタッフ募集ページはセクション背景を単色に統一 */
+.page-recruit main > .section:nth-of-type(even):not(.section--photo):not(.section--flush):not(.cta-final) {
+  background: transparent;
 }
 .page-recruit .page-hero + .section {
   padding-top: 1.25rem;
@@ -2481,6 +2512,54 @@ textarea.form-control {
   font-size: clamp(1rem, 1.5vw, 1.12rem);
   line-height: 1.75;
   font-weight: 500;
+}
+.recruit-visual {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin: 2.6rem auto 0;
+  max-width: 1100px;
+}
+.recruit-visual__item {
+  margin: 0;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+.recruit-visual__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.recruit-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 2.4rem 2.8rem;
+  align-items: start;
+}
+.recruit-split--flip {
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+}
+.recruit-split__media {
+  display: grid;
+  gap: 0.7rem;
+}
+.recruit-split__media img {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+.recruit-split__media img:nth-child(2) {
+  aspect-ratio: 2 / 1;
+}
+.recruit-split__body .recruit-job {
+  grid-template-columns: 1fr;
+  gap: 1.4rem;
+}
+.recruit-split__body .section-title {
+  margin-bottom: 1.2rem;
 }
 .recruit-paren {
   font-size: 0.82em;
