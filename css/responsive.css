@@ -679,6 +679,37 @@
     line-height: 1.65;
   }
 
+  /* スマホ向け：指定行で収まるようタイトル・リードを調整 */
+  .section-title--media {
+    font-size: clamp(1.2rem, 4.8vw, 1.6rem);
+    letter-spacing: 0.03em;
+    line-height: 1.35;
+  }
+
+  .section-lead--media {
+    max-width: 100%;
+    font-size: 0.88rem;
+    line-height: 1.85;
+    letter-spacing: 0.02em;
+  }
+
+  .section-title--ig {
+    font-size: clamp(1.35rem, 5.2vw, 1.7rem);
+    letter-spacing: 0.04em;
+    line-height: 1.45;
+  }
+
+  .sister-block .section-lead {
+    max-width: 100%;
+    font-size: 0.9rem;
+    line-height: 1.85;
+  }
+
+  .page-recruit .container--narrow > p:first-of-type {
+    font-size: 0.92rem;
+    line-height: 1.85;
+  }
+
   .page-recruit .page-hero + .section {
     padding-top: 0.9rem;
     padding-bottom: 4.2rem;
