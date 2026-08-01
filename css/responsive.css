@@ -679,6 +679,20 @@
     line-height: 1.65;
   }
 
+  .reserve-cta__lead {
+    margin-bottom: 1.35rem;
+    font-size: 0.86rem;
+  }
+  .btn-group--reserve {
+    gap: 0.7rem;
+  }
+  .btn-group--reserve .btn {
+    width: 100%;
+  }
+  .btn--hotpepper__logo {
+    height: 24px;
+  }
+
   /* スマホ向け：指定行で収まるようタイトル・リードを調整 */
   .section-title--media {
     font-size: clamp(1.2rem, 4.8vw, 1.6rem);

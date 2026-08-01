@@ -382,6 +382,172 @@ main > .section:nth-of-type(even):not(.section--photo):not(.section--flush):not(
   gap: 0.9rem;
 }
 
+.btn__icon {
+  width: 1.2em;
+  height: 1.2em;
+  flex-shrink: 0;
+  display: inline-block;
+  background-color: currentColor;
+  -webkit-mask: var(--btn-icon) center / contain no-repeat;
+  mask: var(--btn-icon) center / contain no-repeat;
+}
+.btn__icon--phone {
+  --btn-icon: url("../assets/icons/icon-phone.svg");
+}
+.btn__icon--web {
+  --btn-icon: url("../assets/icons/icon-web-reserve.svg");
+}
+.btn__icon--line {
+  --btn-icon: url("../assets/icons/icon-line.svg");
+}
+
+.btn--hotpepper {
+  background: #fff;
+  border-color: #fff;
+  color: #e60012;
+  padding: 0.55rem 1.2rem;
+  min-height: 52px;
+  gap: 0;
+}
+.btn--hotpepper:hover {
+  background: #fff;
+  border-color: #fff;
+  opacity: 0.9;
+}
+.btn--hotpepper__logo {
+  display: block;
+  width: auto;
+  height: 26px;
+  max-width: min(100%, 200px);
+}
+
+.btn--linesns {
+  background: #06c755;
+  border-color: #06c755;
+  color: #fff;
+  letter-spacing: 0.14em;
+}
+.btn--linesns:hover {
+  background: #05b34c;
+  border-color: #05b34c;
+  color: #fff;
+}
+.btn--linesns__logo {
+  display: block;
+  width: 1.55rem;
+  height: 1.55rem;
+  flex-shrink: 0;
+}
+
+.btn--webreq {
+  background: var(--indigo);
+  border-color: var(--indigo);
+  color: #fff;
+}
+.btn--webreq:hover {
+  background: var(--indigo-soft);
+  border-color: var(--indigo-soft);
+  color: #fff;
+}
+
+.btn--telreq {
+  background: #2f6f8f;
+  border-color: #2f6f8f;
+  color: #fff;
+}
+.btn--telreq:hover {
+  background: #3a85aa;
+  border-color: #3a85aa;
+  color: #fff;
+}
+
+.cta-final .btn--hotpepper,
+.band-photo .btn--hotpepper,
+.section--photo .btn--hotpepper,
+.hero .btn--hotpepper {
+  background: #fff;
+  border-color: #fff;
+  color: #e60012;
+}
+.cta-final .btn--hotpepper:hover,
+.band-photo .btn--hotpepper:hover,
+.section--photo .btn--hotpepper:hover,
+.hero .btn--hotpepper:hover {
+  background: #fff;
+  border-color: #fff;
+  opacity: 0.9;
+}
+
+.cta-final .btn--linesns,
+.band-photo .btn--linesns,
+.section--photo .btn--linesns,
+.hero .btn--linesns {
+  background: #06c755;
+  border-color: #06c755;
+  color: #fff;
+}
+.cta-final .btn--linesns:hover,
+.band-photo .btn--linesns:hover,
+.section--photo .btn--linesns:hover,
+.hero .btn--linesns:hover {
+  background: #05b34c;
+  border-color: #05b34c;
+  color: #fff;
+}
+
+.cta-final .btn--webreq,
+.band-photo .btn--webreq,
+.section--photo .btn--webreq,
+.hero .btn--webreq {
+  background: var(--indigo);
+  border-color: var(--indigo);
+  color: #fff;
+}
+.cta-final .btn--webreq:hover,
+.band-photo .btn--webreq:hover,
+.section--photo .btn--webreq:hover,
+.hero .btn--webreq:hover {
+  background: var(--indigo-soft);
+  border-color: var(--indigo-soft);
+  color: #fff;
+}
+
+.cta-final .btn--telreq,
+.band-photo .btn--telreq,
+.section--photo .btn--telreq,
+.hero .btn--telreq {
+  background: #2f6f8f;
+  border-color: #2f6f8f;
+  color: #fff;
+}
+.cta-final .btn--telreq:hover,
+.band-photo .btn--telreq:hover,
+.section--photo .btn--telreq:hover,
+.hero .btn--telreq:hover {
+  background: #3a85aa;
+  border-color: #3a85aa;
+  color: #fff;
+}
+
+.reserve-cta__lead {
+  margin: 0 auto 1.8rem;
+  max-width: 28em;
+  color: rgba(255, 255, 255, 0.82);
+}
+.btn-group--reserve {
+  justify-content: center;
+  gap: 0.85rem;
+}
+
+.btn--ghost .btn__icon,
+.btn--line .btn__icon,
+.cta-final .btn--ghost .btn__icon,
+.band-photo .btn--ghost .btn__icon,
+.section--photo .btn--ghost .btn__icon {
+  width: 1.1em;
+  height: 1.1em;
+}
+
 /* ヒーロー／写真帯：塗りつぶしをやめ、細い白枠に統一 */
 .hero .btn--primary,
 .cta-final .btn--primary,
