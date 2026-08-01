@@ -23,7 +23,7 @@
   --mobile-bar: 58px;
   --w: 1180px;
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
-  --pattern-chicken: url("../assets/images/site/bg-pattern-chicken.png");
+  --pattern-chicken: url("../assets/images/site/bg-pattern-chicken.webp");
   --pattern-chicken-size: 480px auto;
 }
 

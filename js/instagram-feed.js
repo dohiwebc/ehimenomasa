@@ -24,15 +24,15 @@
 
   /** 投稿URL未設定時：すでにある店舗写真でグリッドを構成 */
   var FALLBACK = [
-    { src: "assets/images/site/specialty-honetsukidori-oya.jpg", alt: "丸亀名物 骨付鳥（おや）" },
-    { src: "assets/images/site/specialty-honetsukidori-hina.jpg", alt: "丸亀名物 骨付鳥（ひな）" },
-    { src: "assets/images/site/specialty-tebasaki.jpg", alt: "名古屋名物 手羽先" },
-    { src: "assets/images/site/dish-tori-tataki.jpg", alt: "本家直伝とりのたたき" },
-    { src: "assets/images/site/dish-kawaage-hidaredare.jpg", alt: "かわ揚げ秘伝ダレかけ" },
-    { src: "assets/images/site/dish-jakoten.jpg", alt: "愛媛名物 じゃこてん" },
-    { src: "assets/images/site/course-mankitsu.jpg", alt: "コース料理" },
-    { src: "assets/images/site/interior-dining.jpg", alt: "店内のテーブル席" },
-    { src: "assets/images/site/hp-table-party.jpg", alt: "店内の様子" }
+    { src: "assets/images/site/specialty-honetsukidori-oya.webp", alt: "丸亀名物 骨付鳥（おや）" },
+    { src: "assets/images/site/specialty-honetsukidori-hina.webp", alt: "丸亀名物 骨付鳥（ひな）" },
+    { src: "assets/images/site/specialty-tebasaki.webp", alt: "名古屋名物 手羽先" },
+    { src: "assets/images/site/dish-tori-tataki.webp", alt: "本家直伝とりのたたき" },
+    { src: "assets/images/site/dish-kawaage-hidaredare.webp", alt: "かわ揚げ秘伝ダレかけ" },
+    { src: "assets/images/site/dish-jakoten.webp", alt: "愛媛名物 じゃこてん" },
+    { src: "assets/images/site/course-mankitsu.webp", alt: "コース料理" },
+    { src: "assets/images/site/interior-dining.webp", alt: "店内のテーブル席" },
+    { src: "assets/images/site/hp-table-party.webp", alt: "店内の様子" }
   ];
 
   function ready(fn) {

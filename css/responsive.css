@@ -30,7 +30,7 @@
     transition: opacity 0.3s ease, visibility 0.3s ease;
     /* 店前写真 */
     background-color: var(--bg);
-    background-image: url("../assets/images/site/store-exterior.jpg");
+    background-image: url("../assets/images/site/store-exterior.webp");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
