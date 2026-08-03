@@ -55,10 +55,17 @@
     <div class="container">
       <p class="kicker">愛媛の雅ちゃん</p>
       <h1 class="page-hero__title">お品書き</h1>
-      <p class="page-hero__lead page-hero__lead--menu">価格は全て税込表示です。【テイクアウト用パック・おやひな1つ50円・その他パック1つ20円を頂きます】</p>
+      <p class="page-hero__lead page-hero__lead--menu">価格は全て税込表示です。【テイクアウト用パック・おやひな1つ50円・その他パック1つ20円をいただきます】</p>
     </div>
   </section>
-<section class="section"><div class="container"><section class="menu-category reveal"><h2 class="menu-category__title">名物鶏料理</h2><div class="menu-list">
+<section class="section section--menu"><div class="container">
+    <nav class="menu-jump" aria-label="メニューカテゴリ">
+      <a class="menu-jump__link" href="#menu-meibutsu">名物</a>
+      <a class="menu-jump__link" href="#menu-ippin">一品</a>
+      <a class="menu-jump__link" href="#menu-gohan">ご飯</a>
+      <a class="menu-jump__link" href="#menu-drink">ドリンク</a>
+    </nav>
+<section class="menu-category reveal" id="menu-meibutsu"><h2 class="menu-category__title">名物鶏料理</h2><div class="menu-list">
             <article class="menu-row">
               <div class="menu-row__thumb"><img src="assets/images/site/specialty-honetsukidori-oya.webp" alt="丸亀名物 骨付鳥（おや）" width="800" height="533" loading="lazy" decoding="async"></div>
               <h3 class="menu-row__name">丸亀名物 骨付鳥（おや）</h3>
@@ -83,7 +90,7 @@
               <div class="menu-row__thumb"><img src="assets/images/site/specialty-tebasaki.webp" alt="名古屋名物 手羽先（5本）" width="800" height="533" loading="lazy" decoding="async"></div>
               <h3 class="menu-row__name">名古屋名物 手羽先（5本）</h3>
               <p class="menu-row__price">９３５円</p>
-            </article></div></section><section class="menu-category reveal"><h2 class="menu-category__title">焼き物・鉄板料理</h2><div class="menu-list">
+            </article></div></section><section class="menu-category reveal" id="menu-ippin"><h2 class="menu-category__title">焼き物・鉄板料理</h2><div class="menu-list">
             <article class="menu-row">
               <div class="menu-row__thumb"><img src="assets/images/site/dish-yakitori-assortment.webp" alt="焼鳥・5種盛り合わせ" width="800" height="600" loading="lazy" decoding="async"></div>
               <h3 class="menu-row__name">焼鳥・5種盛り合わせ</h3>
@@ -288,7 +295,7 @@
               <div class="menu-row__thumb"><img src="assets/images/site/dish-tomato-salad.webp" alt="冷っトマトサラダ" width="800" height="600" loading="lazy" decoding="async"></div>
               <h3 class="menu-row__name">冷っトマトサラダ</h3>
               <p class="menu-row__price">５５０円</p>
-            </article></div></section><section class="menu-category reveal"><h2 class="menu-category__title">ご飯・締め</h2><div class="menu-list">
+            </article></div></section><section class="menu-category reveal" id="menu-gohan"><h2 class="menu-category__title">ご飯・締め</h2><div class="menu-list">
             <article class="menu-row">
               <div class="menu-row__thumb"><img src="assets/images/site/dish-yaki-onigiri.webp" alt="焼きおにぎり（2個）" width="800" height="600" loading="lazy" decoding="async"></div>
               <h3 class="menu-row__name">焼きおにぎり（2個）</h3>
@@ -317,9 +324,9 @@
             <article class="menu-row">
               <div class="menu-row__thumb"><img src="assets/images/site/dish-toripaitan-ramen.webp" alt="鶏白湯ラーメン" width="800" height="600" loading="lazy" decoding="async"></div>
               <h3 class="menu-row__name">鶏白湯ラーメン</h3>
-              <p class="menu-row__price"><span class="note">料金未掲載</span></p>
+              <p class="menu-row__price">８２５円</p>
             </article></div></section>
-  <section class="menu-category reveal">
+  <section class="menu-category reveal" id="menu-drink">
     <h2 class="menu-category__title">ドリンク</h2>
     <figure class="drink-menu-figure">
       <img src="assets/images/site/drink-menu.webp" alt="愛媛の雅ちゃん ドリンクメニュー表" width="1024" height="724" loading="lazy" decoding="async">
@@ -371,7 +378,7 @@
   <div class="mobile-bar" aria-label="スマートフォン用クイックアクション">
     <div class="mobile-bar__inner">
       <a class="mobile-bar__btn mobile-bar__btn--reserve" href="reserve.html">予約する</a>
-      <a class="mobile-bar__btn mobile-bar__btn--tel" href="tel:0899131194">電話する</a>
+      <a class="mobile-bar__btn mobile-bar__btn--tel" href="tel:0899131194" data-reserve-gate="tel">電話する</a>
     </div>
   </div>
 

@@ -54,7 +54,7 @@
     <div class="container">
       <p class="kicker">愛媛の雅ちゃん</p>
       <h1 class="page-hero__title">テイクアウト</h1>
-      <p class="page-hero__lead">テイクアウト予約はコチラから</p>
+      <p class="page-hero__lead">テイクアウト予約はこちらから</p>
     </div>
   </section>
 
@@ -65,7 +65,7 @@
         <div class="form-panel form-panel--takeout">
           <p class="form-panel__kicker">Takeout</p>
           <h2 class="form-panel__title">テイクアウト予約フォーム</h2>
-          <p class="form-panel__lead">お問い合わせ頂きました内容をご確認させて頂き、スタッフより折り返しご連絡致します。</p>
+          <p class="form-panel__lead">お問い合わせいただきました内容を確認のうえ、スタッフより折り返しご連絡いたします。すぐのご注文はお電話が便利です。</p>
           <form data-demo-form novalidate>
             <div class="form-grid">
               <div class="form-group">
@@ -181,7 +181,7 @@
 
             <div class="form-actions">
               <button class="btn btn--primary" type="submit">送信する</button>
-              <a class="btn btn--line" href="tel:0899131194">
+              <a class="btn btn--line" href="tel:0899131194" data-reserve-gate="takeout-tel">
                 <span class="btn__icon btn__icon--phone" aria-hidden="true"></span>
                 電話で注文（089-913-1194）
               </a>
@@ -194,11 +194,14 @@
         <div class="takeout-side">
           <section class="takeout-side__block">
             <h2 class="takeout-side__title">ご注意</h2>
-            <ul class="takeout-side__list">
-              <li><strong>午後14時以降</strong>はお電話にてお問い合わせ下さい</li>
+            <ul class="takeout-side__list takeout-side__list--priority">
+              <li><strong>午後14時以降</strong>はお電話にてお問い合わせください</li>
               <li>テイクアウト用パック・<strong>おやひな一つ50円・その他パック一つ20円</strong>をいただきます</li>
-              <li>申し訳ありませんが、<strong>駐車場は御座いません。</strong></li>
-              <li>お車でのお持ち帰り（テイクアウト）時は、<strong>1階までお持ち致します。</strong></li>
+            </ul>
+            <h3 class="takeout-side__subtitle">その他のご案内</h3>
+            <ul class="takeout-side__list takeout-side__list--secondary">
+              <li>申し訳ありませんが、<strong>駐車場はございません。</strong></li>
+              <li>お車でのお持ち帰り（テイクアウト）時は、<strong>1階までお持ちいたします。</strong></li>
             </ul>
           </section>
 
@@ -275,7 +278,7 @@
   <div class="mobile-bar" aria-label="スマートフォン用クイックアクション">
     <div class="mobile-bar__inner">
       <a class="mobile-bar__btn mobile-bar__btn--reserve" href="reserve.html">予約する</a>
-      <a class="mobile-bar__btn mobile-bar__btn--tel" href="tel:0899131194">電話する</a>
+      <a class="mobile-bar__btn mobile-bar__btn--tel" href="tel:0899131194" data-reserve-gate="takeout-tel">電話する</a>
     </div>
   </div>
 

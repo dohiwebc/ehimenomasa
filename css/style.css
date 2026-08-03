@@ -402,12 +402,17 @@ main > .section:nth-of-type(even):not(.section--photo):not(.section--flush):not(
 }
 
 .btn--hotpepper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: #fff;
   border-color: #fff;
   color: #e60012;
-  padding: 0.55rem 1.2rem;
-  min-height: 52px;
+  padding: 0 1.55rem;
+  height: 56px;
+  min-height: 56px;
   gap: 0;
+  line-height: 0;
 }
 .btn--hotpepper:hover {
   background: #fff;
@@ -417,8 +422,9 @@ main > .section:nth-of-type(even):not(.section--photo):not(.section--flush):not(
 .btn--hotpepper__logo {
   display: block;
   width: auto;
-  height: 26px;
-  max-width: min(100%, 200px);
+  height: 32px;
+  max-width: min(100%, 260px);
+  margin: 0;
 }
 
 .btn--linesns {
@@ -437,6 +443,9 @@ main > .section:nth-of-type(even):not(.section--photo):not(.section--flush):not(
   width: 1.55rem;
   height: 1.55rem;
   flex-shrink: 0;
+  object-fit: contain;
+  object-position: center;
+  transform: translateY(0.06em);
 }
 
 .btn--webreq {
@@ -466,7 +475,8 @@ main > .section:nth-of-type(even):not(.section--photo):not(.section--flush):not(
 .section--photo .btn--hotpepper,
 .hero .btn--hotpepper {
   background: #fff;
-  border-color: #fff;
+  border-color: #e60012;
+  border-width: 1px;
   color: #e60012;
 }
 .cta-final .btn--hotpepper:hover,
@@ -474,8 +484,8 @@ main > .section:nth-of-type(even):not(.section--photo):not(.section--flush):not(
 .section--photo .btn--hotpepper:hover,
 .hero .btn--hotpepper:hover {
   background: #fff;
-  border-color: #fff;
-  opacity: 0.9;
+  border-color: #e60012;
+  opacity: 0.92;
 }
 
 .cta-final .btn--linesns,
@@ -537,6 +547,56 @@ main > .section:nth-of-type(even):not(.section--photo):not(.section--flush):not(
 .btn-group--reserve {
   justify-content: center;
   gap: 0.85rem;
+}
+.btn-group--reserve-primary {
+  margin-bottom: 0.85rem;
+}
+.btn-group--reserve-sub {
+  margin-top: 0;
+  align-items: center;
+}
+.btn-group--reserve-sub .btn--telreq,
+.btn-group--reserve-sub .btn--linesns,
+.btn-group--reserve-sub .btn--websub {
+  height: 44px;
+  min-height: 44px;
+  padding: 0 1.15rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  gap: 0.4rem;
+  box-sizing: border-box;
+}
+.btn-group--reserve-sub .btn__icon {
+  width: 1rem;
+  height: 1rem;
+}
+.btn-group--reserve-sub .btn--linesns__logo {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+.btn--hotpepper-lg {
+  height: 68px;
+  min-height: 68px;
+  padding: 0 2.2rem;
+  min-width: min(100%, 320px);
+}
+.btn--hotpepper-lg .btn--hotpepper__logo {
+  height: 42px;
+  max-width: min(100%, 300px);
+}
+.btn--websub {
+  letter-spacing: 0.14em;
+}
+.cta-final .btn--websub,
+.band-photo .btn--websub {
+  border-color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.88);
+}
+.cta-final .btn--websub:hover,
+.band-photo .btn--websub:hover {
+  border-color: #fff;
+  color: #fff;
+  background: transparent;
 }
 
 .btn--ghost .btn__icon,
@@ -1952,6 +2012,61 @@ body.is-video-open {
   }
 }
 
+.menu-jump {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  margin: 0 0 2.6rem;
+  padding: 0.95rem 0;
+  border-top: 1px solid var(--line-2);
+  border-bottom: 1px solid var(--line-2);
+  position: sticky;
+  top: var(--header-h);
+  z-index: 20;
+  background: var(--bg);
+}
+.menu-jump__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  padding: 0.2rem 1.25rem;
+  border: 0;
+  background: transparent;
+  color: var(--ink-2);
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: color 0.25s var(--ease);
+}
+.menu-jump__link:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 1px;
+  height: 0.9em;
+  background: var(--line-2);
+  transform: translateY(-50%);
+}
+.menu-jump__link:hover {
+  color: var(--ember);
+  border-color: transparent;
+  background: transparent;
+}
+#menu-meibutsu,
+#menu-ippin,
+#menu-gohan,
+#menu-drink {
+  scroll-margin-top: calc(var(--header-h) + 3.2rem);
+}
+
 .menu-category { margin-bottom: 3.5rem; }
 .menu-category__title {
   font-family: var(--font-serif);
@@ -2407,6 +2522,23 @@ textarea.form-control {
   letter-spacing: 0.12em;
   color: var(--ink);
 }
+.takeout-side__subtitle {
+  margin: 1.25rem 0 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: var(--ink-2);
+}
+.takeout-side__list--priority li {
+  font-weight: 500;
+}
+.takeout-side__list--secondary {
+  margin-top: 0;
+}
+.takeout-side__list--secondary li {
+  color: var(--ink-2);
+  font-size: 0.84rem;
+}
 .takeout-side__list {
   list-style: none;
   margin: 0;
@@ -2505,6 +2637,62 @@ textarea.form-control {
   line-height: 1.85;
   color: var(--ink-2);
 }
+.reserve-quick {
+  margin: 0 0 2.4rem;
+  padding: 0 0 2rem;
+  border-bottom: 1px solid var(--line);
+}
+.reserve-quick .form-panel__lead {
+  margin-bottom: 1.35rem;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.reserve-quick__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.85rem;
+  width: 100%;
+}
+.reserve-quick__sub {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  width: 100%;
+}
+.reserve-quick__sub .btn {
+  width: 100%;
+  height: 42px;
+  min-height: 42px;
+  padding: 0 0.9rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  gap: 0.35rem;
+  white-space: nowrap;
+  justify-content: center;
+}
+.reserve-quick__sub .btn__icon {
+  width: 1rem;
+  height: 1rem;
+}
+.reserve-quick__sub .btn--linesns__logo {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+.reserve-quick .btn--hotpepper,
+.reserve-quick .btn--hotpepper-lg {
+  border-color: rgba(230, 0, 18, 0.18);
+  box-shadow: 0 0 0 1px rgba(26, 29, 35, 0.06);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+.reserve-form-block .form-panel__lead {
+  margin-bottom: 1.6rem;
+}
+.reserve-form-block .form-panel__title {
+  font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+}
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -2586,48 +2774,28 @@ textarea.form-control {
   border-color: var(--indigo);
 }
 
-/* 予約ページ：LINE問い合わせ（フォーム下） */
+/* 予約ページ：LINEご予約方法（フォーム下） */
 .line-contact {
   margin: 3.2rem 0 0;
   padding: 2.4rem 0 0.4rem;
   border-top: 1px solid var(--line);
   text-align: center;
 }
-.line-contact__title {
-  margin: 0;
-  font-family: var(--font-serif);
-  font-size: clamp(1.25rem, 2vw, 1.55rem);
-  letter-spacing: 0.1em;
-  color: var(--ink);
-  line-height: 1.45;
-}
-.line-contact__sub {
-  margin: 0.55rem 0 1.6rem;
-  font-family: var(--font-serif);
-  font-size: clamp(1.15rem, 1.8vw, 1.4rem);
-  letter-spacing: 0.12em;
-  color: var(--ink);
-}
-.line-contact__link {
-  display: block;
-  margin: 0 auto;
-  max-width: min(100%, 560px);
-  transition: opacity 0.25s var(--ease);
-}
-.line-contact__link:hover {
-  opacity: 0.88;
-}
 .line-contact__figure {
   margin: 0 auto;
-  max-width: 100%;
+  max-width: min(100%, 720px);
 }
 .line-contact__figure img {
   display: block;
   width: 100%;
   height: auto;
+  cursor: zoom-in;
 }
 .line-contact__cta {
-  margin: 1.4rem 0 0;
+  margin: 1.2rem 0 0;
+}
+.line-contact__cta .btn--linesns {
+  min-width: min(100%, 280px);
 }
 
 /* テイクアウト案内（旧） */
@@ -3159,6 +3327,483 @@ textarea.form-control {
   opacity: 1;
   visibility: visible;
 }
+
+.confirm-overlay__dialog.reserve-gate__dialog {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 640px);
+  max-height: min(90vh, 820px);
+  padding: 2.1rem 1.8rem 1.7rem;
+}
+@media (min-width: 1025px) {
+  .confirm-overlay__dialog.reserve-gate__dialog {
+    width: min(100%, 960px);
+    padding: 2.4rem 2.4rem 1.9rem;
+  }
+}
+.reserve-gate__dialog > .confirm-overlay__close { order: 0; }
+.reserve-gate__dialog > .confirm-overlay__kicker { order: 1; }
+.reserve-gate__dialog > .confirm-overlay__title { order: 2; }
+.reserve-gate__dialog > .confirm-overlay__lead { order: 3; }
+.reserve-gate__dialog > .reserve-gate__block--notes { order: 4; }
+.reserve-gate__dialog > .reserve-gate__block--tells { order: 5; }
+.reserve-gate__dialog > .reserve-gate__phone { order: 6; }
+.reserve-gate__dialog > .reserve-gate__actions { order: 7; }
+.reserve-gate--howto .reserve-gate__dialog > .reserve-gate__block--tells { order: 4; }
+.reserve-gate--howto .reserve-gate__dialog > .reserve-gate__phone { order: 5; }
+.reserve-gate--howto .reserve-gate__dialog > .reserve-gate__block--notes { order: 6; }
+
+/* 電話予約：案内チラシ風 */
+.reserve-gate--howto .reserve-gate__dialog {
+  border: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 100% 0%, rgba(47, 111, 143, 0.14), transparent 55%),
+    linear-gradient(165deg, #edf3f7 0%, #f8f6f1 42%, #f3efe6 100%);
+  box-shadow: 0 18px 48px rgba(26, 40, 32, 0.18);
+}
+.reserve-gate--howto .confirm-overlay__kicker {
+  color: #2f6f8f;
+}
+.reserve-gate--howto .confirm-overlay__title {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1.1rem;
+  padding-bottom: 0.55rem;
+  font-size: clamp(1.35rem, 2.2vw, 1.7rem);
+}
+.reserve-gate--howto .confirm-overlay__title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 3.2rem;
+  height: 2px;
+  background: #2f6f8f;
+}
+.reserve-gate__phone {
+  margin: 0.15rem 0 1.1rem;
+  text-align: center;
+}
+.reserve-gate__phone-label {
+  display: inline-block;
+  margin-right: 0.55rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  vertical-align: middle;
+  color: var(--indigo);
+}
+.reserve-gate__phone-num {
+  font-family: var(--font-serif);
+  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+  letter-spacing: 0.06em;
+  color: var(--indigo);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(40, 52, 78, 0.28);
+  vertical-align: middle;
+}
+.reserve-gate__phone-num:hover {
+  border-bottom-color: var(--ember);
+}
+.reserve-gate--howto .reserve-gate__phone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 0.15rem 0 1rem;
+  padding: 0.55rem 1.2rem;
+  border: 0;
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(47, 111, 143, 0.18), 0 10px 28px rgba(47, 111, 143, 0.08);
+}
+.reserve-gate--howto .reserve-gate__phone-label {
+  margin: 0;
+  padding: 0.28rem 0.55rem;
+  border: 1px solid #2f6f8f;
+  color: #2f6f8f;
+  font-size: 0.72rem;
+}
+.reserve-gate--howto .reserve-gate__phone-num {
+  color: #245a75;
+  border-bottom: 0;
+  font-size: clamp(1.55rem, 2.8vw, 2.05rem);
+  font-weight: 600;
+}
+.reserve-gate--howto .reserve-gate__phone-num:hover {
+  color: #1d4f68;
+}
+.reserve-gate__block {
+  margin: 0 0 1.2rem;
+  padding: 0.95rem 0 0;
+  border-top: 1px solid var(--line);
+}
+.reserve-gate--howto .reserve-gate__block--tells {
+  border-top: 0;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+.reserve-gate--howto .reserve-gate__block--notes {
+  margin-bottom: 1.15rem;
+  padding: 0.95rem 1.05rem;
+  border: 1.5px solid rgba(47, 111, 143, 0.45);
+  background: rgba(255, 255, 255, 0.72);
+}
+.reserve-gate--howto .reserve-gate__block--notes .reserve-gate__heading {
+  margin-bottom: 0.55rem;
+  color: #2f6f8f;
+}
+.reserve-gate--howto .reserve-gate__block--notes .reserve-gate__list li {
+  margin: 0 0 0.45rem;
+  padding: 0 0 0 0.9rem;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+.reserve-gate--howto .reserve-gate__block--notes .reserve-gate__list li:last-child {
+  margin-bottom: 0;
+}
+.reserve-gate--howto .reserve-gate__block--notes .reserve-gate__list li::before {
+  display: block;
+  background: #2f6f8f;
+}
+.reserve-gate__heading {
+  margin: 0 0 0.65rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: var(--indigo);
+}
+.reserve-gate__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.reserve-gate__list li {
+  position: relative;
+  margin: 0 0 0.55rem;
+  padding: 0 0 0 0.9rem;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--ink);
+}
+.reserve-gate__list li:last-child {
+  margin-bottom: 0;
+}
+.reserve-gate__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.75em;
+  width: 0.4rem;
+  height: 1px;
+  background: var(--ember);
+}
+
+/* 4ステップ：番号付きカード（モバイル縦積み） */
+.reserve-gate__list-wrap--steps .reserve-gate__list {
+  display: grid;
+  gap: 0.55rem;
+  counter-reset: reserve-step;
+}
+.reserve-gate__list-wrap--steps .reserve-gate__list li {
+  counter-increment: reserve-step;
+  position: relative;
+  margin: 0;
+  padding: 0.85rem 0.9rem 0.85rem 3rem;
+  border: 0;
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(47, 111, 143, 0.12), 0 8px 20px rgba(26, 40, 32, 0.05);
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--ink);
+}
+.reserve-gate__list-wrap--steps .reserve-gate__list li::before {
+  content: counter(reserve-step);
+  top: 50%;
+  left: 0.75rem;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 50%;
+  border: 0;
+  background: #2f6f8f;
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.7rem;
+  text-align: center;
+  transform: translateY(-50%);
+  box-shadow: 0 4px 10px rgba(47, 111, 143, 0.28);
+}
+
+/* 電話モーダル：PCはステップを広く、TELは下に配置 */
+@media (min-width: 1025px) {
+  .reserve-gate--howto .confirm-overlay__dialog.reserve-gate__dialog {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "kicker"
+      "title"
+      "steps"
+      "phone"
+      "notes"
+      "actions";
+    row-gap: 0.95rem;
+    align-items: stretch;
+    width: min(100%, 980px);
+    padding: 2.4rem 2.6rem 1.9rem;
+  }
+  .reserve-gate--howto .reserve-gate__dialog > .confirm-overlay__close {
+    z-index: 2;
+  }
+  .reserve-gate--howto .reserve-gate__dialog > .confirm-overlay__kicker {
+    grid-area: kicker;
+    margin-bottom: 0;
+  }
+  .reserve-gate--howto .reserve-gate__dialog > .confirm-overlay__title {
+    grid-area: title;
+    margin: 0;
+    padding-bottom: 0.35rem;
+    font-size: 1.7rem;
+    line-height: 1.35;
+  }
+  .reserve-gate--howto .reserve-gate__dialog > .confirm-overlay__lead {
+    display: none;
+  }
+  .reserve-gate--howto .reserve-gate__dialog > .reserve-gate__block--tells {
+    grid-area: steps;
+    margin: 0;
+    padding: 1.35rem 1.55rem 1.25rem;
+    background: #fff;
+    box-shadow: inset 0 0 0 1px rgba(47, 111, 143, 0.12);
+  }
+  .reserve-gate--howto .reserve-gate__dialog > .reserve-gate__phone {
+    grid-area: phone;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+    margin: 0;
+    padding: 0.55rem 1.4rem;
+    background: #2f6f8f;
+    box-shadow: none;
+  }
+  .reserve-gate--howto .reserve-gate__phone-label {
+    border-color: rgba(255, 255, 255, 0.55);
+    color: #fff;
+  }
+  .reserve-gate--howto .reserve-gate__phone-num {
+    color: #fff;
+    font-size: 1.85rem;
+    letter-spacing: 0.04em;
+  }
+  .reserve-gate--howto .reserve-gate__phone-num:hover {
+    color: #e8f4fa;
+  }
+  .reserve-gate--howto .reserve-gate__dialog > .reserve-gate__block--notes {
+    grid-area: notes;
+    margin: 0;
+    display: block;
+    padding: 0.95rem 1.15rem;
+  }
+  .reserve-gate--howto .reserve-gate__block--notes .reserve-gate__heading {
+    margin: 0 0 0.55rem;
+  }
+  .reserve-gate--howto .reserve-gate__block--notes [data-reserve-gate-notes] {
+    flex: none;
+  }
+  .reserve-gate--howto .reserve-gate__dialog > .reserve-gate__actions {
+    grid-area: actions;
+    margin: 0.1rem 0 0;
+  }
+
+  /* PCステップ：縦並び（全文が読みやすい幅） */
+  .reserve-gate--howto .reserve-gate__list-wrap--steps .reserve-gate__list {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 0.1rem 0.35rem;
+  }
+  .reserve-gate--howto .reserve-gate__list-wrap--steps .reserve-gate__list::before {
+    content: "";
+    position: absolute;
+    top: 1.2rem;
+    bottom: 1.2rem;
+    left: 1.4rem;
+    width: 2px;
+    height: auto;
+    right: auto;
+    background: rgba(47, 111, 143, 0.28);
+  }
+  .reserve-gate--howto .reserve-gate__list-wrap--steps .reserve-gate__list li {
+    display: block;
+    position: relative;
+    text-align: left;
+    min-height: 0;
+    margin: 0;
+    padding: 0.7rem 0.5rem 0.85rem 3.5rem;
+    background: transparent;
+    box-shadow: none;
+    font-size: 1.02rem;
+    font-weight: 500;
+    line-height: 1.8;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+  }
+  .reserve-gate--howto .reserve-gate__list-wrap--steps .reserve-gate__list li::before {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.35rem;
+    transform: none;
+    width: 2.15rem;
+    height: 2.15rem;
+    margin: 0;
+    line-height: 2.15rem;
+    font-size: 0.9rem;
+    box-shadow: 0 0 0 4px #fff, 0 4px 12px rgba(47, 111, 143, 0.22);
+  }
+  .reserve-gate--howto .reserve-gate__list-wrap--steps .reserve-gate__list li::after {
+    display: none;
+  }
+  .reserve-gate--howto .reserve-gate__step {
+    display: block;
+  }
+}
+
+.reserve-gate--howto .reserve-gate__actions {
+  margin-top: 0.15rem;
+  padding-top: 0.2rem;
+}
+.reserve-gate--howto .btn--telreq {
+  background: #2f6f8f;
+  border-color: #2f6f8f;
+}
+.reserve-gate--howto .btn--telreq:hover {
+  background: #245a75;
+  border-color: #245a75;
+}
+
+/* LINEモーダル */
+.reserve-gate--line .reserve-gate__dialog {
+  border: 0;
+  background:
+    radial-gradient(ellipse 70% 45% at 0% 0%, rgba(6, 199, 85, 0.12), transparent 50%),
+    linear-gradient(165deg, #f3faf5 0%, #fbfaf7 48%, #f2f0ec 100%);
+}
+.reserve-gate--line .confirm-overlay__kicker {
+  color: #06c755;
+}
+.reserve-gate--line .reserve-gate__block--tells {
+  border-top: 0;
+  margin: 0.35rem 0 1.05rem;
+  padding: 1.05rem 1.1rem 1.1rem;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px rgba(6, 199, 85, 0.18);
+}
+.reserve-gate--line .reserve-gate__block--tells .reserve-gate__heading {
+  margin: 0 0 0.85rem;
+  color: #06c755;
+}
+.reserve-gate--line .reserve-gate__list-wrap--line-talk .reserve-gate__list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  counter-reset: line-talk;
+}
+.reserve-gate--line .reserve-gate__list-wrap--line-talk .reserve-gate__list li {
+  counter-increment: line-talk;
+  position: static;
+  display: grid;
+  grid-template-columns: 1.7rem minmax(0, 1fr);
+  align-items: center;
+  column-gap: 0.8rem;
+  margin: 0;
+  padding: 0.85rem 1rem;
+  background: #fff8c9;
+  border: 1px solid rgba(240, 192, 0, 0.35);
+  box-shadow: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+.reserve-gate--line .reserve-gate__list-wrap--line-talk .reserve-gate__list li::before {
+  content: counter(line-talk);
+  position: static;
+  top: auto;
+  left: auto;
+  display: grid;
+  place-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #06c755;
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+  text-align: center;
+  transform: none;
+  box-shadow: none;
+}
+.reserve-gate--line .reserve-gate__list-wrap--line-talk .reserve-gate__step {
+  display: block;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+.reserve-gate--line .reserve-gate__list-wrap--line-talk .reserve-gate__step strong {
+  font-weight: 700;
+}
+@media (min-width: 1025px) {
+  .reserve-gate--line .reserve-gate__block--tells {
+    padding: 1.15rem 1.25rem 1.2rem;
+  }
+  .reserve-gate--line .reserve-gate__list-wrap--line-talk .reserve-gate__list {
+    gap: 0.6rem;
+  }
+  .reserve-gate--line .reserve-gate__list-wrap--line-talk .reserve-gate__list li {
+    grid-template-columns: 1.85rem minmax(0, 1fr);
+    column-gap: 0.9rem;
+    padding: 0.95rem 1.15rem;
+    font-size: 1rem;
+  }
+  .reserve-gate--line .reserve-gate__list-wrap--line-talk .reserve-gate__list li::before {
+    width: 1.85rem;
+    height: 1.85rem;
+    font-size: 0.82rem;
+  }
+}
+.reserve-gate--line .btn--linesns {
+  background: #06c755;
+  border-color: #06c755;
+}
+.reserve-gate--line .btn--linesns:hover {
+  background: #05b34c;
+  border-color: #05b34c;
+}
+
+.reserve-gate__actions {
+  margin-top: 0.4rem;
+  justify-content: stretch;
+}
+.reserve-gate__actions .btn {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.reserve-gate .btn--linesns,
+.reserve-gate .btn--telreq {
+  color: #fff;
+}
 .confirm-overlay__backdrop {
   position: absolute;
   inset: 0;
@@ -3318,6 +3963,21 @@ textarea.form-control {
   color: var(--ink);
   text-align: center;
 }
+.thanks-notes__subtitle {
+  margin: 1.15rem 0 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: var(--ink-2);
+  text-align: left;
+}
+.thanks-notes__list--priority li {
+  font-weight: 500;
+}
+.thanks-notes__list--secondary li {
+  color: var(--ink-2);
+  font-size: 0.84rem;
+}
 .thanks-notes__list {
   list-style: none;
   margin: 0;
@@ -3410,7 +4070,11 @@ main img,
 }
 .site-header img,
 .site-footer img,
-.mobile-bar img {
+.mobile-bar img,
+.btn img,
+.btn--linesns__logo,
+.btn--hotpepper__logo,
+a[data-reserve-gate] img {
   cursor: default;
 }
 body.is-lightbox-open {

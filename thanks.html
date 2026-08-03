@@ -60,13 +60,15 @@
 
           <section class="thanks-notes" aria-labelledby="thanks-notes-title">
             <h2 class="thanks-notes__title" id="thanks-notes-title">ご注意</h2>
-            <ul class="thanks-notes__list">
-              <li>ご連絡は返信メールにてお送り致します。<strong>メールが２４時間以内に届かない場合</strong>はもう一度ご予約をお願い致します</li>
-              <li>こちらからお電話にて、対応させて頂きます</li>
-              <li>【過去にお客様のメールブロック等があり、メールが届かなかった事がある為】</li>
-              <li>【基本的にはメール確認後、即・返信はさせて頂いております】</li>
-              <li><strong>午後14時以降</strong>はお電話にてお問い合わせ下さい</li>
-              <li>テイクアウト用パック・<strong>おやひな一つ50円・その他パック一つ20円</strong>を頂きます</li>
+            <ul class="thanks-notes__list thanks-notes__list--priority">
+              <li>内容確認後、スタッフより折り返しご連絡いたします</li>
+              <li><strong>午後14時以降</strong>はお電話にてお問い合わせください</li>
+              <li>すぐのご予約・ご連絡は<strong>ホットペッパーグルメ・お電話・LINE</strong>もご利用ください</li>
+            </ul>
+            <h3 class="thanks-notes__subtitle">その他のご案内</h3>
+            <ul class="thanks-notes__list thanks-notes__list--secondary">
+              <li>確認のため、こちらからお電話にてご連絡する場合があります</li>
+              <li>テイクアウト用パック・<strong>おやひな一つ50円・その他パック一つ20円</strong>をいただきます</li>
             </ul>
           </section>
 
@@ -74,7 +76,7 @@
 
           <div class="thanks-page__actions">
             <a class="btn btn--primary" href="index.html">トップへ戻る</a>
-            <a class="btn btn--line" href="tel:0899131194">
+            <a class="btn btn--line" href="tel:0899131194" data-reserve-gate="tel">
               <span class="btn__icon btn__icon--phone" aria-hidden="true"></span>
               電話する（089-913-1194）
             </a>
@@ -117,7 +119,7 @@
   <div class="mobile-bar" aria-label="スマートフォン用クイックアクション">
     <div class="mobile-bar__inner">
       <a class="mobile-bar__btn mobile-bar__btn--reserve" href="reserve.html">予約する</a>
-      <a class="mobile-bar__btn mobile-bar__btn--tel" href="tel:0899131194">電話する</a>
+      <a class="mobile-bar__btn mobile-bar__btn--tel" href="tel:0899131194" data-reserve-gate="tel">電話する</a>
     </div>
   </div>
 

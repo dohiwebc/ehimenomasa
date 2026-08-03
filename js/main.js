@@ -4,6 +4,7 @@
  * - ハンバーガーメニュー
  * - スクロール出現アニメーション
  * - 外部予約URL制御
+ * - 電話・LINE予約前の確認モーダル
  */
 
 (function () {
@@ -242,7 +243,8 @@
 
     function isPreviewable(img) {
       if (!img || img.tagName !== "IMG") return false;
-      if (img.closest(".site-header, .site-footer, .mobile-bar, .lightbox, .modal, .ig-grid, [data-instagram-grid], .video-card")) return false;
+      if (img.closest(".site-header, .site-footer, .mobile-bar, .lightbox, .modal, .confirm-overlay, .ig-grid, [data-instagram-grid], .video-card, .btn, a[data-reserve-gate]")) return false;
+      if (img.classList.contains("btn--linesns__logo") || img.classList.contains("btn--hotpepper__logo") || img.classList.contains("reserve-way__logo")) return false;
       if (!img.getAttribute("src")) return false;
       return true;
     }
@@ -469,6 +471,263 @@
     });
   }
 
+
+  function initReserveGate() {
+    var TEL_HREF = "tel:0899131194";
+    var LINE_HREF = "https://line.me/R/ti/p/@ipp6981e";
+
+    var COPY = {
+      tel: {
+        title: "お電話でのご予約方法",
+        lead: "",
+        confirm: "確認して電話する",
+        href: TEL_HREF,
+        external: false,
+        phone: "089-913-1194",
+        notesHeading: "注意事項",
+        tellsHeading: "ご予約の流れ"
+      },
+      line: {
+        title: "LINEでのご予約方法",
+        lead: "友だち追加のうえ、トークで以下をお送りください。確認後、できるだけ早くご返信いたします。",
+        confirm: "確認してLINEを開く",
+        href: LINE_HREF,
+        external: true,
+        notesHeading: "注意事項",
+        tellsHeading: "トークで送る内容"
+      },
+      "takeout-tel": {
+        title: "お電話でのテイクアウト",
+        lead: "ご注文の前に、以下をご確認ください。",
+        confirm: "確認して電話する",
+        href: TEL_HREF,
+        external: false,
+        phone: "089-913-1194",
+        notesHeading: "注意事項",
+        tellsHeading: "お伝えいただきたいこと"
+      }
+    };
+
+    var NOTES = {
+      tel: [
+        "留守番電話への登録後、こちらから折り返しご連絡し、確認後にご予約確定となります",
+        "コースは<strong>2名様以上・前日までのご予約</strong>が必要です（当日もご相談ください）",
+        "営業時間は<strong>17:30〜23:00</strong>（LO 22:30）／日・祝は定休日です",
+        "お急ぎの方は、留守番電話より<strong>返信の早いLINE</strong>がおすすめです",
+        "すぐ予約を確定したい場合は、ホットペッパーグルメもご利用ください"
+      ],
+      line: [
+        "コースは<strong>2名様以上・前日までのご予約</strong>が必要です（当日もご相談ください）",
+        "営業時間は<strong>17:30〜23:00</strong>（LO 22:30）／日・祝は定休日です",
+        "すぐ予約を確定したい場合は、ホットペッパーグルメもご利用ください"
+      ],
+      "takeout-tel": [
+        "<strong>午後14時以降</strong>はお電話にてお問い合わせください",
+        "テイクアウト用パックは<strong>おやひな1つ50円・その他1つ20円</strong>です",
+        "駐車場はございません。お車の場合は1階までお持ちいたします"
+      ]
+    };
+
+    var TELLS = {
+      tel: [
+        "まずは店舗へお電話ください。",
+        "留守番電話にお客様のお<strong>名前</strong>と<strong>電話番号</strong>を登録してください。",
+        "登録されたご連絡先に、こちらからお電話させていただきます。",
+        "確認後、ご予約確定とさせていただきます。"
+      ],
+      line: [
+        "氏名",
+        "電話番号",
+        "ご予約日・時間・人数・ご予約内容（コース等）"
+      ],
+      "takeout-tel": [
+        "お受け取り希望の<strong>日時</strong>",
+        "ご注文内容と<strong>数量</strong>",
+        "お名前・お電話番号",
+        "骨付鳥など名物のご希望があれば"
+      ]
+    };
+
+    var overlay = null;
+    var confirmBtn = null;
+    var pending = null;
+    var lastFocus = null;
+
+    function noteList(items) {
+      return (
+        '<ul class="reserve-gate__list">' +
+        items
+          .map(function (item) {
+            return '<li><span class="reserve-gate__step">' + item + "</span></li>";
+          })
+          .join("") +
+        "</ul>"
+      );
+    }
+
+    function ensureOverlay() {
+      if (overlay) return overlay;
+      overlay = document.createElement("div");
+      overlay.className = "confirm-overlay reserve-gate";
+      overlay.id = "reserve-gate";
+      overlay.setAttribute("role", "dialog");
+      overlay.setAttribute("aria-modal", "true");
+      overlay.setAttribute("aria-labelledby", "reserve-gate-title");
+      overlay.hidden = true;
+      overlay.innerHTML =
+        '<div class="confirm-overlay__backdrop" data-reserve-gate-close></div>' +
+        '<div class="confirm-overlay__dialog reserve-gate__dialog">' +
+        '<button type="button" class="confirm-overlay__close" data-reserve-gate-close aria-label="閉じる">×</button>' +
+        '<p class="confirm-overlay__kicker">Before you reserve</p>' +
+        '<h2 class="confirm-overlay__title" id="reserve-gate-title"></h2>' +
+        '<p class="confirm-overlay__lead" data-reserve-gate-lead></p>' +
+        '<div class="reserve-gate__block reserve-gate__block--tells">' +
+        '<h3 class="reserve-gate__heading" data-reserve-gate-tells-heading>お伝えいただきたいこと</h3>' +
+        '<div data-reserve-gate-tells></div>' +
+        "</div>" +
+        '<p class="reserve-gate__phone" data-reserve-gate-phone hidden></p>' +
+        '<div class="reserve-gate__block reserve-gate__block--notes" data-reserve-gate-notes-wrap>' +
+        '<h3 class="reserve-gate__heading" data-reserve-gate-notes-heading>注意事項</h3>' +
+        '<div data-reserve-gate-notes></div>' +
+        "</div>" +
+        '<div class="confirm-overlay__actions reserve-gate__actions">' +
+        '<button type="button" class="btn btn--line" data-reserve-gate-close>閉じる</button>' +
+        '<button type="button" class="btn btn--primary" data-reserve-gate-confirm></button>' +
+        "</div>" +
+        "</div>";
+      document.body.appendChild(overlay);
+      confirmBtn = overlay.querySelector("[data-reserve-gate-confirm]");
+
+      overlay.addEventListener("click", function (e) {
+        if (e.target.closest("[data-reserve-gate-close]")) close();
+        if (e.target.closest("[data-reserve-gate-confirm]")) proceed();
+      });
+
+      document.addEventListener("keydown", function (e) {
+        if (overlay.hidden) return;
+        if (e.key === "Escape") close();
+      });
+
+      return overlay;
+    }
+
+    function open(type) {
+      var meta = COPY[type];
+      if (!meta) return;
+      var notes = NOTES[type] || [];
+      var tells = TELLS[type] || [];
+      var root = ensureOverlay();
+      pending = meta;
+      lastFocus = document.activeElement;
+
+      root.querySelector("#reserve-gate-title").textContent = meta.title;
+
+      var kickerEl = root.querySelector(".confirm-overlay__kicker");
+      if (type === "tel") {
+        kickerEl.textContent = "Phone Reserve";
+      } else if (type === "line") {
+        kickerEl.textContent = "LINE Reserve";
+      } else {
+        kickerEl.textContent = "Before you reserve";
+      }
+
+      var leadEl = root.querySelector("[data-reserve-gate-lead]");
+      if (meta.lead) {
+        leadEl.hidden = false;
+        leadEl.textContent = meta.lead;
+      } else {
+        leadEl.hidden = true;
+        leadEl.textContent = "";
+      }
+
+      var tellsHeading = root.querySelector("[data-reserve-gate-tells-heading]");
+      if (type === "tel") {
+        tellsHeading.hidden = true;
+      } else {
+        tellsHeading.hidden = false;
+        tellsHeading.textContent = meta.tellsHeading || "お伝えいただきたいこと";
+      }
+      root.querySelector("[data-reserve-gate-notes-heading]").textContent =
+        meta.notesHeading || "注意事項";
+
+      var phoneEl = root.querySelector("[data-reserve-gate-phone]");
+      if (meta.phone) {
+        phoneEl.hidden = false;
+        phoneEl.innerHTML =
+          '<span class="reserve-gate__phone-label">TEL</span>' +
+          '<a class="reserve-gate__phone-num" href="' +
+          meta.href +
+          '">' +
+          meta.phone +
+          "</a>";
+      } else {
+        phoneEl.hidden = true;
+        phoneEl.innerHTML = "";
+      }
+
+      var notesWrap = root.querySelector("[data-reserve-gate-notes-wrap]");
+      if (notes.length) {
+        notesWrap.hidden = false;
+        root.querySelector("[data-reserve-gate-notes]").innerHTML = noteList(notes);
+      } else {
+        notesWrap.hidden = true;
+        root.querySelector("[data-reserve-gate-notes]").innerHTML = "";
+      }
+
+      var tellsEl = root.querySelector("[data-reserve-gate-tells]");
+      tellsEl.innerHTML = noteList(tells);
+      tellsEl.classList.toggle("reserve-gate__list-wrap--steps", type === "tel");
+      tellsEl.classList.toggle("reserve-gate__list-wrap--line-talk", type === "line");
+
+      confirmBtn.textContent = meta.confirm;
+      if (type === "line") {
+        confirmBtn.className = "btn btn--linesns";
+      } else if (type.indexOf("tel") !== -1) {
+        confirmBtn.className = "btn btn--telreq";
+      } else {
+        confirmBtn.className = "btn btn--primary";
+      }
+
+      root.classList.toggle("reserve-gate--howto", type === "tel");
+      root.classList.toggle("reserve-gate--line", type === "line");
+      root.hidden = false;
+      root.classList.add("is-open");
+      root.classList.add("is-visible");
+      document.body.style.overflow = "hidden";
+      confirmBtn.focus();
+    }
+
+    function close() {
+      if (!overlay || overlay.hidden) return;
+      overlay.classList.remove("is-open");
+      overlay.classList.remove("is-visible");
+      overlay.hidden = true;
+      document.body.style.overflow = "";
+      pending = null;
+      if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
+    }
+
+    function proceed() {
+      if (!pending) return;
+      var meta = pending;
+      close();
+      if (meta.external) {
+        window.open(meta.href, "_blank", "noopener,noreferrer");
+      } else {
+        window.location.href = meta.href;
+      }
+    }
+
+    document.addEventListener("click", function (e) {
+      var link = e.target.closest("[data-reserve-gate]");
+      if (!link) return;
+      var type = link.getAttribute("data-reserve-gate");
+      if (!COPY[type]) return;
+      e.preventDefault();
+      open(type);
+    });
+  }
+
   ready(function () {
     initHeader();
     initNav();
@@ -476,5 +735,6 @@
     initExternalReservation();
     initLightbox();
     initVideoPopup();
+    initReserveGate();
   });
 })();

@@ -54,7 +54,7 @@
     <div class="container">
       <p class="kicker">愛媛の雅ちゃん</p>
       <h1 class="page-hero__title">ご予約</h1>
-      <p class="page-hero__lead">サイトからご来店ご予約はコチラから</p>
+      <p class="page-hero__lead">ご来店のご予約はこちらから</p>
     </div>
   </section>
 
@@ -63,10 +63,32 @@
     <div class="takeout-layout">
       <div class="takeout-layout__form reveal">
         <div class="form-panel form-panel--takeout">
-          <p class="form-panel__kicker">Reserve</p>
-          <h2 class="form-panel__title">ご来店予約フォーム</h2>
-          <p class="form-panel__lead">お問い合わせ頂きました内容をご確認させて頂き、スタッフより折り返しご連絡致します。</p>
-          <form data-demo-form novalidate>
+          <section class="reserve-quick" aria-labelledby="reserve-quick-title">
+            <p class="form-panel__kicker">Quick Reserve</p>
+            <h2 class="form-panel__title" id="reserve-quick-title">すぐ予約する</h2>
+            <p class="form-panel__lead reserve-quick__lead">すぐのご予約はホットペッパーグルメが便利です。お電話・LINEでも受け付けています。</p>
+            <div class="reserve-quick__actions">
+              <a class="btn btn--hotpepper btn--hotpepper-lg" data-external-reserve hidden aria-label="ホットペッパーグルメで予約する">
+                <img class="btn--hotpepper__logo" src="assets/icons/logo-hotpepper-gourmet.png" alt="ホットペッパーグルメ" width="264" height="45" decoding="async">
+              </a>
+              <div class="reserve-quick__sub">
+                <a class="btn btn--telreq" href="tel:0899131194" aria-label="電話する（089-913-1194）" data-reserve-gate="tel">
+                  <span class="btn__icon btn__icon--phone" aria-hidden="true"></span>
+                  電話する
+                </a>
+                <a class="btn btn--linesns" href="https://line.me/R/ti/p/@ipp6981e" target="_blank" rel="noopener noreferrer" data-reserve-gate="line">
+                  <img class="btn--linesns__logo" src="assets/icons/logo-line.svg" alt="" width="48" height="48" decoding="async">
+                  LINEで予約
+                </a>
+              </div>
+            </div>
+          </section>
+
+          <div class="reserve-form-block">
+            <p class="form-panel__kicker">WEB Form</p>
+            <h2 class="form-panel__title">ご来店予約フォーム</h2>
+            <p class="form-panel__lead">WEBフォームでも受け付けています。内容確認後、スタッフより折り返しご連絡いたします。</p>
+            <form data-demo-form novalidate>
             <div class="form-grid">
               <div class="form-group">
                 <label for="rs-name">お名前 <span class="req">必須</span></label>
@@ -130,24 +152,24 @@
 
             <div class="form-actions">
               <button class="btn btn--primary" type="submit">予約内容を送信する</button>
-              <a class="btn btn--line" href="tel:0899131194">
+              <a class="btn btn--line" href="tel:0899131194" data-reserve-gate="tel">
                 <span class="btn__icon btn__icon--phone" aria-hidden="true"></span>
                 電話で問い合わせ（089-913-1194）
               </a>
             </div>
           </form>
+          </div>
         </div>
 
-        <section class="line-contact reveal" aria-labelledby="line-contact-title">
-          <h2 class="line-contact__title" id="line-contact-title">LINEでのお問い合わせは</h2>
-          <p class="line-contact__sub">コチラから</p>
-          <a class="line-contact__link" href="https://line.me/R/ti/p/@ipp6981e" target="_blank" rel="noopener noreferrer">
-            <figure class="line-contact__figure">
-              <img src="assets/images/site/line-reserve-qr.webp" alt="LINE友だち追加（@ipp6981e）" width="800" height="800" loading="lazy" decoding="async">
-            </figure>
-          </a>
+        <section class="line-contact reveal" aria-label="LINEでのご予約方法">
+          <figure class="line-contact__figure">
+            <img src="assets/images/site/line-reserve-howto.png" alt="LINEでのご予約方法。友だち追加後、氏名・電話番号・予約内容をトークで送信。QRコードまたはID @ipp6981e" width="800" height="433" loading="lazy" decoding="async">
+          </figure>
           <p class="line-contact__cta">
-            <a class="btn btn--line" href="https://line.me/R/ti/p/@ipp6981e" target="_blank" rel="noopener noreferrer">LINE公式アカウントを開く</a>
+            <a class="btn btn--linesns" href="https://line.me/R/ti/p/@ipp6981e" target="_blank" rel="noopener noreferrer" data-reserve-gate="line">
+              <img class="btn--linesns__logo" src="assets/icons/logo-line.svg" alt="" width="22" height="22" decoding="async">
+              LINE公式アカウントを開く
+            </a>
           </p>
         </section>
       </div>
@@ -156,13 +178,15 @@
         <div class="takeout-side">
           <section class="takeout-side__block">
             <h2 class="takeout-side__title">ご注意</h2>
-            <ul class="takeout-side__list">
-              <li>ご連絡は返信メールにてお送り致します。<strong>メールが２４時間以内に届かない場合</strong>はもう一度ご予約をお願い致します</li>
-              <li>こちらからお電話にて、対応させて頂きます</li>
-              <li>【過去にお客様のメールブロック等があり、メールが届かなかった事がある為】</li>
-              <li>【基本的にはメール確認後、即・返信はさせて頂いております】</li>
-              <li><strong>午後14時以降</strong>はお電話にてお問い合わせ下さい</li>
-              <li>テイクアウト用パック・<strong>おやひな一つ50円・その他パック一つ20円</strong>を頂きます</li>
+            <ul class="takeout-side__list takeout-side__list--priority">
+              <li>すぐのご予約は<strong>ホットペッパーグルメ・お電話・LINE</strong>がスムーズです</li>
+              <li><strong>午後14時以降</strong>はお電話にてお問い合わせください</li>
+              <li>WEBフォームは内容確認後、スタッフより折り返しご連絡いたします</li>
+            </ul>
+            <h3 class="takeout-side__subtitle">その他のご案内</h3>
+            <ul class="takeout-side__list takeout-side__list--secondary">
+              <li>確認のため、こちらからお電話にてご連絡する場合があります</li>
+              <li>テイクアウト用パック・<strong>おやひな一つ50円・その他パック一つ20円</strong>をいただきます</li>
             </ul>
           </section>
 
@@ -239,7 +263,7 @@
   <div class="mobile-bar" aria-label="スマートフォン用クイックアクション">
     <div class="mobile-bar__inner">
       <a class="mobile-bar__btn mobile-bar__btn--reserve" href="reserve.html">予約する</a>
-      <a class="mobile-bar__btn mobile-bar__btn--tel" href="tel:0899131194">電話する</a>
+      <a class="mobile-bar__btn mobile-bar__btn--tel" href="tel:0899131194" data-reserve-gate="tel">電話する</a>
     </div>
   </div>
 
