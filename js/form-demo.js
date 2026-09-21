@@ -9,6 +9,13 @@
 
   var STORAGE_KEY = "masa-form-thanks";
   var SENDING_TEXT = "リクエスト送信中...";
+  var FORMSPREE = {
+    reserve: "https://formspree.io/f/moevenzk",
+    takeout: "https://formspree.io/f/xeaoalwl",
+    recruit: "https://formspree.io/f/xdekewnn"
+  };
+  var SEND_ERROR_TEXT =
+    "送信に失敗しました。通信環境をご確認のうえ、もう一度お試しいただくか、お電話にてお問い合わせください。";
 
   function ready(fn) {
     if (document.readyState === "loading") {
@@ -382,6 +389,12 @@
       }
       if (/^qty_/.test(el.name)) return;
 
+      /* 年齢は「○歳」で確認表示 */
+      if (el.name === "age") {
+        rows.push({ label: label || "年齢", value: value + "歳" });
+        return;
+      }
+
       rows.push({ label: label || el.name, value: value });
     });
 
@@ -432,8 +445,147 @@
   }
 
   function detectFormType(form) {
+    var explicit = form.getAttribute("data-form-type");
+    if (explicit === "recruit" || explicit === "takeout" || explicit === "reserve") {
+      return explicit;
+    }
     if (form.querySelector("[data-order-items]")) return "takeout";
     return "reserve";
+  }
+
+  function formResultTitle(type) {
+    if (type === "takeout") return "テイクアウトのご依頼";
+    if (type === "recruit") return "スタッフ応募";
+    return "ご来店予約";
+  }
+
+  function formConfirmTitle(type) {
+    if (type === "takeout") return "テイクアウト内容の確認";
+    if (type === "recruit") return "応募内容の確認";
+    return "ご予約内容の確認";
+  }
+
+  function fieldValue(form, name) {
+    var el = form.querySelector('[name="' + name + '"]');
+    if (!el) return "";
+    return getFieldValue(el);
+  }
+
+  function combinedTimeValue(form) {
+    var el = form.querySelector("[data-time-combined]");
+    return el && el.value ? String(el.value).trim() : "";
+  }
+
+  /** 確認画面と同じく同一商品は数量合算 */
+  function collectMergedOrders(form) {
+    var orderLines = [];
+    var items = form.querySelectorAll("[data-order-item]");
+    Array.prototype.forEach.call(items, function (item) {
+      var select = item.querySelector("[data-order-select]");
+      var qty = item.querySelector("[data-order-qty]");
+      var name = select ? getFieldValue(select) : "";
+      var qtyVal = qty ? getFieldValue(qty) : "";
+      var qtyNum = parseInt(qtyVal, 10);
+      if (!name || !qtyNum || qtyNum < 1) return;
+      orderLines.push({ name: name, qty: qtyNum });
+    });
+
+    var merged = [];
+    var indexByName = {};
+    orderLines.forEach(function (line) {
+      if (Object.prototype.hasOwnProperty.call(indexByName, line.name)) {
+        merged[indexByName[line.name]].qty += line.qty;
+      } else {
+        indexByName[line.name] = merged.length;
+        merged.push({ name: line.name, qty: line.qty });
+      }
+    });
+    return merged;
+  }
+
+  /** Formspree送信用 FormData（日本語キーに整形） */
+  function buildFormspreeData(form, type) {
+    var fd = new FormData();
+
+    if (type === "recruit") {
+      var rcEmail = fieldValue(form, "email");
+      var rcNote = fieldValue(form, "note");
+      var rcAge = fieldValue(form, "age");
+      var rcExp = fieldValue(form, "experience");
+
+      fd.append("お名前", fieldValue(form, "name"));
+      fd.append("お電話番号", fieldValue(form, "tel"));
+      fd.append("年齢", rcAge ? rcAge + "歳" : "");
+      fd.append("週の出勤可能日数", fieldValue(form, "available_days"));
+      fd.append("メールアドレス", rcEmail || "未入力");
+      fd.append("飲食経験", rcExp || "未選択");
+      fd.append("自己PR・質問", rcNote || "なし");
+      fd.append("_subject", "【愛媛の雅ちゃん】スタッフ応募　" + fieldValue(form, "name") + "様");
+      if (rcEmail) fd.append("_replyto", rcEmail);
+      return fd;
+    }
+
+    if (type === "takeout") {
+      var toEmail = fieldValue(form, "email");
+      var toNote = fieldValue(form, "note");
+      var toTime = combinedTimeValue(form);
+
+      fd.append("お名前", fieldValue(form, "name"));
+      fd.append("お電話番号", fieldValue(form, "tel"));
+      fd.append("受取日", fieldValue(form, "pickup_date"));
+      fd.append("受取時間", toTime || "指定なし");
+      fd.append("メールアドレス", toEmail || "未入力");
+      fd.append("その他ご要望・ご相談", toNote || "なし");
+
+      collectMergedOrders(form).forEach(function (line, i) {
+        fd.append(
+          "ご注文 " + (i + 1),
+          "商品：" + line.name + "\n個数：" + line.qty + "個"
+        );
+      });
+
+      fd.append("_subject", "【愛媛の雅ちゃん】テイクアウト予約　" + fieldValue(form, "name") + "様");
+      if (toEmail) fd.append("_replyto", toEmail);
+      return fd;
+    }
+
+    var email = fieldValue(form, "email");
+    var note = fieldValue(form, "note");
+    var party = fieldValue(form, "party");
+    var course = fieldValue(form, "course");
+
+    fd.append("お名前", fieldValue(form, "name"));
+    fd.append("お電話番号", fieldValue(form, "tel"));
+    fd.append("メールアドレス", email);
+    fd.append("ご予約人数", party ? party + "名" : "");
+    fd.append("ご来店日", fieldValue(form, "date"));
+    fd.append("ご来店時間", combinedTimeValue(form));
+    fd.append("希望コース", course || "席のみ予約");
+    fd.append("その他、ご要望・ご相談", note || "なし");
+    fd.append("_subject", "【愛媛の雅ちゃん】ご来店予約　" + fieldValue(form, "name") + "様");
+    if (email) fd.append("_replyto", email);
+    return fd;
+  }
+
+  function submitToFormspree(form, type) {
+    var endpoint = FORMSPREE[type] || FORMSPREE.reserve;
+    var body = buildFormspreeData(form, type);
+    return fetch(endpoint, {
+      method: "POST",
+      body: body,
+      headers: { Accept: "application/json" }
+    }).then(function (res) {
+      if (!res.ok) {
+        return res.json().catch(function () {
+          return {};
+        }).then(function () {
+          throw new Error("formspree-failed");
+        });
+      }
+      return res.json().catch(function () {
+        return {};
+      });
+    });
   }
 
   function playSendAnimation(done) {
@@ -521,7 +673,7 @@
     if (existing && existing.parentNode) existing.parentNode.removeChild(existing);
 
     var type = detectFormType(form);
-    var title = type === "takeout" ? "テイクアウト内容の確認" : "ご予約内容の確認";
+    var title = formConfirmTitle(type);
 
     var overlay = document.createElement("div");
     overlay.id = "confirm-overlay";
@@ -539,6 +691,7 @@
         '<div class="confirm-overlay__summary">' +
           renderSummaryHtml(rows) +
         "</div>" +
+        '<p class="confirm-overlay__error" data-confirm-error hidden></p>' +
         '<div class="confirm-overlay__actions">' +
           '<button type="button" class="btn btn--line" data-confirm-cancel>戻って修正</button>' +
           '<button type="button" class="btn btn--primary" data-confirm-send>この内容で送信する</button>' +
@@ -548,11 +701,40 @@
     document.body.appendChild(overlay);
     document.body.style.overflow = "hidden";
 
+    var sending = false;
+    var sendBtn = overlay.querySelector("[data-confirm-send]");
+    var cancelBtns = overlay.querySelectorAll("[data-confirm-cancel]");
+    var errorEl = overlay.querySelector("[data-confirm-error]");
+
     requestAnimationFrame(function () {
       overlay.classList.add("is-visible");
     });
 
+    function setConfirmError(message) {
+      if (!errorEl) return;
+      if (!message) {
+        errorEl.hidden = true;
+        errorEl.textContent = "";
+        return;
+      }
+      errorEl.hidden = false;
+      errorEl.textContent = message;
+    }
+
+    function setSendingState(isSending) {
+      sending = isSending;
+      if (sendBtn) {
+        sendBtn.disabled = isSending;
+        sendBtn.setAttribute("aria-busy", isSending ? "true" : "false");
+        sendBtn.textContent = isSending ? "送信中..." : "この内容で送信する";
+      }
+      Array.prototype.forEach.call(cancelBtns, function (btn) {
+        btn.disabled = isSending;
+      });
+    }
+
     function closeConfirm() {
+      if (sending) return;
       overlay.classList.remove("is-visible");
       setTimeout(function () {
         if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
@@ -562,8 +744,35 @@
       }, 280);
     }
 
+    function finishSuccess() {
+      try {
+        sessionStorage.setItem(
+          STORAGE_KEY,
+          JSON.stringify({
+            type: type,
+            title: formResultTitle(type),
+            rows: rows,
+            html: renderSummaryHtml(rows)
+          })
+        );
+      } catch (err) {
+        /* ignore */
+      }
+
+      document.removeEventListener("keydown", onKey);
+      if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+
+      var submitBtn = form.querySelector('[type="submit"]');
+      if (submitBtn) submitBtn.disabled = true;
+
+      playSendAnimation(function () {
+        window.location.href = "thanks.html";
+      });
+    }
+
     function onKey(e) {
       if (e.key === "Escape") {
+        if (sending) return;
         document.removeEventListener("keydown", onKey);
         closeConfirm();
       }
@@ -572,38 +781,28 @@
 
     overlay.addEventListener("click", function (e) {
       if (e.target.closest("[data-confirm-cancel]")) {
+        if (sending) return;
         document.removeEventListener("keydown", onKey);
         closeConfirm();
         return;
       }
-      if (e.target.closest("[data-confirm-send]")) {
-        document.removeEventListener("keydown", onKey);
-        if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+      if (!e.target.closest("[data-confirm-send]")) return;
+      if (sending) return;
 
-        var submitBtn = form.querySelector('[type="submit"]');
-        if (submitBtn) submitBtn.disabled = true;
+      setConfirmError("");
+      setSendingState(true);
 
-        try {
-          sessionStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify({
-              type: type,
-              title: type === "takeout" ? "テイクアウトのご依頼" : "ご来店予約",
-              rows: rows,
-              html: renderSummaryHtml(rows)
-            })
-          );
-        } catch (err) {
-          /* ignore */
-        }
-
-        playSendAnimation(function () {
-          window.location.href = "thanks.html";
+      submitToFormspree(form, type)
+        .then(function () {
+          finishSuccess();
+        })
+        .catch(function () {
+          setSendingState(false);
+          setConfirmError(SEND_ERROR_TEXT);
+          if (sendBtn) sendBtn.focus();
         });
-      }
     });
 
-    var sendBtn = overlay.querySelector("[data-confirm-send]");
     if (sendBtn) sendBtn.focus();
   }
 

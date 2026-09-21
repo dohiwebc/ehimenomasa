@@ -20,8 +20,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Old+Mincho:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/style.css?v=20260803b">
-  <link rel="stylesheet" href="css/responsive.css?v=20260803b">
+  <link rel="stylesheet" href="css/style.css?v=20260921d">
+  <link rel="stylesheet" href="css/responsive.css?v=20260921d">
 </head>
 <body class="page-recruit">
 
@@ -205,17 +205,79 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="recruit-apply">
       <div class="container container--narrow reveal">
         <h2 class="section-title">応募方法</h2>
         <p>応募後、1営業日以内にご連絡します。<br class="br-sp">友達と応募もOKです。</p>
-        <div class="recruit-apply">
-          <a class="btn btn--primary" href="https://jp.indeed.com/viewjob?jk=aa90ccd90eaa3455" target="_blank" rel="noopener noreferrer">WEBで応募する<span class="recruit-paren">（Indeed）</span></a>
-          <a class="btn btn--line" href="tel:0899131194">
-            <span class="btn__icon btn__icon--phone" aria-hidden="true"></span>
-            電話で応募する<span class="recruit-paren">（089-913-1194）</span>
-          </a>
+
+        <div class="form-panel form-panel--recruit">
+          <p class="form-panel__kicker">Apply</p>
+          <h3 class="form-panel__title">WEB応募フォーム</h3>
+          <p class="form-panel__lead">必要事項をご記入のうえ送信してください。ホール・キッチンどちらもお任せします。</p>
+          <form data-demo-form data-form-type="recruit" novalidate>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="rc-name">お名前 <span class="req">必須</span></label>
+                <input class="form-control" id="rc-name" name="name" type="text" required autocomplete="name" placeholder="山田 太郎">
+              </div>
+              <div class="form-group">
+                <label for="rc-tel">お電話番号 <span class="req">必須</span></label>
+                <input class="form-control" id="rc-tel" name="tel" type="tel" required autocomplete="tel" placeholder="090-0000-0000">
+              </div>
+              <div class="form-group">
+                <label for="rc-age">年齢 <span class="req">必須</span></label>
+                <div class="form-row form-row--unit">
+                  <input class="form-control" id="rc-age" name="age" type="number" min="16" max="80" required inputmode="numeric" placeholder="25">
+                  <span class="form-unit" aria-hidden="true">歳</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="rc-days">週の出勤可能日数 <span class="req">必須</span></label>
+                <select class="form-control" id="rc-days" name="available_days" required>
+                  <option value="">選択してください</option>
+                  <option value="週1日">週1日</option>
+                  <option value="週2日">週2日</option>
+                  <option value="週3日">週3日</option>
+                  <option value="週4日">週4日</option>
+                  <option value="週5日以上">週5日以上</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="rc-email">メールアドレス <span class="opt">任意</span></label>
+                <input class="form-control" id="rc-email" name="email" type="email" autocomplete="email" placeholder="example@email.com">
+              </div>
+              <div class="form-group">
+                <label for="rc-experience">飲食経験 <span class="opt">任意</span></label>
+                <select class="form-control" id="rc-experience" name="experience">
+                  <option value="">選択してください</option>
+                  <option value="あり">あり</option>
+                  <option value="なし">なし</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="rc-note">自己PR・質問 <span class="opt">任意</span></label>
+              <textarea class="form-control" id="rc-note" name="note" rows="4" placeholder="自己PRや質問があればご記入ください"></textarea>
+            </div>
+
+            <div class="form-group">
+              <div class="form-check">
+                <input id="rc-privacy" name="privacy" type="checkbox" required>
+                <label for="rc-privacy">個人情報の取り扱いに同意する <span class="req">必須</span></label>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn--primary" type="submit">応募内容を送信する</button>
+              <a class="btn btn--line" href="tel:0899131194">
+                <span class="btn__icon btn__icon--phone" aria-hidden="true"></span>
+                電話で応募する（089-913-1194）
+              </a>
+            </div>
+          </form>
         </div>
+
         <h3 class="recruit-subhead">選考の流れ</h3>
         <ol class="recruit-flow">
           <li>応募</li>
@@ -261,6 +323,7 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=20260803b"></script>
+  <script src="js/main.js?v=20260921a"></script>
+  <script src="js/form-demo.js?v=20260921d"></script>
 </body>
 </html>

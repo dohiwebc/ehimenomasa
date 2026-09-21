@@ -2421,6 +2421,23 @@ textarea.form-control {
   padding-left: 0.45rem;
   padding-right: 0.35rem;
 }
+.form-row--unit {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  max-width: 12rem;
+}
+.form-row--unit .form-control {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.form-unit {
+  flex: 0 0 auto;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
 .time-pair__unit {
   font-size: 0.88rem;
   letter-spacing: 0.08em;
@@ -2612,6 +2629,15 @@ textarea.form-control {
   border: 0;
   padding: 0.2rem 0 0.6rem;
   background: transparent;
+}
+.form-panel--recruit {
+  margin: 1.6rem 0 2rem;
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+.form-panel--recruit .form-actions {
+  margin-top: 0.4rem;
 }
 .form-panel__kicker {
   margin: 0 0 0.45rem;
@@ -3855,11 +3881,27 @@ textarea.form-control {
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
+.confirm-overlay__error {
+  margin: 0 0 1rem;
+  padding: 0.75rem 0.9rem;
+  background: rgba(199, 75, 42, 0.08);
+  border: 1px solid rgba(199, 75, 42, 0.35);
+  color: var(--ember-deep);
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+.confirm-overlay__error[hidden] {
+  display: none;
+}
 .confirm-overlay__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.7rem;
   justify-content: flex-end;
+}
+.confirm-overlay__actions .btn:disabled {
+  opacity: 0.55;
+  pointer-events: none;
 }
 .form-summary__list {
   margin: 0;
