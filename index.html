@@ -19,10 +19,10 @@
   <link rel="icon" href="assets/icons/favicon-192.webp" sizes="192x192">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Old+Mincho:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Sans+JP:wght@400;500;700&family=Zen+Old+Mincho:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/style.css?v=20260803b">
-  <link rel="stylesheet" href="css/responsive.css?v=20260803b">
+  <link rel="stylesheet" href="css/style.css?v=20260922e">
+  <link rel="stylesheet" href="css/responsive.css?v=20260922e">
 </head>
 <body>
 
@@ -71,26 +71,63 @@
           <span class="hero__bg hero__bg--mobile" style="background-image:url('assets/images/site/interior-dining.webp'); background-position:center 40%;"></span>
         </div>
       </div>
+      <div class="hero__catch-overlay" aria-hidden="true">
+        <img
+          class="hero__catch-overlay__img"
+          src="assets/images/site/hero-catch-phrase.png"
+          alt=""
+          width="868"
+          height="395"
+          decoding="async">
+      </div>
       <div class="hero__content">
         <div class="container">
           <div class="hero__copy">
             <h1 class="hero__catch">
-              <span class="hero__catch-line">最高の隠し味は</span>
-              <span class="hero__catch-main">おもてなし</span>
+              <img
+                class="hero__catch-img"
+                src="assets/images/site/hero-catch-phrase.png"
+                alt="最高の隠し味は おもてなし。最高の鶏料理を追い求めて１４年"
+                width="868"
+                height="395"
+                decoding="async">
             </h1>
             <p class="hero__lead">
-              <span class="hero__lead-head">最高の鶏料理を追い求めて<span class="hero__years">１４年</span></span>
               皆様、一人一人に満足していただけるように毎日精進しております。<br class="hero__lead-break">
               おいしい鶏料理をご堪能ください。
             </p>
           </div>
           <nav class="hero-nav" aria-label="主なご案内">
-            <a class="hero-nav__link" href="menu.html">お品書き</a>
-            <a class="hero-nav__link" href="course.html">宴会コース</a>
-            <a class="hero-nav__link" href="reserve.html">お席の予約</a>
-            <a class="hero-nav__link" href="shop.html">店内アクセス</a>
-            <a class="hero-nav__link" href="https://www.instagram.com/ehimenomasa/" target="_blank" rel="noopener noreferrer">SNS</a>
-            <a class="hero-nav__link" href="about.html">愛媛の雅ちゃん</a>
+            <div class="hero-nav__main">
+              <a class="hero-nav__btn hero-nav__btn--primary" href="reserve.html">
+                <span class="hero-nav__copy">
+                  <span class="hero-nav__en">Reservation</span>
+                  <span class="hero-nav__label">お席の予約</span>
+                </span>
+                <span class="hero-nav__arrow" aria-hidden="true">→</span>
+              </a>
+              <div class="hero-nav__row">
+                <a class="hero-nav__btn hero-nav__btn--secondary" href="menu.html">
+                  <span class="hero-nav__copy">
+                    <span class="hero-nav__en">Menu</span>
+                    <span class="hero-nav__label">お品書き</span>
+                  </span>
+                  <span class="hero-nav__arrow" aria-hidden="true">→</span>
+                </a>
+                <a class="hero-nav__btn hero-nav__btn--secondary" href="course.html">
+                  <span class="hero-nav__copy">
+                    <span class="hero-nav__en">Course</span>
+                    <span class="hero-nav__label">宴会・コース</span>
+                  </span>
+                  <span class="hero-nav__arrow" aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
+            <div class="hero-nav__sub">
+              <a class="hero-nav__text" href="shop.html">店内・アクセス<span class="hero-nav__arrow" aria-hidden="true">→</span></a>
+              <a class="hero-nav__text" href="https://www.instagram.com/ehimenomasa/" target="_blank" rel="noopener noreferrer">SNS<span class="hero-nav__arrow" aria-hidden="true">→</span></a>
+              <a class="hero-nav__text" href="about.html">愛媛の雅ちゃん<span class="hero-nav__arrow" aria-hidden="true">→</span></a>
+            </div>
           </nav>
           <p class="hero__access">松山市駅から徒歩1分</p>
         </div>
@@ -195,61 +232,60 @@
           <p class="meta-note">価格は全て税込表示です。</p>
         </div>
         <div class="pick-board reveal">
-
-          <article class="pick">
-            <img src="assets/images/site/dish-tori-tataki.webp" alt="本家直伝とりのたたき" width="800" height="600" loading="lazy" decoding="async">
-            <div class="pick__meta">
-              <h3 class="pick__name">本家直伝とりのたたき</h3>
-              <p class="price">８８０円</p>
-            </div>
-          </article>
-          <article class="pick">
-            <img src="assets/images/site/dish-tsukune.webp" alt="雅ちゃんつくね" width="800" height="600" loading="lazy" decoding="async">
-            <div class="pick__meta">
-              <h3 class="pick__name">雅ちゃんつくね</h3>
-              <p class="price">４９５円</p>
-            </div>
-          </article>
-          <article class="pick">
-            <img src="assets/images/site/dish-aspara-butabara.webp" alt="アスパラの豚バラ巻き揚げ" width="800" height="600" loading="lazy" decoding="async">
-            <div class="pick__meta">
-              <h3 class="pick__name">アスパラの豚バラ巻き揚げ</h3>
-              <p class="price">６９３円</p>
-            </div>
-          </article>
-          <article class="pick">
-            <img src="assets/images/site/dish-jakoten.webp" alt="愛媛名物 じゃこてん" width="800" height="600" loading="lazy" decoding="async">
-            <div class="pick__meta">
-              <h3 class="pick__name">愛媛名物 じゃこてん</h3>
-              <p class="price">５５０円</p>
-            </div>
-          </article>
-          <article class="pick">
-            <img src="assets/images/site/dish-renkon-chips.webp" alt="パリパリれんこんチップス" width="800" height="600" loading="lazy" decoding="async">
-            <div class="pick__meta">
-              <h3 class="pick__name">パリパリれんこんチップス</h3>
-              <p class="price">４９５円</p>
-            </div>
-          </article>
-          <article class="pick">
-            <img src="assets/images/site/dish-dashimaki.webp" alt="だし巻き玉子" width="800" height="600" loading="lazy" decoding="async">
-            <div class="pick__meta">
-              <h3 class="pick__name">だし巻き玉子</h3>
-              <p class="price">５５０円</p>
-            </div>
-          </article>
-          <article class="pick">
-            <img src="assets/images/site/dish-tako-karaage.webp" alt="たこの唐揚げ" width="800" height="600" loading="lazy" decoding="async">
-            <div class="pick__meta">
-              <h3 class="pick__name">たこの唐揚げ</h3>
-              <p class="price">７７０円</p>
-            </div>
-          </article>
           <article class="pick">
             <img src="assets/images/site/dish-kawaage-hidaredare.webp" alt="かわ揚げ秘伝ダレかけ" width="800" height="600" loading="lazy" decoding="async">
             <div class="pick__meta">
               <h3 class="pick__name">かわ揚げ秘伝ダレかけ</h3>
               <p class="price">７７０円</p>
+            </div>
+          </article>
+          <article class="pick">
+            <img src="assets/images/site/dish-zuriage.webp" alt="ずり揚げ" width="800" height="600" loading="lazy" decoding="async">
+            <div class="pick__meta">
+              <h3 class="pick__name">ずり揚げ</h3>
+              <p class="price">７７０円</p>
+            </div>
+          </article>
+          <article class="pick">
+            <img src="assets/images/site/dish-yakitori-assortment.webp" alt="焼鳥・5種盛り合わせ" width="800" height="600" loading="lazy" decoding="async">
+            <div class="pick__meta">
+              <h3 class="pick__name">焼鳥・5種盛り合わせ</h3>
+              <p class="price">９７９円</p>
+            </div>
+          </article>
+          <article class="pick">
+            <img src="assets/images/site/dish-jumbo-kushi.webp" alt="ジャンボ串（2本）" width="800" height="600" loading="lazy" decoding="async">
+            <div class="pick__meta">
+              <h3 class="pick__name">ジャンボ串（2本）</h3>
+              <p class="price">６６０円</p>
+            </div>
+          </article>
+          <article class="pick">
+            <img src="assets/images/site/dish-beef-tongue.webp" alt="厚切り牛タン" width="800" height="600" loading="lazy" decoding="async">
+            <div class="pick__meta">
+              <h3 class="pick__name">厚切り牛タン</h3>
+              <p class="price">１,５９５円</p>
+            </div>
+          </article>
+          <article class="pick">
+            <img src="assets/images/site/dish-masachan-karaage.webp" alt="雅ちゃんからあげ（5個）" width="800" height="600" loading="lazy" decoding="async">
+            <div class="pick__meta">
+              <h3 class="pick__name">雅ちゃんからあげ（5個）</h3>
+              <p class="price">８８０円</p>
+            </div>
+          </article>
+          <article class="pick">
+            <img src="assets/images/site/dish-sashimi-3shu.webp" alt="刺身3種盛り" width="800" height="600" loading="lazy" decoding="async">
+            <div class="pick__meta">
+              <h3 class="pick__name">刺身3種盛り</h3>
+              <p class="price">１,１５５円</p>
+            </div>
+          </article>
+          <article class="pick">
+            <img src="assets/images/site/dish-tori-tataki.webp" alt="本家直伝とりのたたき" width="800" height="600" loading="lazy" decoding="async">
+            <div class="pick__meta">
+              <h3 class="pick__name">本家直伝とりのたたき</h3>
+              <p class="price">８８０円</p>
             </div>
           </article>
         </div>
@@ -289,7 +325,7 @@
             </div>
             <div class="course-line__main">
               <h3 class="course-line__name">満喫コース</h3>
-              <p class="course-line__desc">コース8品 ＋ 飲み放題120分付　名物を選べる内容</p>
+              <p class="course-line__desc">コース8品 ＋ 飲み放題120分付<br class="br-sp">名物を選べる内容</p>
             </div>
             <p class="course-line__price price">6,000 円</p>
           </article>
@@ -299,7 +335,7 @@
             </div>
             <div class="course-line__main">
               <h3 class="course-line__name">親雛コース</h3>
-              <p class="course-line__desc">コース8品 ＋ 飲み放題120分付　骨付鳥（おや・ひな）</p>
+              <p class="course-line__desc">コース8品 ＋ 飲み放題120分付<br class="br-sp">骨付鳥（おや・ひな）</p>
             </div>
             <p class="course-line__price price">5,300 円</p>
           </article>
@@ -309,7 +345,7 @@
             </div>
             <div class="course-line__main">
               <h3 class="course-line__name">揚げ鳥コース</h3>
-              <p class="course-line__desc">コース8品 ＋ 飲み放題120分付　揚げ足鳥 or 手羽先</p>
+              <p class="course-line__desc">コース8品 ＋ 飲み放題120分付<br class="br-sp">揚げ足鳥 or 手羽先</p>
             </div>
             <p class="course-line__price price">4,800 円</p>
           </article>
@@ -568,7 +604,7 @@
     ]
   }
   </script>
-  <script src="js/main.js?v=20260803b"></script>
+  <script src="js/main.js?v=20260921l"></script>
   <script src="js/slider.js"></script>
   <script src="js/instagram-feed.js"></script>
 </body>

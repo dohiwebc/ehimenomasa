@@ -243,7 +243,7 @@
 
     function isPreviewable(img) {
       if (!img || img.tagName !== "IMG") return false;
-      if (img.closest(".site-header, .site-footer, .mobile-bar, .lightbox, .modal, .confirm-overlay, .ig-grid, [data-instagram-grid], .video-card, .btn, a[data-reserve-gate]")) return false;
+      if (img.closest(".site-header, .site-footer, .mobile-bar, .lightbox, .modal, .confirm-overlay, .ig-grid, [data-instagram-grid], .video-card, .btn, a[data-reserve-gate], .hero__catch")) return false;
       if (img.classList.contains("btn--linesns__logo") || img.classList.contains("btn--hotpepper__logo") || img.classList.contains("reserve-way__logo")) return false;
       if (!img.getAttribute("src")) return false;
       return true;

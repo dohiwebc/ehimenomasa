@@ -170,14 +170,32 @@
   .intro-grid,
   .meibutsu-row,
   .meibutsu-row--flip,
-  .owner,
-  .owner-block,
   .takeout-split,
   .takeout-panel,
   .access-grid,
   .shop-access,
   .footer-grid {
     grid-template-columns: 1fr;
+  }
+
+  /* タブレットでも店長写真＋挨拶はPC同様に左右配置 */
+  .owner,
+  .owner-block {
+    grid-template-columns: minmax(200px, 240px) minmax(0, 1fr);
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .owner__photo,
+  .owner-block__photo {
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
+    aspect-ratio: 5 / 7;
+  }
+
+  .owner-block__photo {
+    border-color: var(--line);
   }
 
   .shop-access__map {
@@ -250,11 +268,13 @@
   }
 
   .meibutsu-item__media img {
-    height: 200px;
+    height: auto;
+    aspect-ratio: 4 / 3;
   }
 
   .meibutsu-list__row--3 .meibutsu-item__media img {
     height: 160px;
+    aspect-ratio: auto;
   }
 
   .course-line,
@@ -327,6 +347,19 @@
     display: block;
   }
 
+  /* スマホのみ縦並び */
+  .owner,
+  .owner-block {
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+  }
+
+  .owner__photo,
+  .owner-block__photo {
+    width: min(100%, 320px);
+    margin-inline: auto;
+  }
+
   /* 正方形のビジュアル＋下セクションへグラデで接続 */
   .hero {
     min-height: 0;
@@ -383,35 +416,72 @@
     aspect-ratio: 1 / 1;
   }
 
-  /* 下端だけ溶かす。写真の大半は見える */
+  /* キャッチ可読性用：下部を黒〜茶のグラデに */
   .hero__slider::after {
     content: "";
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
-    height: 38%;
+    height: 58%;
     z-index: 2;
     pointer-events: none;
     background: linear-gradient(
       180deg,
-      rgba(242, 240, 236, 0) 0%,
-      rgba(242, 240, 236, 0.2) 28%,
-      rgba(242, 240, 236, 0.55) 55%,
-      rgba(242, 240, 236, 0.85) 78%,
-      var(--bg) 100%
+      rgba(20, 14, 10, 0) 0%,
+      rgba(20, 14, 10, 0.18) 32%,
+      rgba(20, 14, 10, 0.52) 62%,
+      rgba(18, 12, 9, 0.78) 100%
     );
   }
 
   .hero__slide::after {
-    background: linear-gradient(
-      180deg,
-      rgba(14, 12, 10, 0.12) 0%,
-      rgba(14, 12, 10, 0.04) 50%,
-      rgba(14, 12, 10, 0.1) 100%
-    );
+    /* PC同様、左から暗い影＋下部を少し落とす（端は控えめに） */
+    background:
+      linear-gradient(
+        105deg,
+        rgba(14, 12, 10, 0.48) 0%,
+        rgba(14, 12, 10, 0.28) 28%,
+        rgba(14, 12, 10, 0.1) 52%,
+        rgba(14, 12, 10, 0.04) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(14, 12, 10, 0.08) 0%,
+        rgba(14, 12, 10, 0.03) 40%,
+        rgba(14, 12, 10, 0.22) 100%
+      );
   }
 
+  /* 画像上にキャッチを重ねる（左下・PCと同じ透過PNG） */
+  .hero__catch-overlay {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    grid-column: 1;
+    grid-row: 1;
+    z-index: 3;
+    width: 100%;
+    max-width: 100%;
+    align-self: stretch;
+    justify-self: stretch;
+    /* 右下のコンパクト操作分の余白を確保 */
+    padding: 0 4.6rem 0.75rem 0.55rem;
+    pointer-events: none;
+  }
+
+  .hero__catch-overlay__img {
+    display: block;
+    width: min(88%, 20.5rem);
+    max-width: 100%;
+    height: auto;
+    transform: translateX(-0.2rem);
+    /* 黒字→白字（暗いグラデ上で読みやすく） */
+    filter: invert(1) drop-shadow(0 2px 14px rgba(0, 0, 0, 0.35));
+  }
+
+  /* 操作は横幅を詰めて右下配置 */
   .hero__controls {
     position: relative;
     grid-column: 1;
@@ -421,28 +491,32 @@
     right: auto;
     top: auto;
     bottom: auto;
-    margin: 0 0.7rem 0.75rem 0;
+    margin: 0 0.5rem 0.65rem 0;
     z-index: 4;
-    gap: 0.4rem;
-    opacity: 0.82;
+    gap: 0.2rem;
+    opacity: 0.9;
   }
 
   .hero__btn {
-    width: 34px;
-    height: 34px;
+    width: 24px;
+    height: 24px;
     border-color: rgba(255, 250, 243, 0.4);
-    background: rgba(14, 12, 10, 0.22);
-    font-size: 0.95rem;
+    background: rgba(14, 12, 10, 0.28);
+    font-size: 0.72rem;
     color: rgba(255, 250, 243, 0.95);
   }
 
   .hero__btn:hover {
-    background: rgba(14, 12, 10, 0.35);
+    background: rgba(14, 12, 10, 0.4);
+  }
+
+  .hero__dots {
+    gap: 0.18rem;
   }
 
   .hero__dot {
-    width: 6px;
-    height: 6px;
+    width: 3.5px;
+    height: 3.5px;
     background: rgba(255, 250, 243, 0.45);
   }
 
@@ -460,7 +534,7 @@
     width: 100%;
     max-width: 100%;
     margin-top: 0;
-    padding: 1.6rem 0 2.8rem;
+    padding: 1.15rem 0 2.2rem;
     justify-content: flex-start;
     color: var(--ink-2);
     background: transparent;
@@ -468,44 +542,32 @@
 
   .hero__copy {
     padding-left: 0;
-    margin-top: 0.35rem;
-    margin-bottom: 1.1rem;
+    margin-top: 0;
+    margin-bottom: 0.9rem;
     max-width: 100%;
     line-break: auto;
     word-break: normal;
     overflow-wrap: anywhere;
   }
 
+  /* 画像下には説明文以降のみ（キャッチ画像は非表示） */
   .hero__catch {
-    color: var(--ink);
-    text-shadow: none;
-    margin-bottom: 0.7rem;
-  }
-
-  .hero__catch-line {
-    letter-spacing: 0.16em;
-    font-size: 0.82rem;
-    white-space: normal;
-    color: rgba(26, 29, 35, 0.62);
-    margin-bottom: 0.4rem;
-  }
-
-  .hero__catch-main {
-    font-size: clamp(1.85rem, 9vw, 2.7rem);
-    letter-spacing: 0.08em;
-    white-space: nowrap;
-    max-width: 100%;
-    text-shadow: none;
+    display: none;
   }
 
   .hero__lead {
     color: var(--ink-2);
     text-shadow: none;
     max-width: 100%;
-    line-height: 1.9;
+    font-size: 0.94rem;
+    font-weight: 500;
+    line-height: 2;
+    letter-spacing: 0.08em;
     line-break: loose;
     word-break: normal;
     overflow-wrap: anywhere;
+    border-top: 0;
+    padding-top: 0;
   }
 
   .hero__lead-break {
@@ -525,13 +587,91 @@
     color: var(--ink);
   }
 
-  /* スマホFVの導線ボタンは非表示（ヘッダー／下部ナビで案内） */
+  /* スマホFV：メイン3つ縦並び＋補助リンク */
   .hero-nav {
-    display: none;
+    width: 100%;
+    gap: 0.75rem;
+    margin-top: 0.7rem;
+  }
+
+  .hero-nav__main {
+    gap: 0.35rem;
+  }
+
+  .hero-nav__row {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem;
+  }
+
+  .hero-nav__btn {
+    min-height: 3.15rem;
+    padding: 0.5rem 0.65rem 0.55rem 0.75rem;
+    gap: 0.35rem;
+  }
+
+  .hero-nav__btn--primary {
+    min-height: 3.45rem;
+    padding: 0.65rem 1rem 0.7rem 1.05rem;
+  }
+
+  .hero-nav__btn--primary .hero-nav__label {
+    font-size: 0.98rem;
+    letter-spacing: 0.14em;
+  }
+
+  .hero-nav__btn--secondary {
+    background: rgba(25, 18, 12, 0.9);
+    border-color: rgba(25, 18, 12, 0.9);
+  }
+
+  .hero-nav__btn--secondary .hero-nav__label {
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+  }
+
+  .hero-nav__en {
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+  }
+
+  .hero-nav__btn--primary .hero-nav__en {
+    font-size: 0.62rem;
+  }
+
+  .hero-nav__btn--secondary .hero-nav__arrow {
+    font-size: 0.95rem;
+  }
+
+  .hero-nav__arrow {
+    font-size: 1.05rem;
+  }
+
+  .hero-nav__sub {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.55rem 1.2rem;
+    padding-top: 0.1rem;
+  }
+
+  .hero-nav__sub .hero-nav__text:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .hero-nav__text {
+    color: rgba(26, 29, 35, 0.78);
+    text-shadow: none;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+  }
+
+  .hero-nav__text:hover,
+  .hero-nav__text:focus-visible {
+    color: var(--ink);
   }
 
   .hero__access {
-    margin-top: 1.2rem;
+    margin-top: 1rem;
     color: var(--ink-2);
     text-shadow: none;
     opacity: 0.85;
@@ -664,8 +804,8 @@
   }
 
   .page-hero {
-    height: clamp(250px, 40vh, 360px);
-    min-height: clamp(250px, 40vh, 360px);
+    height: clamp(290px, 48vh, 430px);
+    min-height: clamp(290px, 48vh, 430px);
     padding: calc(var(--header-h) + 1.8rem) 0 1.8rem;
   }
 
@@ -1077,11 +1217,13 @@
   }
 
   .meibutsu-item__media img {
-    height: 160px;
+    height: auto;
+    aspect-ratio: 4 / 3;
   }
 
   .meibutsu-list__row--3 .meibutsu-item__media img {
     height: 130px;
+    aspect-ratio: auto;
   }
 
   .meibutsu-item__name,

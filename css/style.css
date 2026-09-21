@@ -19,6 +19,7 @@
   --overlay-2: rgba(20, 24, 32, 0.72);
   --font-sans: "Noto Sans JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
   --font-serif: "Zen Old Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --font-display: "Cormorant Garamond", "Times New Roman", "Zen Old Mincho", serif;
   --header-h: 72px;
   --mobile-bar: 58px;
   --w: 1180px;
@@ -930,21 +931,38 @@ body.is-menu-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) ro
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: calc(var(--header-h) + 3rem) 0 5.5rem;
+  padding: calc(var(--header-h) + 3rem) 0 3.4rem;
+}
+
+/* スマホ専用キャッチ（PCでは非表示） */
+.hero__catch-overlay {
+  display: none;
+}
+
+.hero__catch {
+  margin: 0 0 1.55rem;
+  color: #fff;
+}
+
+.hero__catch-img {
+  display: block;
+  width: min(100%, 26rem);
+  max-width: 100%;
+  height: auto;
+  margin: 0 0 0 0;
+  /* 少し左へ */
+  transform: translateX(-0.85rem);
+  /* 黒文字→白文字（暗いヒーロー写真の上で読みやすく） */
+  filter: invert(1) drop-shadow(0 2px 18px rgba(0, 0, 0, 0.35));
 }
 
 .hero__copy {
   max-width: 36rem;
-  margin-bottom: 1.4rem;
+  margin-bottom: 1.15rem;
   padding-left: 0;
   border-left: 0;
   line-break: strict;
   word-break: keep-all;
-}
-
-.hero__catch {
-  margin: 0 0 0.95rem;
-  color: #fff;
 }
 
 .hero__catch-line {
@@ -976,10 +994,14 @@ body.is-menu-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) ro
 .hero__lead {
   margin: 0;
   max-width: 28em;
-  font-size: 0.92rem;
-  line-height: 2.1;
-  letter-spacing: 0.06em;
-  color: rgba(255, 250, 243, 0.88);
+  padding-top: 0.95rem;
+  border-top: 1px solid rgba(255, 248, 238, 0.28);
+  font-family: var(--font-serif);
+  font-size: 0.98rem;
+  font-weight: 500;
+  line-height: 2.15;
+  letter-spacing: 0.1em;
+  color: rgba(255, 250, 243, 0.9);
   text-shadow: 0 1px 14px rgba(0, 0, 0, 0.35);
 }
 
@@ -1005,44 +1027,188 @@ body.is-menu-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) ro
   white-space: nowrap;
 }
 
-/* ファーストビュー導線：ラベルのみ・3列 */
+/* ファーストビュー導線：予約主＋品書き／コース＋補助リンク */
 .hero-nav {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.65rem 0.6rem;
-  width: min(100%, 34rem);
-  margin: 1rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  width: min(100%, 32rem);
+  margin: 0.85rem 0 0;
 }
 
-.hero-nav__link {
+.hero-nav__main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.hero-nav__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45rem;
+}
+
+.hero-nav__btn {
   display: flex;
   align-items: center;
-  justify-content: center;
-  min-height: 3.1rem;
-  padding: 0.85rem 0.7rem;
-  border: 1px solid rgba(255, 248, 238, 0.28);
-  background: rgba(255, 248, 238, 0.04);
-  color: rgba(255, 250, 243, 0.94);
-  font-size: 0.86rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  line-height: 1.35;
-  text-align: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 4.1rem;
+  padding: 0.85rem 1.25rem 0.9rem 1.3rem;
+  border: 1px solid transparent;
+  border-radius: 0;
+  text-decoration: none;
   transition:
     color 0.28s var(--ease),
-    border-color 0.28s var(--ease),
-    background-color 0.28s var(--ease);
+    background-color 0.28s var(--ease),
+    border-color 0.28s var(--ease);
 }
 
-.hero-nav__link:hover,
-.hero-nav__link:focus-visible {
+.hero-nav__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.18rem;
+  min-width: 0;
+}
+
+.hero-nav__en {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: 0.22em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.hero-nav__label {
+  font-family: var(--font-serif);
+  font-size: 1.08rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1.35;
+}
+
+.hero-nav__btn--primary {
+  min-height: 4.55rem;
+  padding: 0.95rem 1.4rem 1.05rem 1.45rem;
+  background: #f3ece0;
+  border-color: #f3ece0;
+  color: #2c2118;
+}
+
+.hero-nav__btn--primary .hero-nav__en {
+  opacity: 0.68;
+  color: #2c2118;
+}
+
+.hero-nav__btn--primary .hero-nav__label {
+  font-size: 1.28rem;
+  letter-spacing: 0.18em;
+}
+
+.hero-nav__btn--primary:hover,
+.hero-nav__btn--primary:focus-visible {
+  background: #2c2118;
+  border-color: #2c2118;
+  color: #f3ece0;
+}
+
+.hero-nav__btn--primary:hover .hero-nav__en,
+.hero-nav__btn--primary:focus-visible .hero-nav__en {
+  color: #f3ece0;
+  opacity: 0.72;
+}
+
+.hero-nav__btn--secondary {
+  background: rgba(25, 18, 12, 0.85);
+  border-color: rgba(25, 18, 12, 0.85);
+  color: #f3ece0;
+}
+
+.hero-nav__btn--secondary .hero-nav__en {
+  color: #f3ece0;
+  opacity: 0.68;
+}
+
+.hero-nav__btn--secondary .hero-nav__label {
+  font-size: 1.02rem;
+}
+
+.hero-nav__btn--secondary:hover,
+.hero-nav__btn--secondary:focus-visible {
+  background: #f3ece0;
+  border-color: #f3ece0;
+  color: #2c2118;
+}
+
+.hero-nav__btn--secondary:hover .hero-nav__en,
+.hero-nav__btn--secondary:focus-visible .hero-nav__en {
+  color: #2c2118;
+  opacity: 0.68;
+}
+
+.hero-nav__arrow {
+  flex-shrink: 0;
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 500;
+  font-style: normal;
+  letter-spacing: 0;
+  line-height: 1;
+  opacity: 0.78;
+  transition: transform 0.28s var(--ease), opacity 0.28s var(--ease);
+}
+
+.hero-nav__btn:hover .hero-nav__arrow,
+.hero-nav__btn:focus-visible .hero-nav__arrow,
+.hero-nav__text:hover .hero-nav__arrow,
+.hero-nav__text:focus-visible .hero-nav__arrow {
+  transform: translateX(0.28rem);
+  opacity: 1;
+}
+
+.hero-nav__sub {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem 2.1rem;
+  padding: 0.2rem 0.05rem 0;
+}
+
+.hero-nav__text {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 0;
+  padding: 0.2rem 0;
+  background: none;
+  color: rgba(255, 250, 243, 0.9);
+  font-family: var(--font-serif);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  line-height: 1.5;
+  text-decoration: none;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.45);
+  transition: color 0.28s var(--ease);
+}
+
+.hero-nav__text .hero-nav__arrow {
+  font-size: 1rem;
+  opacity: 0.7;
+}
+
+.hero-nav__text:hover,
+.hero-nav__text:focus-visible {
   color: #fff;
-  border-color: rgba(255, 248, 238, 0.5);
-  background: rgba(255, 248, 238, 0.08);
 }
 
 .hero__access {
-  margin-top: 1.6rem;
+  margin-top: 1.25rem;
   font-size: 0.86rem;
   letter-spacing: 0.22em;
   opacity: 0.92;
@@ -1260,11 +1426,15 @@ body.is-menu-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) ro
 .meibutsu-item__media img {
   display: block;
   width: 100%;
-  height: 280px;
+  height: auto;
+  /* 上段2つ：スマホに近い縦幅のある比率 */
+  aspect-ratio: 4 / 3;
   object-fit: cover;
 }
 
 .meibutsu-list__row--3 .meibutsu-item__media img {
+  /* 下段3つは従来どおり */
+  aspect-ratio: auto;
   height: 220px;
 }
 
@@ -1443,9 +1613,27 @@ body.is-menu-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) ro
   gap: 3rem;
   align-items: center;
 }
-.owner__photo img, .owner-block__photo img {
-  height: 360px; object-fit: cover; object-position: top;
-  border: 1px solid rgba(255,255,255,0.2);
+.owner__photo,
+.owner-block__photo {
+  width: min(100%, 280px);
+  /* 元写真より少し低くし、下側を切る（看板〜お腹は残す） */
+  aspect-ratio: 5 / 7;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.08);
+}
+.owner-block__photo {
+  border-color: var(--line);
+  background: var(--bg-2);
+}
+.owner__photo img,
+.owner-block__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* 看板〜お腹が常に入るよう、上基準でトリミング */
+  object-position: center top;
+  border: 0;
 }
 
 /* takeout */
@@ -1963,8 +2151,8 @@ body.is-video-open {
 .page-hero {
   position: relative;
   /* 全下層ページで写真帯の高さを統一 */
-  height: clamp(300px, 44vh, 460px);
-  min-height: clamp(300px, 44vh, 460px);
+  height: clamp(340px, 52vh, 540px);
+  min-height: clamp(340px, 52vh, 540px);
   display: flex;
   align-items: flex-end;
   color: #fff;
