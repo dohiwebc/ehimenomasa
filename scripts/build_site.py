@@ -110,14 +110,6 @@ def group_menu(items: list[dict]) -> list[dict]:
     return categories
 
 
-def gallery_rows_from_urls(urls: list[str]) -> list[list[dict]]:
-    imgs = []
-    for u in urls:
-        # microCMS 画像はクエリでサイズ可。比率は 4/3 仮置き〜URLに height/width ないので 1.0〜1.33
-        imgs.append({"url": u, "w": 800, "h": 600, "ar": 1.3333})
-    return chunk_rows(imgs, pattern=[2, 3, 3, 4, 4])
-
-
 def replace_marked(html: str, name: str, fragment: str) -> str:
     start = f"<!-- cms:{name} -->"
     end = f"<!-- /cms:{name} -->"
@@ -222,8 +214,7 @@ def main():
         "privacyBody": site_raw.get("privacyBody") or "",
     }
     tel = tel_href(site["phone"])
-    gallery = media_list(access_raw.get("gallery"))
-    gallery_rows = gallery_rows_from_urls(gallery)
+    # ギャラリーはコラージュ比率がデザインのため静的（CMS の gallery は使わない）
 
     jinja = Environment(
         loader=FileSystemLoader(str(ROOT / "templates")),
@@ -237,7 +228,6 @@ def main():
         "categories": categories,
         "courses": courses,
         "about": about,
-        "gallery_rows": gallery_rows,
         "meibutsu_rows": chunk_rows(meibutsu),
         "picks": picks,
     }
