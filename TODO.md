@@ -22,4 +22,4 @@
 ## 備考
 
 - 外部予約サイト: ホットペッパー https://www.hotpepper.jp/strJ004612520/
-- 公開先: GitHub Pages（https://dohiwebc.github.io/ehimenomasa/）
+- 公開先: GitHub Pages（https://ehimenomasa.com/）

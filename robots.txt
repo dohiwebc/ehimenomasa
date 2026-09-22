@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://dohiwebc.github.io/ehimenomasa/sitemap.xml
+Sitemap: https://ehimenomasa.com/sitemap.xml

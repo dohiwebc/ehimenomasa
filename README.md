@@ -2,7 +2,7 @@
 
 愛媛県松山市の居酒屋「愛媛の雅ちゃん」の公式サイトです。
 
-公開URL: https://dohiwebc.github.io/ehimenomasa/
+公開URL: https://ehimenomasa.com/
 
 ## サイトの目的
 
