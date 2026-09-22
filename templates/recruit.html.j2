@@ -5,42 +5,182 @@
   canonical='https://ehimenomasa.com/recruit.html',
   css_v=css_v
 ) }}
-<body>
+<body class="page-recruit">
 {{ m.site_header(current='recruit') }}
 <main id="main">
-  <section class="page-hero" style="background-image:url('assets/images/site/bnr-work.webp');">
+  <section class="page-hero" style="background-image:url('assets/images/site/interior-dining.webp');">
     <div class="container">
       <p class="kicker">愛媛の雅ちゃん</p>
-      <h1 class="page-hero__title">{{ site.recruitTitle or 'スタッフ募集' }}</h1>
+      <h1 class="page-hero__title">スタッフ募集</h1>
       <p class="page-hero__lead">雅ちゃんで楽しく、元気に働いてくれる方を募集しています</p>
+    </div>
+  </section>
+
+  {% if not site.recruitOpen %}
+  <section class="section">
+    <div class="container container--narrow reveal">
+      <h2 class="section-title">現在募集を停止しています</h2>
+      <p>募集再開までしばらくお待ちください。</p>
+    </div>
+  </section>
+  {% else %}
+  {# レイアウト・写真・見出しは静的（CMS本文は使わない） #}
+  <section class="section">
+    <div class="container">
+      <figure class="recruit-banner reveal">
+        <img src="assets/images/site/bnr-work.webp" alt="求ム!! 雅ちゃんで楽しく！元気に！働いてくれる方 スタッフ募集" width="800" height="223" loading="lazy" decoding="async">
+      </figure>
+
+      <div class="recruit-intro reveal">
+        <h2 class="recruit-intro__lead">
+          <span class="recruit-intro__lead-main">アルバイト募集</span>
+          <span class="recruit-intro__lead-sub">居酒屋のホール・キッチンスタッフ</span>
+        </h2>
+        <p>スタッフ卒業シーズンに伴い、<br class="recruit-intro__br">NEWスタッフを大募集しています。</p>
+      </div>
+
+      <div class="recruit-visual reveal" aria-label="お店の雰囲気">
+        <figure class="recruit-visual__item">
+          <img src="assets/images/site/store-exterior.webp" alt="松山市駅前の店舗入口" width="800" height="600" loading="lazy" decoding="async">
+        </figure>
+        <figure class="recruit-visual__item">
+          <img src="assets/images/site/hero-table-dishes.webp" alt="店内で提供する鶏料理" width="800" height="600" loading="lazy" decoding="async">
+        </figure>
+        <figure class="recruit-visual__item">
+          <img src="assets/images/site/interior-counter.webp" alt="店内の看板まわり" width="800" height="600" loading="lazy" decoding="async">
+        </figure>
+      </div>
     </div>
   </section>
 
   <section class="section">
     <div class="container container--narrow reveal">
-      {% if not site.recruitOpen %}
-        <h2 class="section-title">現在募集を停止しています</h2>
-        <p>募集再開までしばらくお待ちください。</p>
-      {% else %}
-        {% if site.recruitBody %}
-        <div class="recruit-cms">{{ site.recruitBody | safe }}</div>
-        {% endif %}
-        {% if site.recruitCond %}
-        <h2 class="section-title" style="margin-top:2rem;">募集概要・条件</h2>
-        <p style="white-space:pre-line;">{{ site.recruitCond }}</p>
-        {% endif %}
-      {% endif %}
+      <h2 class="section-title">募集概要</h2>
+      <table class="company-table">
+        <tr><th>雇用形態</th><td>アルバイト</td></tr>
+        <tr><th>職種</th><td>ホール・キッチンスタッフ</td></tr>
+        <tr><th>給与</th><td>時給1,100円〜1,250円<br>試用期間<span class="recruit-paren">（2か月）</span>は時給1,040円以上<br>金曜日は時給50円UP<br>習熟度に応じて、レベルアップごとに随時昇給あり</td></tr>
+        <tr><th>勤務時間</th><td>18:00〜23:00<br>週2日〜OK<br>シフト制<span class="recruit-paren">（2週間ごとに作成）</span><br>時間・曜日応相談／午後のみ・短時間勤務OK／平日のみOK／扶養内勤務OK／終電など早上がり相談OK</td></tr>
+        <tr><th>休暇・休日</th><td>シフトにより決定<br>日曜日・祝日休み<br>夏季休暇<span class="recruit-paren">（1週間）</span><br>年末年始休暇<span class="recruit-paren">（12/31〜1/5）</span><br>帰省や旅行、テスト期間中などのお休み希望も柔軟に対応</td></tr>
+        <tr><th>勤務地</th><td>愛媛の雅ちゃん<br>〒790-0012 愛媛県松山市湊町5丁目4-2 健勝ビル2F<br>伊予鉄「松山市駅」より徒歩30秒<br>転勤なし／U・Iターン歓迎</td></tr>
+        <tr><th>企業名</th><td>株式会社雅道<br>代表：土肥雅樹</td></tr>
+      </table>
     </div>
   </section>
 
-  {% if site.recruitOpen %}
+  <section class="section">
+    <div class="container reveal">
+      <div class="recruit-split">
+        <div class="recruit-split__body">
+          <h2 class="section-title">仕事内容</h2>
+          <div class="recruit-job">
+            <div class="recruit-job__block">
+              <h3 class="recruit-job__title">キッチン業務</h3>
+              <ul>
+                <li>居酒屋料理の仕込み</li>
+                <li>盛り付け、トッピングなどの調理補助</li>
+                <li>洗い場　等</li>
+              </ul>
+              <p class="recruit-job__note">料理は基本店主が作るので、サポートをお任せします。</p>
+            </div>
+            <div class="recruit-job__block">
+              <h3 class="recruit-job__title">ホール業務</h3>
+              <ul>
+                <li>ドリンク作り</li>
+                <li>ドリンク、料理の配膳</li>
+                <li>片付け</li>
+                <li>接客</li>
+              </ul>
+            </div>
+          </div>
+          <ul class="recruit-points recruit-points--inline">
+            <li>キッチン業務は調理補助メイン</li>
+            <li>レジ操作＆電話対応なし</li>
+          </ul>
+          <p>難しい作業はありません。未経験の方も丁寧にお教えするのでご安心ください。</p>
+        </div>
+        <div class="recruit-split__media">
+          <img src="assets/images/site/specialty-honetsukidori-oya.webp" alt="丸亀名物 骨付鳥" width="800" height="1000" loading="lazy" decoding="async">
+          <img src="assets/images/site/hp-counter-live.webp" alt="カウンター席のある店内" width="480" height="480" loading="lazy" decoding="async">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container container--narrow reveal">
+      <h2 class="section-title">求める人材</h2>
+      <ul class="recruit-points">
+        <li>未経験者歓迎</li>
+        <li>学歴・資格・経験不問</li>
+        <li>元気に明るい対応ができる方大歓迎</li>
+        <li>専門学校・短大・大学生歓迎</li>
+        <li>フリーター歓迎</li>
+        <li>副業・WワークOK</li>
+        <li>無資格歓迎</li>
+        <li>長期歓迎</li>
+        <li>ハローワークで求職中の方も歓迎</li>
+      </ul>
+      <h3 class="recruit-subhead">経験者歓迎<span class="recruit-paren">（ブランクOK）</span></h3>
+      <p class="recruit-exp-note">カフェスタッフ、喫茶店、レストラン、焼肉店、居酒屋など飲食店の店舗スタッフ、ホールスタッフ、調理スタッフ、社員食堂、学校給食などの調理補助、洗い場、アパレル販売、本屋、コンビニ、スーパー、ドラッグストア、カラオケ店、パチンコ店での接客など、様々な経験が活かせます。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container container--appeal reveal">
+      <h2 class="section-title">アピールポイント</h2>
+      <dl class="recruit-appeal">
+        <div class="recruit-appeal__item">
+          <dt>2週間ごとのシフト制</dt>
+          <dd>時間・曜日は応相談。午後のみ・短時間・平日のみ・扶養内勤務もOK。終電など早上がりも相談できます。</dd>
+        </div>
+        <div class="recruit-appeal__item">
+          <dt>アクセス抜群</dt>
+          <dd>松山市駅より徒歩30秒。伊予鉄「松山市駅」すぐ。通いやすく、授業や本業のあとにも立ち寄りやすい立地です。</dd>
+        </div>
+        <div class="recruit-appeal__item">
+          <dt>学業との両立を応援</dt>
+          <dd>週2日〜OK。授業が忙しい時期や終電時間なども考慮し、柔軟に対応します。自分のペースで無理なく働けます。</dd>
+        </div>
+        <div class="recruit-appeal__item">
+          <dt>オシャレ自由度高め</dt>
+          <dd>髪色・ピアス・ネイルOK<span class="recruit-paren">（長いネイルは手袋着用のためNG）</span>。自分らしさを大切にしながら働けます。</dd>
+        </div>
+        <div class="recruit-appeal__item">
+          <dt>絶品まかないで食費を節約</dt>
+          <dd>賄いはメニューから好きなものが選べます。お腹を満たしつつ食費の節約にも。</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container container--narrow reveal">
+      <h2 class="section-title">待遇・福利厚生</h2>
+      <ul class="recruit-points">
+        <li>絶品まかない付き</li>
+        <li>制服貸与<span class="recruit-paren">（Tシャツ、帽子、前掛け）</span></li>
+        <li>髪色自由</li>
+        <li>ピアスOK</li>
+        <li>ネイルOK<span class="recruit-paren">（手袋着用のため、長いネイルはNG）</span></li>
+        <li>ネックレスOK<span class="recruit-paren">（華美すぎないもの）</span></li>
+        <li>自転車、バイク通勤OK</li>
+        <li>社会保険<span class="recruit-paren">（法令に則り適用）</span>／雇用保険・労災保険・健康保険・厚生年金</li>
+      </ul>
+      <h3 class="recruit-subhead">店舗について</h3>
+      <p>席数：37席<span class="recruit-paren">（テーブル7卓、座敷2つ、カウンター7席）</span><br>顧客層：40〜60代の仕事帰りのビジネスマン、ファミリー層がメインです。</p>
+    </div>
+  </section>
+
   <section class="section" id="recruit-apply">
     <div class="container container--narrow reveal">
       <h2 class="section-title">応募方法</h2>
+      <p>応募後、1営業日以内にご連絡します。<br class="br-sp">友達と応募もOKです。</p>
+
       <div class="form-panel form-panel--recruit">
         <p class="form-panel__kicker">Apply</p>
         <h3 class="form-panel__title">WEB応募フォーム</h3>
-        <p class="form-panel__lead">必要事項をご記入のうえ送信してください。</p>
+        <p class="form-panel__lead">必要事項をご記入のうえ送信してください。ホール・キッチンどちらもお任せします。</p>
         <form data-demo-form data-form-type="recruit" novalidate>
           <div class="form-grid">
             <div class="form-group">
@@ -101,6 +241,19 @@
           </div>
         </form>
       </div>
+
+      <h3 class="recruit-subhead">選考の流れ</h3>
+      <ol class="recruit-flow">
+        <li>応募</li>
+        <li>面接1回</li>
+        <li>採用</li>
+      </ol>
+      <ul class="recruit-points recruit-points--inline">
+        <li>面接時の履歴書は写真貼り付けなしでOK</li>
+        <li>勤務開始時期調整OK</li>
+        <li>職場見学可</li>
+      </ul>
+      <p class="note" style="margin-top:1.4rem;">WEB応募は24時間受付中です。</p>
     </div>
   </section>
   {% endif %}
