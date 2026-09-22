@@ -20,7 +20,32 @@
 - microCMS（お品書き・コース・店舗情報などのコンテンツ）
 - Python + Jinja2（ビルド時に HTML を生成）
 
+## Cloudflare Pages（*.pages.dev）
+
+GitHub に置いた静的ファイルを、Cloudflare Pages で配信できます（例: `https://ehimenomasa.pages.dev`）。
+
+### ダッシュボードでの作成手順
+
+1. https://dash.cloudflare.com/ → **Workers & Pages** → **Create** → **Pages** → **Connect to Git**
+2. リポジトリ **`dohiwebc/ehimenomasa`** を選択
+3. ビルド設定:
+   - Framework preset: **None**
+   - Build command: **空欄**
+   - Build output directory: **`/`**（または `.`）
+   - Root directory: 空欄
+4. **Save and Deploy**
+5. 発行された `https://xxxx.pages.dev` が仮公開URL
+
+カスタムドメイン（`ehimenomasa.com`）は、あとから Pages の **Custom domains** で追加すればOKです（今は不要）。
+
+### 補足
+
+- コンテンツ更新はこれまでどおり microCMS → GitHub Actions で `main` に反映
+- Cloudflare Pages は `main` を見て自動デプロイ（Git 連携時）
+- ロリポップの旧サイト・お名前.com のドメイン契約はそのまま触れなくてよい
+
 ## microCMS 連携
+
 
 コンテンツの更新は microCMS 管理画面で行い、次のいずれかでサイトへ反映します。
 
