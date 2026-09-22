@@ -18,7 +18,6 @@ from cms_utils import (  # noqa: E402
     format_price_course,
     format_price_jp,
     load_env,
-    media_list,
     media_url,
     tel_href,
 )
@@ -171,6 +170,16 @@ def main():
 
     menu_items = [normalize_menu_item(x) for x in menu_raw]
     courses = sorted([normalize_course(x) for x in course_raw], key=lambda x: x["sortOrder"])
+    # コース写真はローカル画像を優先（CDN差し替えでデザイン崩れを防ぐ）
+    local_course_images = {
+        "満喫コース": "assets/images/site/course-mankitsu.webp",
+        "親雛コース": "assets/images/site/course-oyahina.webp",
+        "揚げ鳥コース": "assets/images/site/course-agedori.webp",
+    }
+    for c in courses:
+        if c["name"] in local_course_images:
+            c["image"] = local_course_images[c["name"]]
+
     categories = group_menu(menu_items)
 
     meibutsu = sorted(

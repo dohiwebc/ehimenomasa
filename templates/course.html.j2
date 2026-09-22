@@ -8,61 +8,94 @@
 <body>
 {{ m.site_header(current='course') }}
 <main id="main">
-  <section class="page-hero" style="background-image:url('assets/images/site/course-mankitsu.webp');">
+  <section class="page-hero" style="background-image:url('assets/images/site/hero-course-spread.webp');">
     <div class="container">
       <p class="kicker">愛媛の雅ちゃん</p>
       <h1 class="page-hero__title">宴会・コース</h1>
-      <p class="page-hero__lead">コース8品 ＋ 飲み放題120分付</p>
+      <p class="page-hero__lead">価格は全て税込表示です。会社宴会や歓送迎会にもご利用いただけます。</p>
     </div>
   </section>
 
-  <aside class="notice-rail reveal" aria-label="コースご利用にあたって">
-    <ol class="notice-rail__list">
-      <li>
-        <span class="notice-rail__index" aria-hidden="true">01</span>
-        <p class="notice-rail__text">価格は全て税込表示です。</p>
-      </li>
-      <li>
-        <span class="notice-rail__index" aria-hidden="true">02</span>
-        <p class="notice-rail__text">コースメニューは2名様以上の前日予約が必要です。<span class="notice-rail__sub">当日予約希望の場合もご相談ください</span></p>
-      </li>
-      <li>
-        <span class="notice-rail__index" aria-hidden="true">03</span>
-        <p class="notice-rail__text">コースメニューの内容は、<br class="br-sp">一部変更になる場合がございます。</p>
-      </li>
-    </ol>
-  </aside>
+  <section class="section">
+    <div class="container">
+      {# 注意書きはデザイン固定（CMS外） #}
+      <aside class="notice-rail reveal" aria-label="コースご利用にあたって">
+        <ol class="notice-rail__list">
+          <li>
+            <span class="notice-rail__index" aria-hidden="true">01</span>
+            <p class="notice-rail__text">価格は全て税込表示です。</p>
+          </li>
+          <li>
+            <span class="notice-rail__index" aria-hidden="true">02</span>
+            <p class="notice-rail__text">コースメニューは2名様以上の前日予約が必要です。<span class="notice-rail__sub">当日予約希望の場合もご相談ください</span></p>
+          </li>
+          <li>
+            <span class="notice-rail__index" aria-hidden="true">03</span>
+            <p class="notice-rail__text">コースメニューの内容は、<br class="br-sp">一部変更になる場合がございます。</p>
+          </li>
+        </ol>
+      </aside>
 
-  {% for c in courses %}
-  <article class="course-detail{% if loop.index is even %} course-detail--flip{% endif %} reveal">
-    {% if c.image %}
-    <div class="course-detail__media">
-      <img src="{{ c.image }}" alt="{{ c.name }}の料理一例" width="800" height="600" loading="lazy" decoding="async">
-    </div>
-    {% endif %}
-    <div class="course-detail__content">
-      <div class="course-detail__head">
-        <h2 class="course-detail__name">{{ c.name }}</h2>
-        <p class="price">{{ c.price_label }}</p>
-      </div>
-      {% if c.lead %}<p class="course-detail__lead">{{ c.lead }}</p>{% endif %}
-      {% if c.lines %}
-      <ul class="course-detail__list">
-        {% for line in c.lines %}
-        <li>{{ line }}</li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-    </div>
-  </article>
-  {% endfor %}
+      {% for c in courses %}
+      <article class="course-detail{% if loop.index is even %} course-detail--flip{% endif %} reveal">
+        {% if c.image %}
+        <div class="course-detail__media">
+          <img src="{{ c.image }}" alt="{{ c.name }}の料理一例" width="800" height="600" loading="lazy" decoding="async">
+        </div>
+        {% endif %}
+        <div class="course-detail__content">
+          <div class="course-detail__head">
+            <h2 class="course-detail__name">{{ c.name }}</h2>
+            <p class="price">{{ c.price_label }}</p>
+          </div>
+          {% if c.lead %}<p class="course-detail__lead">{{ c.lead }}</p>{% endif %}
+          {% if c.lines %}
+          <ul class="course-detail__list">
+            {% for line in c.lines %}
+            <li>{{ line }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </div>
+      </article>
+      {% endfor %}
 
-  <section class="section section--photo cta-final" style="background-image:url('assets/images/site/interior-dining.webp');">
+      <section class="nomihoudai reveal">
+        <h2 class="menu-category__title">単品飲み放題</h2>
+        <div class="nomihoudai-panel">
+          <div class="nomihoudai-panel__main">
+            <p class="nomihoudai-panel__lead">120分・単品飲み放題</p>
+            <p class="nomihoudai-panel__price">
+              <span class="nomihoudai-panel__price-main">２,２５０<span class="nomihoudai-panel__yen">円</span></span>
+              <span class="nomihoudai-panel__price-tax">【税込 2,４７５円】</span>
+            </p>
+            <div class="nomihoudai-panel__conditions">
+              <p class="nomihoudai-panel__cond-label">ご利用条件</p>
+              <ul class="nomihoudai-panel__list">
+                <li>お1人様・税込1,815円以上のフードのご注文が必要です（2名様〜利用可能）</li>
+                <li>お通しのカットは出来ません／お通し代は含みません</li>
+                <li>対象受付時間／17:30～20:15（30分前ラストドリンク）</li>
+                <li>アサヒスーパードライ・チューハイ・ノンアルコール・ハイボール・カクテル・焼酎・日本酒 等々（40種類以上）</li>
+              </ul>
+            </div>
+          </div>
+          <figure class="nomihoudai-panel__flyer">
+            <img src="assets/images/site/nomihoudai-flyer.webp" alt="単品飲み放題のご案内チラシ" width="724" height="1024" loading="lazy" decoding="async">
+          </figure>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <section class="section section--photo cta-final" style="background-image:url('assets/images/site/hp-table-party.webp');">
     <div class="container reveal">
       <h2 class="section-title">コースのご予約はこちら</h2>
       <div class="btn-group">
         <a class="btn btn--primary" href="reserve.html">席を予約する</a>
-        <a class="btn btn--ghost" href="menu.html">お品書きを見る</a>
+        <a class="btn btn--ghost" href="{{ tel }}" data-reserve-gate="tel">
+          <span class="btn__icon btn__icon--phone" aria-hidden="true"></span>
+          電話する（{{ site.phone }}）
+        </a>
       </div>
     </div>
   </section>
