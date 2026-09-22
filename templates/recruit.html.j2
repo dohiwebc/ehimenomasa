@@ -1,7 +1,7 @@
 {% import 'macros.j2' as m %}
 {{ m.head(
-  title='スタッフ募集｜松山市の居酒屋 愛媛の雅ちゃん',
-  description='愛媛の雅ちゃんのアルバイト募集。ホール・キッチンスタッフ。松山市駅すぐ。',
+  title='スタッフ募集｜松山市駅の居酒屋 愛媛の雅ちゃん',
+  description='松山市駅すぐの居酒屋「愛媛の雅ちゃん」のアルバイト募集。ホール・キッチンスタッフ。',
   canonical='https://ehimenomasa.com/recruit.html',
   css_v=css_v
 ) }}
@@ -15,6 +15,7 @@
       <p class="page-hero__lead">雅ちゃんで楽しく、元気に働いてくれる方を募集しています</p>
     </div>
   </section>
+{{ m.breadcrumb('スタッフ募集', 'https://ehimenomasa.com/recruit.html') }}
 
   {% if not site.recruitOpen %}
   <section class="section">

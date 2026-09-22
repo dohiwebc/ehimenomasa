@@ -1,7 +1,7 @@
 {% import 'macros.j2' as m %}
 {{ m.head(
-  title='店内・アクセス｜松山市駅前の居酒屋 愛媛の雅ちゃん',
-  description='松山市駅徒歩1分。健勝ビル2階の店舗案内・アクセス・店内の雰囲気。',
+  title='店内・アクセス｜松山市駅徒歩1分の居酒屋 愛媛の雅ちゃん',
+  description='松山市駅から徒歩1分、健勝ビル2階。店内の雰囲気・アクセス・席のご案内。駐車場はありません。',
   canonical='https://ehimenomasa.com/shop.html',
   css_v=css_v
 ) }}
@@ -11,10 +11,11 @@
   <section class="page-hero" style="background-image:url('assets/images/site/store-exterior.webp'); background-position:center 18%;">
     <div class="container">
       <p class="kicker">愛媛の雅ちゃん</p>
-      <h1 class="page-hero__title">店舗案内</h1>
+      <h1 class="page-hero__title">店内・アクセス</h1>
       <p class="page-hero__lead">{% if access.seatInfo %}{{ access.seatInfo | nl2br }}{% else %}松山市駅前の小さな居酒屋。健勝ビル2階。<br>カウンターとテーブルで、仕事帰りから宴会まで。{% endif %}</p>
     </div>
   </section>
+{{ m.breadcrumb('店内・アクセス', 'https://ehimenomasa.com/shop.html') }}
 
   <section class="section shop-intro">
     <div class="container">

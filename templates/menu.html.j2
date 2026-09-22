@@ -1,7 +1,7 @@
 {% import 'macros.j2' as m %}
 {{ m.head(
-  title='お品書き｜松山市駅の居酒屋 愛媛の雅ちゃん｜骨付鳥',
-  description='松山市駅すぐの居酒屋「愛媛の雅ちゃん」のお品書き。丸亀名物の骨付鳥、揚げ足鳥、手羽先など名物鶏料理と単品メニューのご案内。',
+  title='お品書き｜松山 骨付鳥・揚げ足鳥の居酒屋 愛媛の雅ちゃん',
+  description='松山市駅すぐ「愛媛の雅ちゃん」のお品書き。丸亀名物の骨付鳥、川之江名物の揚げ足鳥、名古屋名物の手羽先など名物鶏料理のご案内。',
   canonical='https://ehimenomasa.com/menu.html',
   css_v=css_v
 ) }}
@@ -15,6 +15,7 @@
       <p class="page-hero__lead page-hero__lead--menu">価格は全て税込表示です。【テイクアウト用パック・おやひな1つ50円・その他パック1つ20円をいただきます】</p>
     </div>
   </section>
+{{ m.breadcrumb('お品書き', 'https://ehimenomasa.com/menu.html') }}
   <section class="section section--menu"><div class="container">
     <nav class="menu-jump" aria-label="メニューカテゴリ">
       <a class="menu-jump__link" href="#menu-meibutsu">名物</a>
@@ -63,6 +64,7 @@
       <h2 class="section-title">ご来店・テイクアウトもご相談ください</h2>
       <div class="btn-group">
         <a class="btn btn--primary" href="reserve.html">席を予約する</a>
+        <a class="btn btn--ghost" href="course.html">宴会・コース</a>
         <a class="btn btn--ghost" href="takeout.html">テイクアウト案内</a>
       </div>
     </div>
