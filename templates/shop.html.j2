@@ -1,0 +1,71 @@
+{% import 'macros.j2' as m %}
+{{ m.head(
+  title='店内・アクセス｜松山市駅前の居酒屋 愛媛の雅ちゃん',
+  description='松山市駅徒歩1分。健勝ビル2階の店舗案内・アクセス・店内の雰囲気。',
+  canonical='https://dohiwebc.github.io/ehimenomasa/shop.html',
+  css_v=css_v
+) }}
+<body>
+{{ m.site_header(current='shop') }}
+<main id="main">
+  <section class="page-hero" style="background-image:url('assets/images/site/store-exterior.webp'); background-position:center 18%;">
+    <div class="container">
+      <p class="kicker">愛媛の雅ちゃん</p>
+      <h1 class="page-hero__title">店舗案内</h1>
+      <p class="page-hero__lead">{{ access.seatInfo or '松山市駅より徒歩1分。健勝ビル2階のご案内です。' }}</p>
+    </div>
+  </section>
+
+  <section class="section shop-intro">
+    <div class="container">
+      <div class="shop-intro__head reveal">
+        <p class="kicker">店舗紹介</p>
+        <h2 class="section-title">松山市駅前の、<br>小さな居酒屋です</h2>
+        <p class="section-lead">{{ access.seatInfo or '健勝ビル2階。カウンターとテーブルで、仕事帰りから宴会まで。' }}</p>
+      </div>
+      {% if gallery_rows %}
+      <div class="shop-collage reveal">
+        {% for row in gallery_rows %}
+        <div class="shop-collage__row">
+          {% for img in row %}
+          <figure style="--ar:{{ '%.4f'|format(img.ar) }}">
+            <img src="{{ img.url }}" alt="店内の様子" width="{{ img.w }}" height="{{ img.h }}" loading="lazy" decoding="async">
+          </figure>
+          {% endfor %}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="shop-access reveal">
+        <div class="shop-access__copy">
+          <p class="kicker">Access</p>
+          <h2 class="section-title">アクセス</h2>
+          <table class="info-table">
+            <tr><th>所在地</th><td>{{ access.address }}</td></tr>
+            <tr><th>TEL</th><td><a href="{{ tel }}">{{ site.phone }}</a></td></tr>
+            {% if access.holiday %}<tr><th>定休日</th><td>{{ access.holiday }}</td></tr>{% endif %}
+            {% if access.hours %}<tr><th>営業時間</th><td>{{ access.hours }}</td></tr>{% endif %}
+          </table>
+          {% if access.accessText %}
+          <div class="shop-access__notes">
+            <p style="white-space:pre-line;">{{ access.accessText }}</p>
+          </div>
+          {% endif %}
+        </div>
+        <div class="shop-access__map">
+          {% if access.mapEmbed %}
+            {{ access.mapEmbed | safe }}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{{ m.site_footer(site=site, access=access, tel=tel, css_v=css_v) }}
+</body>
+</html>

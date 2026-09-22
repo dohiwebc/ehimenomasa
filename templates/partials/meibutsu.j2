@@ -1,0 +1,21 @@
+{# TOP 名物（外側の .meibutsu-list は index 側） #}
+{% if meibutsu_rows %}
+{% for row in meibutsu_rows %}
+<div class="meibutsu-list__row meibutsu-list__row--{{ row|length }}">
+  {% for item in row %}
+  <article class="meibutsu-item reveal">
+    {% if item.image %}
+    <div class="meibutsu-item__media">
+      <img src="{{ item.image }}" alt="{{ item.name }}" width="800" height="533" loading="lazy" decoding="async">
+    </div>
+    {% endif %}
+    <div class="meibutsu-item__body">
+      {% if item.place %}<p class="meibutsu-item__place">{{ item.place }}</p>{% endif %}
+      <h3 class="meibutsu-item__name">{{ item.name }}</h3>
+      {% if item.price_label %}<p class="price">{{ item.price_label }}</p>{% endif %}
+    </div>
+  </article>
+  {% endfor %}
+</div>
+{% endfor %}
+{% endif %}

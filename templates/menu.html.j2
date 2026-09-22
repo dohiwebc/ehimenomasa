@@ -1,0 +1,73 @@
+{% import 'macros.j2' as m %}
+{{ m.head(
+  title='お品書き｜松山市駅の居酒屋 愛媛の雅ちゃん｜骨付鳥',
+  description='松山市駅すぐの居酒屋「愛媛の雅ちゃん」のお品書き。丸亀名物の骨付鳥、揚げ足鳥、手羽先など名物鶏料理と単品メニューのご案内。',
+  canonical='https://dohiwebc.github.io/ehimenomasa/menu.html',
+  css_v=css_v
+) }}
+<body>
+{{ m.site_header(current='menu') }}
+<main id="main">
+  <section class="page-hero" style="background-image:url('assets/images/site/hero-chicken-dishes.webp');">
+    <div class="container">
+      <p class="kicker">愛媛の雅ちゃん</p>
+      <h1 class="page-hero__title">お品書き</h1>
+      <p class="page-hero__lead page-hero__lead--menu">価格は全て税込表示です。【テイクアウト用パック・おやひな1つ50円・その他パック1つ20円をいただきます】</p>
+    </div>
+  </section>
+  <section class="section section--menu"><div class="container">
+    <nav class="menu-jump" aria-label="メニューカテゴリ">
+      <a class="menu-jump__link" href="#menu-meibutsu">名物</a>
+      <a class="menu-jump__link" href="#menu-ippin">一品</a>
+      <a class="menu-jump__link" href="#menu-gohan">ご飯</a>
+      <a class="menu-jump__link" href="#menu-drink">ドリンク</a>
+    </nav>
+    {% for cat in categories %}
+      {% if cat.name == 'ドリンク' %}
+        <section class="menu-category reveal" id="{{ cat.id }}">
+          <h2 class="menu-category__title">{{ cat.name }}</h2>
+          {% for item in cat.dishes %}
+            {% if item.image %}
+            <figure class="drink-menu-figure">
+              <img src="{{ item.image }}" alt="{{ item.name }}" width="1024" height="724" loading="lazy" decoding="async">
+            </figure>
+            {% endif %}
+          {% endfor %}
+          <p class="note" style="margin-top:1rem;"><a class="text-link" href="course.html">単品飲み放題の詳細を見る →</a></p>
+        </section>
+      {% else %}
+        <section class="menu-category reveal"{% if cat.id %} id="{{ cat.id }}"{% endif %}>
+          <h2 class="menu-category__title">{{ cat.name }}</h2>
+          <div class="menu-list">
+            {% for item in cat.dishes %}
+            <article class="menu-row">
+              {% if item.image %}
+              <div class="menu-row__thumb"><img src="{{ item.image }}" alt="{{ item.name }}" width="800" height="600" loading="lazy" decoding="async"></div>
+              {% endif %}
+              <h3 class="menu-row__name">{{ item.name }}</h3>
+              {% if item.price_label %}
+              <p class="menu-row__price">{{ item.price_label }}</p>
+              {% elif item.price_note %}
+              <p class="menu-row__price">{{ item.price_note }}</p>
+              {% endif %}
+            </article>
+            {% endfor %}
+          </div>
+        </section>
+      {% endif %}
+    {% endfor %}
+  </div></section>
+
+  <section class="section section--photo cta-final" style="background-image:url('assets/images/site/interior-dining.webp');">
+    <div class="container reveal">
+      <h2 class="section-title">ご来店・テイクアウトもご相談ください</h2>
+      <div class="btn-group">
+        <a class="btn btn--primary" href="reserve.html">席を予約する</a>
+        <a class="btn btn--ghost" href="takeout.html">テイクアウト案内</a>
+      </div>
+    </div>
+  </section>
+</main>
+{{ m.site_footer(site=site, access=access, tel=tel, css_v=css_v) }}
+</body>
+</html>

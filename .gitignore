@@ -4,4 +4,6 @@
 *.log
 .env
 .env.*
+!.env.example
+scripts/.media-cache.json
 .venv/

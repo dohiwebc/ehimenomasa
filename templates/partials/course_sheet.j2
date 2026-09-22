@@ -1,0 +1,16 @@
+<div class="course-sheet reveal">
+  {% for c in courses %}
+  <article class="course-line course-line--with-photo">
+    {% if c.image %}
+    <div class="course-line__thumb">
+      <img src="{{ c.image }}" alt="{{ c.name }}の料理一例" width="800" height="600" loading="lazy" decoding="async">
+    </div>
+    {% endif %}
+    <div class="course-line__main">
+      <h3 class="course-line__name">{{ c.name }}</h3>
+      {% if c.lead %}<p class="course-line__desc">{{ c.lead }}</p>{% endif %}
+    </div>
+    <p class="course-line__price price">{{ c.price_label }}</p>
+  </article>
+  {% endfor %}
+</div>

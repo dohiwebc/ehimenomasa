@@ -16,11 +16,26 @@
 
 ## 使用技術
 
-- HTML
-- CSS
-- JavaScript
+- HTML / CSS / JavaScript（静的サイト・GitHub Pages）
+- microCMS（お品書き・コース・店舗情報などのコンテンツ）
+- Python + Jinja2（ビルド時に HTML を生成）
 
-フレームワーク、CMS、Bootstrap、Tailwind CSS、ビルド工程は使用していません。
+## microCMS 連携
+
+コンテンツの更新は microCMS 管理画面で行い、次のコマンドでサイトへ反映します。
+
+```bash
+# 初回のみ
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+
+# 生成（要: .env に MICROCMS_SERVICE_ID / MICROCMS_API_KEY）
+.venv/bin/python scripts/build_site.py
+```
+
+生成対象: `menu.html` / `course.html` / `about.html` / `shop.html` / `recruit.html` / `privacy.html` と、TOPの名物・おすすめ・コース枠。
+
+GitHub Actions（`.github/workflows/build-from-microcms.yml`）でも実行できます。リポジトリの Secrets に `MICROCMS_API_KEY` を登録してください。
 
 ## ページ構成
 
@@ -33,6 +48,7 @@
 | `shop.html` | 店内紹介・店舗情報・アクセス |
 | `about.html` | 店主あいさつ・会社概要 |
 | `recruit.html` | スタッフ募集（ホール・キッチン） |
+| `privacy.html` | プライバシーポリシー |
 | `reserve.html` | 来店予約フォーム |
 | `thanks.html` | フォーム送信後の完了ページ |
 

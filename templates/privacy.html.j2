@@ -1,0 +1,29 @@
+{% import 'macros.j2' as m %}
+{{ m.head(
+  title='プライバシーポリシー｜愛媛の雅ちゃん',
+  description='愛媛の雅ちゃん（株式会社雅道）の個人情報の取り扱いについて。',
+  canonical='https://dohiwebc.github.io/ehimenomasa/privacy.html',
+  css_v=css_v
+) }}
+<body>
+{{ m.site_header(current='') }}
+<main id="main">
+  <section class="page-hero" style="background-image:url('assets/images/site/interior-counter.webp');">
+    <div class="container">
+      <p class="kicker">愛媛の雅ちゃん</p>
+      <h1 class="page-hero__title">プライバシーポリシー</h1>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container container--narrow reveal about-prose">
+      {% if site.privacyBody %}
+        {{ site.privacyBody | safe }}
+      {% else %}
+        <p>準備中です。</p>
+      {% endif %}
+    </div>
+  </section>
+</main>
+{{ m.site_footer(site=site, access=access, tel=tel, css_v=css_v) }}
+</body>
+</html>

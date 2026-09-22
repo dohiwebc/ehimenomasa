@@ -1,0 +1,40 @@
+{% import 'macros.j2' as m %}
+{{ m.head(
+  title='雅ちゃんについて｜松山市の居酒屋 愛媛の雅ちゃん',
+  description='松山市駅前の居酒屋「愛媛の雅ちゃん」のごあいさつ・お店のコンセプト・会社概要。',
+  canonical='https://dohiwebc.github.io/ehimenomasa/about.html',
+  css_v=css_v
+) }}
+<body>
+{{ m.site_header(current='about') }}
+<main id="main">
+  <section class="page-hero" style="background-image:url('assets/images/site/interior-counter.webp');">
+    <div class="container">
+      <p class="kicker">{{ about.kicker or '愛媛の雅ちゃん' }}</p>
+      <h1 class="page-hero__title">{{ about.title }}</h1>
+      {% if about.lead %}<p class="page-hero__lead">{{ about.lead }}</p>{% endif %}
+    </div>
+  </section>
+
+  <section class="section"><div class="container">
+    <div class="owner-block reveal">
+      {% if about.ownerPhoto %}
+      <div class="owner-block__photo">
+        <img src="{{ about.ownerPhoto }}" alt="{{ about.ownerName or '店主' }}" width="300" height="480" loading="lazy" decoding="async">
+      </div>
+      {% endif %}
+      <div class="about-prose">
+        <h2 class="section-title">ごあいさつ</h2>
+        {% if about.ownerMessage %}
+        <p>{{ about.ownerMessage }}</p>
+        {% endif %}
+        {% if about.body %}
+        <div class="about-prose__cms">{{ about.body | safe }}</div>
+        {% endif %}
+      </div>
+    </div>
+  </div></section>
+</main>
+{{ m.site_footer(site=site, access=access, tel=tel, css_v=css_v) }}
+</body>
+</html>

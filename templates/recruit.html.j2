@@ -1,0 +1,111 @@
+{% import 'macros.j2' as m %}
+{{ m.head(
+  title='スタッフ募集｜松山市の居酒屋 愛媛の雅ちゃん',
+  description='愛媛の雅ちゃんのアルバイト募集。ホール・キッチンスタッフ。松山市駅すぐ。',
+  canonical='https://dohiwebc.github.io/ehimenomasa/recruit.html',
+  css_v=css_v
+) }}
+<body>
+{{ m.site_header(current='recruit') }}
+<main id="main">
+  <section class="page-hero" style="background-image:url('assets/images/site/bnr-work.webp');">
+    <div class="container">
+      <p class="kicker">愛媛の雅ちゃん</p>
+      <h1 class="page-hero__title">{{ site.recruitTitle or 'スタッフ募集' }}</h1>
+      <p class="page-hero__lead">雅ちゃんで楽しく、元気に働いてくれる方を募集しています</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container container--narrow reveal">
+      {% if not site.recruitOpen %}
+        <h2 class="section-title">現在募集を停止しています</h2>
+        <p>募集再開までしばらくお待ちください。</p>
+      {% else %}
+        {% if site.recruitBody %}
+        <div class="recruit-cms">{{ site.recruitBody | safe }}</div>
+        {% endif %}
+        {% if site.recruitCond %}
+        <h2 class="section-title" style="margin-top:2rem;">募集概要・条件</h2>
+        <p style="white-space:pre-line;">{{ site.recruitCond }}</p>
+        {% endif %}
+      {% endif %}
+    </div>
+  </section>
+
+  {% if site.recruitOpen %}
+  <section class="section" id="recruit-apply">
+    <div class="container container--narrow reveal">
+      <h2 class="section-title">応募方法</h2>
+      <div class="form-panel form-panel--recruit">
+        <p class="form-panel__kicker">Apply</p>
+        <h3 class="form-panel__title">WEB応募フォーム</h3>
+        <p class="form-panel__lead">必要事項をご記入のうえ送信してください。</p>
+        <form data-demo-form data-form-type="recruit" novalidate>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="rc-name">お名前 <span class="req">必須</span></label>
+              <input class="form-control" id="rc-name" name="name" type="text" required autocomplete="name" placeholder="山田 太郎">
+            </div>
+            <div class="form-group">
+              <label for="rc-tel">お電話番号 <span class="req">必須</span></label>
+              <input class="form-control" id="rc-tel" name="tel" type="tel" required autocomplete="tel" placeholder="090-0000-0000">
+            </div>
+            <div class="form-group">
+              <label for="rc-age">年齢 <span class="req">必須</span></label>
+              <div class="form-row form-row--unit">
+                <input class="form-control" id="rc-age" name="age" type="number" min="16" max="80" required inputmode="numeric" placeholder="25">
+                <span class="form-unit" aria-hidden="true">歳</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="rc-days">週の出勤可能日数 <span class="req">必須</span></label>
+              <select class="form-control" id="rc-days" name="available_days" required>
+                <option value="">選択してください</option>
+                <option value="週1日">週1日</option>
+                <option value="週2日">週2日</option>
+                <option value="週3日">週3日</option>
+                <option value="週4日">週4日</option>
+                <option value="週5日以上">週5日以上</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="rc-email">メールアドレス <span class="opt">任意</span></label>
+              <input class="form-control" id="rc-email" name="email" type="email" autocomplete="email" placeholder="example@email.com">
+            </div>
+            <div class="form-group">
+              <label for="rc-experience">飲食経験 <span class="opt">任意</span></label>
+              <select class="form-control" id="rc-experience" name="experience">
+                <option value="">選択してください</option>
+                <option value="あり">あり</option>
+                <option value="なし">なし</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="rc-note">自己PR・質問 <span class="opt">任意</span></label>
+            <textarea class="form-control" id="rc-note" name="note" rows="4" placeholder="自己PRや質問があればご記入ください"></textarea>
+          </div>
+          <div class="form-group">
+            <div class="form-check">
+              <input id="rc-privacy" name="privacy" type="checkbox" required>
+              <label for="rc-privacy">個人情報の取り扱いに同意する（<a href="privacy.html">プライバシーポリシー</a>） <span class="req">必須</span></label>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn--primary" type="submit">応募内容を送信する</button>
+            <a class="btn btn--line" href="{{ tel }}">
+              <span class="btn__icon btn__icon--phone" aria-hidden="true"></span>
+              電話で応募する（{{ site.phone }}）
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+</main>
+{{ m.site_footer(site=site, access=access, tel=tel, css_v=css_v) }}
+<script src="js/form-demo.js?v={{ css_v }}"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<div class="pick-board reveal">
+  {% for item in picks %}
+  <article class="pick">
+    {% if item.image %}
+    <img src="{{ item.image }}" alt="{{ item.name }}" width="800" height="600" loading="lazy" decoding="async">
+    {% endif %}
+    <div class="pick__meta">
+      <h3 class="pick__name">{{ item.name }}</h3>
+      {% if item.price_label %}<p class="price">{{ item.price_label }}</p>{% endif %}
+    </div>
+  </article>
+  {% endfor %}
+</div>
