@@ -129,7 +129,7 @@
       { passive: false }
     );
 
-    var navMq = window.matchMedia("(max-width: 1280px)");
+    var navMq = window.matchMedia("(max-width: 1024px)");
 
     function syncNavAria() {
       if (navMq.matches) {

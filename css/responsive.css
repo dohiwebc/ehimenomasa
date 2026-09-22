@@ -15,8 +15,37 @@
   }
 }
 
-/* ヘッダーが折り返す幅ではハンバーガーへ切替 */
-@media (max-width: 1280px) {
+/* PC〜タブレット手前：ナビをコンパクトにして1行を維持 */
+@media (max-width: 1280px) and (min-width: 1025px) {
+  .site-header__inner {
+    gap: 0.45rem;
+    width: min(100% - 1.25rem, 1280px);
+  }
+
+  .site-logo img {
+    height: 46px;
+  }
+
+  .site-nav__list {
+    gap: 0.08rem;
+  }
+
+  .site-nav__link {
+    padding: 0.32rem 0.42rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+  }
+
+  .site-nav__reserve {
+    margin-left: 0.35rem;
+    min-height: 34px;
+    padding: 0.4rem 0.75rem !important;
+    letter-spacing: 0.1em;
+  }
+}
+
+/* タブレット以下はハンバーガー */
+@media (max-width: 1024px) {
   .site-nav {
     position: fixed;
     inset: 0;
