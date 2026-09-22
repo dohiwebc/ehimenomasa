@@ -740,6 +740,35 @@
     });
   }
 
+  function initFaqAccordion() {
+    var roots = document.querySelectorAll("[data-faq-accordion]");
+    if (!roots.length) return;
+
+    roots.forEach(function (root) {
+      root.addEventListener("click", function (e) {
+        var btn = e.target.closest(".faq-item__q");
+        if (!btn || !root.contains(btn)) return;
+        var item = btn.closest(".faq-item");
+        if (!item) return;
+        var panel = item.querySelector(".faq-item__panel");
+        var willOpen = !item.classList.contains("is-open");
+
+        root.querySelectorAll(".faq-item.is-open").forEach(function (openItem) {
+          if (openItem === item) return;
+          var openBtn = openItem.querySelector(".faq-item__q");
+          var openPanel = openItem.querySelector(".faq-item__panel");
+          openItem.classList.remove("is-open");
+          if (openBtn) openBtn.setAttribute("aria-expanded", "false");
+          if (openPanel) openPanel.setAttribute("aria-hidden", "true");
+        });
+
+        item.classList.toggle("is-open", willOpen);
+        btn.setAttribute("aria-expanded", willOpen ? "true" : "false");
+        if (panel) panel.setAttribute("aria-hidden", willOpen ? "false" : "true");
+      });
+    });
+  }
+
   ready(function () {
     initHeader();
     initNav();
@@ -748,5 +777,6 @@
     initLightbox();
     initVideoPopup();
     initReserveGate();
+    initFaqAccordion();
   });
 })();

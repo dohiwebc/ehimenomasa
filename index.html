@@ -30,8 +30,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Sans+JP:wght@400;500;700&family=Zen+Old+Mincho:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/style.css?v=20260922aj">
-  <link rel="stylesheet" href="css/responsive.css?v=20260922aj">
+  <link rel="stylesheet" href="css/style.css?v=20260922ak">
+  <link rel="stylesheet" href="css/responsive.css?v=20260922ak">
 </head>
 <body>
 
@@ -85,8 +85,8 @@
           class="hero__catch-overlay__img"
           src="assets/images/site/hero-catch-phrase.png"
           alt=""
-          width="868"
-          height="395"
+          width="869"
+          height="399"
           loading="lazy"
           decoding="async">
       </div>
@@ -99,8 +99,8 @@
                 class="hero__catch-img"
                 src="assets/images/site/hero-catch-phrase.png"
                 alt=""
-                width="868"
-                height="395"
+                width="869"
+                height="399"
                 decoding="async"
                 aria-hidden="true">
             </h1>
@@ -254,8 +254,6 @@
         </div>
         <div class="meibutsu-foot reveal">
           <a class="text-link" href="menu.html">お品書き・骨付鳥をすべて見る</a>
-          <a class="text-link" href="takeout.html" style="margin-left:1.25rem;">テイクアウト案内</a>
-          <a class="text-link" href="course.html" style="margin-left:1.25rem;">宴会・コース</a>
         </div>
       </div>
     </section>
@@ -427,7 +425,7 @@
 </div>
 <!-- /cms:course_sheet -->
         <p style="margin-top:1.8rem; text-align:center;" class="reveal">
-          <a class="text-link" href="course.html">料理内容と注意事項を見る</a>
+          <a class="text-link" href="course.html">コースの詳細を見る</a>
         </p>
       </div>
     </section>
@@ -549,38 +547,80 @@
 
 
     <section class="section" id="faq">
-      <div class="container container--narrow">
+      <div class="container container--faq">
         <div class="section-head section-head--center reveal">
           <span class="kicker">よくあるご質問</span>
           <h2 class="section-title">ご来店前の確認事項</h2>
-          <p class="section-lead">松山市駅前の居酒屋「愛媛の雅ちゃん」について、よくいただくご質問です。</p>
+          <p class="section-lead section-lead--faq">松山市駅前の居酒屋「愛媛の雅ちゃん」について、よくいただくご質問です。</p>
         </div>
-        <ul class="faq-list reveal">
-          <li class="faq-item">
-            <h3 class="faq-item__q">予約は必要ですか？</h3>
-            <p class="faq-item__a">お席のご予約をおすすめしています。<a href="reserve.html">WEBフォーム</a>・電話（089-913-1194）・LINE・ホットペッパーグルメからお申し込みください。</p>
-          </li>
-          <li class="faq-item">
-            <h3 class="faq-item__q">営業時間と定休日は？</h3>
-            <p class="faq-item__a">営業時間は17:30〜23:00（ラストオーダー22:30）、定休日は日曜日・祝日です。</p>
-          </li>
-          <li class="faq-item">
-            <h3 class="faq-item__q">松山市駅から近いですか？</h3>
-            <p class="faq-item__a">伊予鉄・松山市駅より徒歩1分です。北側出口を出てすぐの横断歩道を渡りきると正面にございます（健勝ビル2階）。</p>
-          </li>
-          <li class="faq-item">
-            <h3 class="faq-item__q">駐車場はありますか？</h3>
-            <p class="faq-item__a">申し訳ありませんが、駐車場はございません。お車でのテイクアウト時は、1階までお持ちいたします。</p>
-          </li>
-          <li class="faq-item">
-            <h3 class="faq-item__q">骨付鳥のテイクアウトはできますか？</h3>
-            <p class="faq-item__a">はい、可能です。容器代（おやひな1つ50円・その他パック1つ20円）をいただきます。詳しくは<a href="takeout.html">テイクアウト案内</a>をご覧ください。</p>
-          </li>
-          <li class="faq-item">
-            <h3 class="faq-item__q">宴会・コースは利用できますか？</h3>
-            <p class="faq-item__a">満喫・親雛・揚げ鳥コースと飲み放題をご用意しています。コースは2名様以上の前日予約が必要です（当日もご相談ください）。詳しくは<a href="course.html">宴会・コース</a>へ。</p>
-          </li>
-        </ul>
+        <div class="faq-list reveal" data-faq-accordion>
+          <div class="faq-item">
+            <button class="faq-item__q" type="button" aria-expanded="false" id="faq-q1" aria-controls="faq-a1">
+              <span class="faq-item__q-text">予約は必要ですか？</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-a1" role="region" aria-labelledby="faq-q1" aria-hidden="true">
+              <div class="faq-item__panel-inner">
+                <p class="faq-item__a">お席のご予約をおすすめしています。<a href="reserve.html">WEBフォーム</a>・電話（089-913-1194）・LINE・ホットペッパーグルメからお申し込みください。</p>
+              </div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__q" type="button" aria-expanded="false" id="faq-q2" aria-controls="faq-a2">
+              <span class="faq-item__q-text">営業時間と定休日は？</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-a2" role="region" aria-labelledby="faq-q2" aria-hidden="true">
+              <div class="faq-item__panel-inner">
+                <p class="faq-item__a">営業時間は17:30〜23:00（ラストオーダー22:30）、定休日は日曜日・祝日です。</p>
+              </div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__q" type="button" aria-expanded="false" id="faq-q3" aria-controls="faq-a3">
+              <span class="faq-item__q-text">松山市駅から近いですか？</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-a3" role="region" aria-labelledby="faq-q3" aria-hidden="true">
+              <div class="faq-item__panel-inner">
+                <p class="faq-item__a">伊予鉄・松山市駅より徒歩1分です。北側出口を出てすぐの横断歩道を渡りきると正面にございます（健勝ビル2階）。</p>
+              </div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__q" type="button" aria-expanded="false" id="faq-q4" aria-controls="faq-a4">
+              <span class="faq-item__q-text">駐車場はありますか？</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-a4" role="region" aria-labelledby="faq-q4" aria-hidden="true">
+              <div class="faq-item__panel-inner">
+                <p class="faq-item__a">申し訳ありませんが、駐車場はございません。お車でのテイクアウト時は、1階までお持ちいたします。</p>
+              </div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__q" type="button" aria-expanded="false" id="faq-q5" aria-controls="faq-a5">
+              <span class="faq-item__q-text">骨付鳥のテイクアウトはできますか？</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-a5" role="region" aria-labelledby="faq-q5" aria-hidden="true">
+              <div class="faq-item__panel-inner">
+                <p class="faq-item__a">はい、可能です。容器代（おやひな1つ50円・その他パック1つ20円）をいただきます。詳しくは<a href="takeout.html">テイクアウト案内</a>をご覧ください。</p>
+              </div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__q" type="button" aria-expanded="false" id="faq-q6" aria-controls="faq-a6">
+              <span class="faq-item__q-text">宴会・コースは利用できますか？</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-a6" role="region" aria-labelledby="faq-q6" aria-hidden="true">
+              <div class="faq-item__panel-inner">
+                <p class="faq-item__a">満喫・親雛・揚げ鳥コースと飲み放題をご用意しています。コースは2名様以上の前日予約が必要です（当日もご相談ください）。詳しくは<a href="course.html">宴会・コース</a>へ。</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -815,7 +855,7 @@
   ]
 }
   </script>
-  <script src="js/main.js?v=20260922aj"></script>
+  <script src="js/main.js?v=20260922ak"></script>
   <script src="js/slider.js"></script>
   <script src="js/instagram-feed.js"></script>
 </body>
