@@ -3,9 +3,10 @@ name: Build from microCMS
 on:
   workflow_dispatch:
   repository_dispatch:
-    types: [microcms]
+    # microCMS の Webhook「トリガーイベント名」と一致させる
+    types: [microcms, microcms_build]
   schedule:
-    # 念のため1日1回（手動 / Webhook が主）
+    # 念のため1日1回（Webhook が主）
     - cron: "0 15 * * *"
 
 permissions:

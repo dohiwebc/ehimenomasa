@@ -22,7 +22,25 @@
 
 ## microCMS 連携
 
-コンテンツの更新は microCMS 管理画面で行い、次のコマンドでサイトへ反映します。
+コンテンツの更新は microCMS 管理画面で行い、次のいずれかでサイトへ反映します。
+
+### 自動反映（推奨）
+
+microCMS の Webhook（GitHub Actions）を設定すると、**公開・更新のたびに自動ビルド**されます。
+
+1. GitHub で Personal Access Token を作成  
+   https://github.com/settings/tokens?type=beta  
+   - Repository access: `dohiwebc/ehimenomasa` のみ  
+   - Permissions: **Contents → Read and write**
+2. microCMS の各 API（`menu` / `course` / `about` / `access` / `site`）→ API設定 → Webhook → **GitHub Actions** を追加  
+   - GitHubトークン: 上で作ったトークン  
+   - ユーザー名: `dohiwebc`  
+   - リポジトリ名: `ehimenomasa`  
+   - トリガーイベント名: `microcms`  
+   - タイミング: **コンテンツの公開時・更新時**（と削除時も必要なら）
+3. 一度公開して、Actions に **Build from microCMS** が走ればOK
+
+### 手動ビルド
 
 ```bash
 # 初回のみ
@@ -33,9 +51,11 @@ python3 -m venv .venv
 .venv/bin/python scripts/build_site.py
 ```
 
+または GitHub → Actions → Build from microCMS → Run workflow
+
 生成対象: `menu.html` / `course.html` / `about.html` / `shop.html` / `recruit.html` / `privacy.html` と、TOPの名物・おすすめ・コース枠。
 
-GitHub Actions（`.github/workflows/build-from-microcms.yml`）でも実行できます。リポジトリの Secrets に `MICROCMS_API_KEY` を登録してください。
+リポジトリ Secrets に `MICROCMS_API_KEY`（読み取りキー）が必要です。
 
 ## ページ構成
 
