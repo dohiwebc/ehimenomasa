@@ -72,7 +72,7 @@
   }
 }
 
-@media (max-width: 1099px) and (min-width: 901px) {
+@media (max-width: 1099px) and (min-width: 903px) {
   .site-header__inner {
     gap: 0.45rem;
     width: min(100% - 1rem, 1280px);
@@ -100,8 +100,8 @@
   }
 }
 
-/* 900px以下（実タブレット想定）でハンバーガー。1024pxノートPCは横並びヘッダー */
-@media (max-width: 900px) {
+/* 902px以下でハンバーガー。903px以上は横並びヘッダー */
+@media (max-width: 902px) {
   .site-nav {
     position: fixed;
     inset: 0;
