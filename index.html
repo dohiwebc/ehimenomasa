@@ -5,18 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>愛媛の雅ちゃん｜松山市駅すぐの焼き・揚げ鳥居酒屋</title>
   <link rel="canonical" href="https://ehimenomasa.com/">
-  <meta property="og:url" content="https://ehimenomasa.com/">
   <meta name="description" content="松山市駅から徒歩1分。丸亀名物の骨付鳥、川之江名物の揚げ足鳥、名古屋名物の手羽先が楽しめる居酒屋「愛媛の雅ちゃん」。普段使いから宴会まで。">
   <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" content="#243b55">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="愛媛の雅ちゃん">
+  <meta property="og:locale" content="ja_JP">
   <meta property="og:title" content="愛媛の雅ちゃん｜松山市駅すぐの焼き・揚げ鳥居酒屋">
   <meta property="og:description" content="松山市駅から徒歩1分。丸亀名物の骨付鳥、川之江名物の揚げ足鳥、名古屋名物の手羽先が楽しめる居酒屋「愛媛の雅ちゃん」。普段使いから宴会まで。">
+  <meta property="og:url" content="https://ehimenomasa.com/">
   <meta property="og:image" content="https://ehimenomasa.com/assets/images/site/hero-chicken-dishes.webp">
-  <meta property="og:locale" content="ja_JP">
-  <meta property="og:site_name" content="愛媛の雅ちゃん">
+  <meta property="og:image:width" content="800">
+  <meta property="og:image:height" content="600">
+  <meta property="og:image:alt" content="愛媛の雅ちゃんの鶏料理">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="愛媛の雅ちゃん｜松山市駅すぐの焼き・揚げ鳥居酒屋">
+  <meta name="twitter:description" content="松山市駅から徒歩1分。丸亀名物の骨付鳥、川之江名物の揚げ足鳥、名古屋名物の手羽先が楽しめる居酒屋「愛媛の雅ちゃん」。普段使いから宴会まで。">
+  <meta name="twitter:image" content="https://ehimenomasa.com/assets/images/site/hero-chicken-dishes.webp">
   <link rel="icon" href="assets/icons/favicon-32.webp" sizes="32x32">
   <link rel="icon" href="assets/icons/favicon-192.webp" sizes="192x192">
+  <link rel="apple-touch-icon" href="assets/icons/favicon-192.webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Sans+JP:wght@400;500;700&family=Zen+Old+Mincho:wght@500;600;700&display=swap" rel="stylesheet">
@@ -632,11 +640,19 @@
     "@context": "https://schema.org",
     "@type": "Restaurant",
     "name": "愛媛の雅ちゃん",
-    "image": "https://ehimenomasa.com/assets/images/site/logo-masachan.webp",
+    "alternateName": "えひめのまさちゃん",
+    "description": "松山市駅から徒歩1分。丸亀名物の骨付鳥、川之江名物の揚げ足鳥、名古屋名物の手羽先が楽しめる居酒屋。",
+    "image": [
+      "https://ehimenomasa.com/assets/images/site/hero-chicken-dishes.webp",
+      "https://ehimenomasa.com/assets/images/site/logo-masachan.webp",
+      "https://ehimenomasa.com/assets/images/site/store-exterior.webp"
+    ],
+    "logo": "https://ehimenomasa.com/assets/images/site/logo-masachan.webp",
     "url": "https://ehimenomasa.com/",
     "telephone": "089-913-1194",
-    "servesCuisine": ["居酒屋", "焼鳥"],
+    "servesCuisine": ["居酒屋", "焼鳥", "揚げ物"],
     "priceRange": "￥1,000〜￥3,000",
+    "currenciesAccepted": "JPY",
     "menu": "https://ehimenomasa.com/menu.html",
     "acceptsReservations": true,
     "address": {
@@ -652,6 +668,7 @@
       "latitude": 33.8356333,
       "longitude": 132.7615666
     },
+    "hasMap": "https://www.google.com/maps/search/?api=1&query=33.8356333%2C132.7615666",
     "openingHoursSpecification": [
       {
         "@type": "OpeningHoursSpecification",
@@ -660,6 +677,22 @@
         "closes": "23:00"
       }
     ],
+    "potentialAction": {
+      "@type": "ReserveAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://ehimenomasa.com/reserve.html",
+        "inLanguage": "ja",
+        "actionPlatform": [
+          "https://schema.org/DesktopWebPlatform",
+          "https://schema.org/MobileWebPlatform"
+        ]
+      },
+      "result": {
+        "@type": "FoodEstablishmentReservation",
+        "name": "店舗予約"
+      }
+    },
     "sameAs": [
       "https://www.instagram.com/ehimenomasa/",
       "https://www.hotpepper.jp/strJ004612520/",
