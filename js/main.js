@@ -129,16 +129,28 @@
       { passive: false }
     );
 
-    window.addEventListener("resize", function () {
-      if (window.innerWidth > 1024) closeMenu();
-    });
+    var navMq = window.matchMedia("(max-width: 1280px)");
 
-    // 初期状態（PCでは常に表示、SPでは閉）
-    if (window.innerWidth <= 1024) {
-      nav.setAttribute("aria-hidden", "true");
-    } else {
-      nav.removeAttribute("aria-hidden");
+    function syncNavAria() {
+      if (navMq.matches) {
+        if (!document.body.classList.contains("is-menu-open")) {
+          nav.setAttribute("aria-hidden", "true");
+        }
+      } else {
+        closeMenu();
+        nav.removeAttribute("aria-hidden");
+      }
     }
+
+    window.addEventListener("resize", syncNavAria);
+    if (typeof navMq.addEventListener === "function") {
+      navMq.addEventListener("change", syncNavAria);
+    } else if (typeof navMq.addListener === "function") {
+      navMq.addListener(syncNavAria);
+    }
+
+    // 初期状態（PCでは常に表示、ハンバーガー幅では閉）
+    syncNavAria();
   }
 
   function initReveal() {

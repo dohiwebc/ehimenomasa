@@ -25,7 +25,7 @@
   --w: 1180px;
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   --pattern-chicken: url("../assets/images/site/bg-pattern-chicken.webp");
-  --pattern-chicken-size: 480px auto;
+  --pattern-chicken-size: 920px auto;
 }
 
 html {
@@ -723,6 +723,7 @@ main > .section:nth-of-type(even):not(.section--photo):not(.section--flush):not(
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  flex-wrap: nowrap;
 }
 .site-logo {
   display: flex;
@@ -743,7 +744,7 @@ main > .section:nth-of-type(even):not(.section--photo):not(.section--flush):not(
 .site-header.is-solid .site-logo img {
   filter: none;
 }
-.site-nav__list { display: flex; align-items: center; gap: 0.35rem; }
+.site-nav__list { display: flex; align-items: center; gap: 0.35rem; flex-wrap: nowrap; }
 .site-nav__link {
   display: inline-block;
   padding: 0.45rem 0.78rem;
