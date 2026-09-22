@@ -229,6 +229,18 @@ def main():
         loader=FileSystemLoader(str(ROOT / "templates")),
         autoescape=select_autoescape(["html", "xml"]),
     )
+
+    def nl2br(value: str) -> str:
+        """テキストエリアの改行を <br> に変換（エスケープ済み）。"""
+        from markupsafe import Markup, escape
+
+        if not value:
+            return ""
+        # \r\n / \r も統一
+        text = str(value).replace("\r\n", "\n").replace("\r", "\n")
+        return Markup("<br>\n".join(escape(line) for line in text.split("\n")))
+
+    jinja.filters["nl2br"] = nl2br
     ctx = {
         "css_v": css_v,
         "site": site,

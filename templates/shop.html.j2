@@ -12,7 +12,7 @@
     <div class="container">
       <p class="kicker">愛媛の雅ちゃん</p>
       <h1 class="page-hero__title">店舗案内</h1>
-      <p class="page-hero__lead">松山市駅前の小さな居酒屋。健勝ビル2階。<br>カウンターとテーブルで、仕事帰りから宴会まで。</p>
+      <p class="page-hero__lead">{% if access.seatInfo %}{{ access.seatInfo | nl2br }}{% else %}松山市駅前の小さな居酒屋。健勝ビル2階。<br>カウンターとテーブルで、仕事帰りから宴会まで。{% endif %}</p>
     </div>
   </section>
 
@@ -21,7 +21,7 @@
       <div class="shop-intro__head reveal">
         <p class="kicker">店舗紹介</p>
         <h2 class="section-title">松山市駅前の、<br>小さな居酒屋です</h2>
-        <p class="section-lead">松山市駅前の小さな居酒屋。健勝ビル2階。<br>カウンターとテーブルで、仕事帰りから宴会まで。</p>
+        <p class="section-lead">{% if access.seatInfo %}{{ access.seatInfo | nl2br }}{% else %}松山市駅前の小さな居酒屋。健勝ビル2階。<br>カウンターとテーブルで、仕事帰りから宴会まで。{% endif %}</p>
       </div>
       {# ギャラリーは比率・並びがデザインなので CMS 外（静的） #}
       <div class="shop-collage reveal">
