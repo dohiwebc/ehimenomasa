@@ -915,6 +915,10 @@
     padding-bottom: 1.5rem;
   }
 
+  .footer-brand img {
+    height: 58px;
+  }
+
   .footer-info {
     grid-template-columns: 1fr;
     row-gap: 1rem;
