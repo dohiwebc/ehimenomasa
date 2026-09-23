@@ -2889,8 +2889,11 @@ textarea.form-control {
   white-space: nowrap;
   flex: 0 0 auto;
 }
-.form-check { display: flex; gap: 0.55rem; align-items: flex-start; }
-.form-check input { margin-top: 0.3rem; }
+.form-check { display: flex; gap: 0.55rem; align-items: center; }
+.form-check input {
+  margin-top: 0;
+  flex-shrink: 0;
+}
 .form-check a {
   color: var(--indigo);
   text-decoration: underline;
