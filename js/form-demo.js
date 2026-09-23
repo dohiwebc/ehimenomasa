@@ -23,7 +23,7 @@
   var SEND_ERROR_TEXT =
     "送信に失敗しました。通信環境をご確認のうえ、もう一度お試しいただくか、お電話にてお問い合わせください。";
   var TURNSTILE_WAIT_TEXT =
-    "セキュリティ確認の準備ができていません。数秒待ってからもう一度お試しください。";
+    "セキュリティ確認が完了していません。チェックが「成功」になったことを確認してから、もう一度お試しください。";
 
   function ready(fn) {
     if (document.readyState === "loading") {
@@ -640,29 +640,77 @@
     });
   }
 
+  /** Turnstile トークンをフォーム内の hidden に確実に保持する */
+  function setTurnstileToken(form, token) {
+    if (!form) return;
+    var value = token ? String(token) : "";
+    var field = form.querySelector('[name="cf-turnstile-response"]');
+    if (!field) {
+      field = document.createElement("input");
+      field.type = "hidden";
+      field.name = "cf-turnstile-response";
+      form.appendChild(field);
+    }
+    field.value = value;
+    if (value) {
+      form.setAttribute("data-turnstile-ready", "1");
+    } else {
+      form.removeAttribute("data-turnstile-ready");
+    }
+  }
+
   function getTurnstileToken(form) {
     if (!form) return "";
-    var hidden = form.querySelector('input[name="cf-turnstile-response"]');
-    if (hidden && hidden.value) return hidden.value;
-    var widgetId = form.getAttribute("data-turnstile-widget-id");
-    if (widgetId !== null && widgetId !== "" && window.turnstile && window.turnstile.getResponse) {
-      try {
-        return window.turnstile.getResponse(widgetId) || "";
-      } catch (err) {
-        return "";
+
+    var hidden = form.querySelector('[name="cf-turnstile-response"]');
+    if (hidden && hidden.value) return String(hidden.value).trim();
+
+    if (window.turnstile && window.turnstile.getResponse) {
+      var widgetId = form.getAttribute("data-turnstile-widget-id");
+      var candidates = [];
+      if (widgetId !== null && widgetId !== "") {
+        candidates.push(widgetId);
+        /* 数値 ID（0 含む）でも試す */
+        if (/^\d+$/.test(widgetId)) candidates.push(Number(widgetId));
+      }
+      candidates.push(undefined);
+
+      for (var i = 0; i < candidates.length; i++) {
+        try {
+          var token =
+            candidates[i] === undefined
+              ? window.turnstile.getResponse()
+              : window.turnstile.getResponse(candidates[i]);
+          if (token) {
+            setTurnstileToken(form, token);
+            return String(token).trim();
+          }
+        } catch (err) {
+          /* 次の候補へ */
+        }
       }
     }
+
     return "";
   }
 
   function resetTurnstile(form) {
+    setTurnstileToken(form, "");
     if (!form || !window.turnstile || !window.turnstile.reset) return;
     var widgetId = form.getAttribute("data-turnstile-widget-id");
     if (widgetId === null || widgetId === "") return;
     try {
-      window.turnstile.reset(widgetId);
+      if (/^\d+$/.test(widgetId)) {
+        window.turnstile.reset(Number(widgetId));
+      } else {
+        window.turnstile.reset(widgetId);
+      }
     } catch (err) {
-      /* ignore */
+      try {
+        window.turnstile.reset(widgetId);
+      } catch (err2) {
+        /* ignore */
+      }
     }
   }
 
@@ -674,12 +722,24 @@
         if (!turnstile || !turnstile.render) return;
         document.querySelectorAll("[data-demo-form]").forEach(function (form) {
           var mount = form.querySelector("[data-turnstile]");
-          if (!mount || form.getAttribute("data-turnstile-widget-id")) return;
+          if (!mount || form.getAttribute("data-turnstile-widget-id") !== null) return;
           try {
             var id = turnstile.render(mount, {
               sitekey: TURNSTILE_SITE_KEY,
               theme: "light",
-              language: "ja"
+              language: "ja",
+              callback: function (token) {
+                setTurnstileToken(form, token);
+              },
+              "expired-callback": function () {
+                setTurnstileToken(form, "");
+              },
+              "error-callback": function () {
+                setTurnstileToken(form, "");
+              },
+              "timeout-callback": function () {
+                setTurnstileToken(form, "");
+              }
             });
             form.setAttribute("data-turnstile-widget-id", String(id));
           } catch (err) {
@@ -896,6 +956,13 @@
       setConfirmError("");
       setSendingState(true);
 
+      if (TURNSTILE_SITE_KEY && !getTurnstileToken(form)) {
+        setSendingState(false);
+        setConfirmError(TURNSTILE_WAIT_TEXT);
+        if (sendBtn) sendBtn.focus();
+        return;
+      }
+
       submitToFormspree(form, type)
         .then(function () {
           finishSuccess();
@@ -1062,6 +1129,14 @@
       form.addEventListener("submit", function (e) {
         e.preventDefault();
         if (!validateRequired(form)) return;
+        if (TURNSTILE_SITE_KEY && !getTurnstileToken(form)) {
+          window.alert(TURNSTILE_WAIT_TEXT);
+          var mount = form.querySelector("[data-turnstile]");
+          if (mount && mount.scrollIntoView) {
+            mount.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+          return;
+        }
         var rows = collectSummary(form);
         openConfirm(form, rows);
       });
