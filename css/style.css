@@ -1426,6 +1426,12 @@ body.is-menu-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) ro
   overflow: visible;
 }
 
+.meibutsu-item__media,
+.menu-row__thumb {
+  container-type: inline-size;
+  container-name: dish-media;
+}
+
 .meibutsu-item__media {
   position: relative;
   overflow: visible;
@@ -1462,61 +1468,44 @@ body.is-menu-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) ro
   color: var(--indigo-soft);
   margin-bottom: 0.4rem;
 }
+/* 画像幅に比例してバッジが大小する */
 .popular-label {
   position: absolute;
-  top: -0.55rem;
-  left: -0.65rem;
+  top: -4.5cqi;
+  left: -5cqi;
   z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.12rem;
-  min-width: 4.5rem;
+  gap: 0.8cqi;
+  min-width: 22cqi;
   margin: 0;
-  padding: 0.72rem 0.85rem 0.65rem;
+  padding: 3.6cqi 4cqi 3.2cqi;
   background: var(--ember);
   color: #fff;
-  border: 3px solid #fff;
+  border: max(2px, 0.9cqi) solid #fff;
   box-shadow:
-    5px 6px 0 rgba(26, 29, 35, 0.45),
-    0 12px 26px rgba(20, 24, 32, 0.3);
+    1.4cqi 1.7cqi 0 rgba(26, 29, 35, 0.45),
+    0 3cqi 6cqi rgba(20, 24, 32, 0.3);
   transform: rotate(-9deg);
   line-height: 1;
   text-align: center;
 }
 .popular-label__kicker {
   display: block;
-  font-size: 0.78rem;
+  font-size: max(0.58rem, 3.6cqi);
   font-weight: 700;
-  letter-spacing: 0.22em;
-  padding-left: 0.22em;
+  letter-spacing: 0.2em;
+  padding-left: 0.2em;
 }
 .popular-label__rank {
   display: block;
   font-family: var(--font-display);
-  font-size: 1.7rem;
+  font-size: max(0.95rem, 8.2cqi);
   font-weight: 700;
   letter-spacing: 0.04em;
   line-height: 1;
-}
-.menu-row__thumb .popular-label {
-  top: -0.4rem;
-  left: -0.45rem;
-  min-width: 3.15rem;
-  padding: 0.42rem 0.48rem 0.38rem;
-  border-width: 2px;
-  box-shadow:
-    3px 4px 0 rgba(26, 29, 35, 0.45),
-    0 8px 16px rgba(20, 24, 32, 0.28);
-  transform: rotate(-8deg);
-}
-.menu-row__thumb .popular-label__kicker {
-  font-size: 0.58rem;
-  letter-spacing: 0.16em;
-}
-.menu-row__thumb .popular-label__rank {
-  font-size: 1.1rem;
 }
 .meibutsu-item__name {
   font-family: var(--font-serif);
