@@ -1471,30 +1471,30 @@ body.is-menu-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) ro
 /* 画像幅に比例してバッジが大小する */
 .popular-label {
   position: absolute;
-  top: -4.5cqi;
-  left: -5cqi;
+  top: -3.2cqi;
+  left: -3.6cqi;
   z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.8cqi;
-  min-width: 22cqi;
+  gap: 0.55cqi;
+  min-width: 16cqi;
   margin: 0;
-  padding: 3.6cqi 4cqi 3.2cqi;
+  padding: 2.5cqi 2.9cqi 2.2cqi;
   background: var(--ember);
   color: #fff;
-  border: max(2px, 0.9cqi) solid #fff;
+  border: max(2px, 0.7cqi) solid #fff;
   box-shadow:
-    1.4cqi 1.7cqi 0 rgba(26, 29, 35, 0.45),
-    0 3cqi 6cqi rgba(20, 24, 32, 0.3);
+    1cqi 1.2cqi 0 rgba(26, 29, 35, 0.45),
+    0 2.2cqi 4.5cqi rgba(20, 24, 32, 0.3);
   transform: rotate(-9deg);
   line-height: 1;
   text-align: center;
 }
 .popular-label__kicker {
   display: block;
-  font-size: max(0.58rem, 3.6cqi);
+  font-size: max(0.52rem, 2.7cqi);
   font-weight: 700;
   letter-spacing: 0.2em;
   padding-left: 0.2em;
@@ -1502,7 +1502,7 @@ body.is-menu-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) ro
 .popular-label__rank {
   display: block;
   font-family: var(--font-display);
-  font-size: max(0.95rem, 8.2cqi);
+  font-size: max(0.82rem, 6cqi);
   font-weight: 700;
   letter-spacing: 0.04em;
   line-height: 1;
