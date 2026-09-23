@@ -1761,11 +1761,15 @@ body.is-menu-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) ro
   font-size: 0.84rem; letter-spacing: 0.08em;
 }
 .map-embed {
-  width: 100%; min-height: 330px; border: 0;
+  width: 100%;
+  min-height: 520px;
+  height: 520px;
+  border: 0;
   filter: grayscale(0.35) contrast(1.04) brightness(1.02);
 }
 .map-embed--sm {
   min-height: 200px;
+  height: 200px;
   margin-top: 1.2rem;
 }
 

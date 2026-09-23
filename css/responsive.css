@@ -312,6 +312,11 @@
     position: static;
   }
 
+  .map-embed:not(.map-embed--sm) {
+    min-height: 300px;
+    height: 300px;
+  }
+
   .shop-collage {
     gap: 0.55rem;
   }
