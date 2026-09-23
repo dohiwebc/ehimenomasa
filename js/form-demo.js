@@ -1009,7 +1009,7 @@
       if (submitBtn) submitBtn.disabled = true;
 
       playSendAnimation(function () {
-        window.location.href = "thanks.html";
+        window.location.href = type === "recruit" ? "thanks-recruit.html" : "thanks.html";
       });
     }
 
@@ -1272,13 +1272,19 @@
     }
 
     if (lead && data && data.title) {
-      lead.textContent =
-        data.title + "の内容を受け付けました。スタッフより折り返しご連絡いたします。";
+      if (data.type === "recruit") {
+        lead.textContent =
+          "スタッフ応募の内容を受け付けました。内容確認後、折り返しご連絡いたします。";
+      } else {
+        lead.textContent =
+          data.title + "の内容を受け付けました。スタッフより折り返しご連絡いたします。";
+      }
     }
 
     if (summary && data && data.html) {
+      var summaryTitle = data.type === "recruit" ? "応募内容" : "送信内容";
       summary.innerHTML =
-        '<h2 class="thanks-summary__title">送信内容</h2>' + data.html;
+        '<h2 class="thanks-summary__title">' + summaryTitle + "</h2>" + data.html;
       summary.hidden = false;
     }
 
