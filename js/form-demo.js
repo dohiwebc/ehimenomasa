@@ -529,7 +529,10 @@
       fd.append("飲食経験", rcExp || "未選択");
       fd.append("自己PR・質問", rcNote || "なし");
       fd.append("_subject", "【愛媛の雅ちゃん】スタッフ応募　" + fieldValue(form, "name") + "様");
-      if (rcEmail) fd.append("_replyto", rcEmail);
+      if (rcEmail) {
+        fd.append("email", rcEmail);
+        fd.append("_replyto", rcEmail);
+      }
       return fd;
     }
 
@@ -553,7 +556,10 @@
       });
 
       fd.append("_subject", "【愛媛の雅ちゃん】テイクアウト予約　" + fieldValue(form, "name") + "様");
-      if (toEmail) fd.append("_replyto", toEmail);
+      if (toEmail) {
+        fd.append("email", toEmail);
+        fd.append("_replyto", toEmail);
+      }
       return fd;
     }
 
@@ -565,6 +571,7 @@
     fd.append("お名前", fieldValue(form, "name"));
     fd.append("お電話番号", fieldValue(form, "tel"));
     fd.append("メールアドレス", email);
+    if (email) fd.append("email", email);
     fd.append("ご予約人数", party ? party + "名" : "");
     fd.append("ご来店日", fieldValue(form, "date"));
     fd.append("ご来店時間", combinedTimeValue(form));
@@ -575,12 +582,64 @@
     return fd;
   }
 
+  function parseFormspreeError(payload, status) {
+    if (!payload || typeof payload !== "object") {
+      return status ? "送信エラー（" + status + "）" : "";
+    }
+    var msg = payload.error || payload.message || "";
+    if (!msg && payload.errors) {
+      if (Array.isArray(payload.errors)) {
+        msg = payload.errors
+          .map(function (e) {
+            if (typeof e === "string") return e;
+            if (e && e.message) return e.message;
+            return "";
+          })
+          .filter(Boolean)
+          .join(" / ");
+      } else if (typeof payload.errors === "object") {
+        msg = Object.keys(payload.errors)
+          .map(function (k) {
+            var v = payload.errors[k];
+            return k + ": " + (Array.isArray(v) ? v.join(", ") : v);
+          })
+          .join(" / ");
+      }
+    }
+    return msg || (status ? "送信エラー（" + status + "）" : "");
+  }
+
+  function friendlySendError(raw) {
+    var text = String(raw || "").toLowerCase();
+    if (
+      text.indexOf("captcha") !== -1 ||
+      text.indexOf("turnstile") !== -1 ||
+      text.indexOf("recaptcha") !== -1
+    ) {
+      return (
+        "セキュリティ確認が Formspree 側で拒否されました。" +
+        "もう一度チェックを完了してから送信するか、" +
+        "FormspreeのCAPTCHA設定（TurnstileのSecret Key）を確認してください。"
+      );
+    }
+    if (text.indexOf("forbidden") !== -1 || text.indexOf("domain") !== -1) {
+      return (
+        "このドメインからの送信が許可されていない可能性があります。" +
+        "Formspreeのフォーム設定で許可ドメインを確認してください。"
+      );
+    }
+    return SEND_ERROR_TEXT + (raw ? "（" + raw + "）" : "");
+  }
+
   function submitToFormspree(form, type) {
     var endpoint = FORMSPREE[type] || FORMSPREE.reserve;
     var body = buildFormspreeData(form, type);
+    var token = getTurnstileToken(form);
+
+    /* Turnstile が挿入する空の cf-turnstile-response は送らない（空欄だと Formspree が 400） */
+    clearTurnstileInputs(form);
 
     if (TURNSTILE_SITE_KEY) {
-      var token = getTurnstileToken(form);
       if (!token) {
         return Promise.reject(new Error("turnstile-missing"));
       }
@@ -592,16 +651,24 @@
       body: body,
       headers: { Accept: "application/json" }
     }).then(function (res) {
-      if (!res.ok) {
-        return res.json().catch(function () {
+      return res
+        .json()
+        .catch(function () {
           return {};
-        }).then(function () {
-          throw new Error("formspree-failed");
+        })
+        .then(function (payload) {
+          if (!res.ok) {
+            var detail = parseFormspreeError(payload, res.status);
+            var err = new Error("formspree-failed");
+            err.detail = detail;
+            err.status = res.status;
+            err.payload = payload;
+            throw err;
+          }
+          /* 成功後はトークンを使い捨て済みとしてクリア */
+          setTurnstileToken(form, "");
+          return payload;
         });
-      }
-      return res.json().catch(function () {
-        return {};
-      });
     });
   }
 
@@ -640,37 +707,48 @@
     });
   }
 
-  /** Turnstile トークンをフォーム内の hidden に確実に保持する */
+  /** Turnstile トークンを data 属性で保持（空の hidden を送ると Formspree が拒否するため） */
+  function clearTurnstileInputs(form) {
+    if (!form) return;
+    var fields = form.querySelectorAll('[name="cf-turnstile-response"]');
+    Array.prototype.forEach.call(fields, function (el) {
+      if (el && el.parentNode) el.parentNode.removeChild(el);
+    });
+  }
+
   function setTurnstileToken(form, token) {
     if (!form) return;
-    var value = token ? String(token) : "";
-    var field = form.querySelector('[name="cf-turnstile-response"]');
-    if (!field) {
-      field = document.createElement("input");
-      field.type = "hidden";
-      field.name = "cf-turnstile-response";
-      form.appendChild(field);
-    }
-    field.value = value;
+    var value = token ? String(token).trim() : "";
     if (value) {
+      form.setAttribute("data-turnstile-token", value);
       form.setAttribute("data-turnstile-ready", "1");
     } else {
+      form.removeAttribute("data-turnstile-token");
       form.removeAttribute("data-turnstile-ready");
+      clearTurnstileInputs(form);
     }
   }
 
   function getTurnstileToken(form) {
     if (!form) return "";
 
-    var hidden = form.querySelector('[name="cf-turnstile-response"]');
-    if (hidden && hidden.value) return String(hidden.value).trim();
+    var stored = form.getAttribute("data-turnstile-token");
+    if (stored && String(stored).trim()) return String(stored).trim();
+
+    var fields = form.querySelectorAll('[name="cf-turnstile-response"]');
+    for (var f = 0; f < fields.length; f++) {
+      var v = fields[f] && fields[f].value ? String(fields[f].value).trim() : "";
+      if (v) {
+        setTurnstileToken(form, v);
+        return v;
+      }
+    }
 
     if (window.turnstile && window.turnstile.getResponse) {
       var widgetId = form.getAttribute("data-turnstile-widget-id");
       var candidates = [];
       if (widgetId !== null && widgetId !== "") {
         candidates.push(widgetId);
-        /* 数値 ID（0 含む）でも試す */
         if (/^\d+$/.test(widgetId)) candidates.push(Number(widgetId));
       }
       candidates.push(undefined);
@@ -681,9 +759,10 @@
             candidates[i] === undefined
               ? window.turnstile.getResponse()
               : window.turnstile.getResponse(candidates[i]);
-          if (token) {
-            setTurnstileToken(form, token);
-            return String(token).trim();
+          if (token && String(token).trim()) {
+            var cleaned = String(token).trim();
+            setTurnstileToken(form, cleaned);
+            return cleaned;
           }
         } catch (err) {
           /* 次の候補へ */
@@ -973,7 +1052,11 @@
           if (err && err.message === "turnstile-missing") {
             setConfirmError(TURNSTILE_WAIT_TEXT);
           } else {
-            setConfirmError(SEND_ERROR_TEXT);
+            var detail = err && err.detail ? err.detail : "";
+            if (typeof console !== "undefined" && console.warn) {
+              console.warn("[formspree]", err && err.status, err && err.payload);
+            }
+            setConfirmError(friendlySendError(detail));
           }
           if (sendBtn) sendBtn.focus();
         });
