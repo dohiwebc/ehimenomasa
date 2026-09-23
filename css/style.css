@@ -3434,6 +3434,10 @@ textarea.form-control {
   max-width: 28em;
   text-align: left;
 }
+.recruit-intro .recruit-apply {
+  margin-top: 1.85rem;
+  margin-bottom: 0.35rem;
+}
 .recruit-intro .recruit-points li {
   margin: 0 0 0.8rem;
   font-size: clamp(1rem, 1.5vw, 1.12rem);
