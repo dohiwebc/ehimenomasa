@@ -2891,6 +2891,15 @@ textarea.form-control {
 }
 .form-check { display: flex; gap: 0.55rem; align-items: flex-start; }
 .form-check input { margin-top: 0.3rem; }
+.form-check a {
+  color: var(--indigo);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+.form-check a:hover {
+  color: var(--ember);
+}
 .form-turnstile {
   margin: 0 0 1.15rem;
   min-height: 65px;
