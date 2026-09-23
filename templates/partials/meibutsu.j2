@@ -7,7 +7,7 @@
     {% if item.image %}
     <div class="meibutsu-item__media">
       <img src="{{ item.image }}" alt="{{ item.name }}" width="800" height="533" loading="lazy" decoding="async">
-      {% if '（ひな）' in item.name %}<span class="popular-label">人気No.1</span>{% elif '（おや）' in item.name %}<span class="popular-label">人気No.2</span>{% endif %}
+      {% if '（ひな）' in item.name %}<span class="popular-label" aria-label="人気No.1"><span class="popular-label__kicker">人気</span><span class="popular-label__rank">No.1</span></span>{% elif '（おや）' in item.name %}<span class="popular-label" aria-label="人気No.2"><span class="popular-label__kicker">人気</span><span class="popular-label__rank">No.2</span></span>{% endif %}
     </div>
     {% endif %}
     <div class="meibutsu-item__body">
