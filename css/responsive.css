@@ -382,11 +382,6 @@
     aspect-ratio: 4 / 3;
   }
 
-  .meibutsu-list__row--3 .meibutsu-item__media img {
-    height: 160px;
-    aspect-ratio: auto;
-  }
-
   .course-line,
   .course-card {
     grid-template-columns: 1fr;
@@ -1455,11 +1450,6 @@
   .meibutsu-item__media img {
     height: auto;
     aspect-ratio: 4 / 3;
-  }
-
-  .meibutsu-list__row--3 .meibutsu-item__media img {
-    height: 130px;
-    aspect-ratio: auto;
   }
 
   .meibutsu-item__name,

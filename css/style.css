@@ -1435,15 +1435,8 @@ body.is-menu-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) ro
   display: block;
   width: 100%;
   height: auto;
-  /* 上段2つ：スマホに近い縦幅のある比率 */
   aspect-ratio: 4 / 3;
   object-fit: cover;
-}
-
-.meibutsu-list__row--3 .meibutsu-item__media img {
-  /* 下段3つは従来どおり */
-  aspect-ratio: auto;
-  height: 220px;
 }
 
 .meibutsu-item__body {
