@@ -865,11 +865,6 @@
     grid-template-columns: 1fr 1fr;
   }
 
-  .pick img,
-  .menu-pick img {
-    height: 150px;
-  }
-
   .menu-list {
     gap: 1rem 0.7rem;
   }
@@ -1330,10 +1325,6 @@
   .pick-board {
     grid-template-columns: 1fr 1fr;
     gap: 1rem 0.7rem;
-  }
-
-  .pick img {
-    height: 130px;
   }
 
   .pick__meta {

@@ -1555,7 +1555,11 @@ body.is-menu-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) ro
 }
 .pick, .menu-pick { background: transparent; }
 .pick img, .menu-pick img {
-  height: 200px; object-fit: cover;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
   border: 1px solid var(--line);
 }
 .pick__meta, .menu-pick__body {
