@@ -45,7 +45,7 @@
               {% if item.image %}
               <div class="menu-row__thumb"><img src="{{ item.image }}" alt="{{ item.name }}" width="800" height="600" loading="lazy" decoding="async"></div>
               {% endif %}
-              <h3 class="menu-row__name">{{ item.name }}</h3>
+              <h3 class="menu-row__name">{% if '（ひな）' in item.name %}<span class="popular-label">人気No.1</span>{% elif '（おや）' in item.name %}<span class="popular-label">人気No.2</span>{% endif %}{{ item.name }}</h3>
               {% if item.price_label %}
               <p class="menu-row__price">{{ item.price_label }}</p>
               {% elif item.price_note %}

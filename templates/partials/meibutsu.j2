@@ -11,6 +11,7 @@
     {% endif %}
     <div class="meibutsu-item__body">
       {% if item.place %}<p class="meibutsu-item__place">{{ item.place }}</p>{% endif %}
+      {% if '（ひな）' in item.name %}<p class="popular-label">人気No.1</p>{% elif '（おや）' in item.name %}<p class="popular-label">人気No.2</p>{% endif %}
       <h3 class="meibutsu-item__name">{{ item.name }}</h3>
       {% if item.price_label %}<p class="price">{{ item.price_label }}</p>{% endif %}
     </div>
