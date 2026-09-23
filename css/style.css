@@ -2049,14 +2049,14 @@ body.is-video-open {
 
 /* footer */
 .site-footer {
-  --footer-ink: #1c2d42;
-  --footer-ink-2: #243b55;
-  --footer-line: rgba(215, 192, 154, 0.22);
-  --footer-text: rgba(247, 242, 234, 0.82);
-  --footer-text-strong: #f7f2ea;
-  --footer-gold: #e0c89a;
+  --footer-ink: #0e1218;
+  --footer-ink-2: #141a22;
+  --footer-line: rgba(215, 192, 154, 0.14);
+  --footer-text: rgba(236, 232, 224, 0.72);
+  --footer-text-strong: #ece8e0;
+  --footer-gold: #cbb892;
   background:
-    linear-gradient(165deg, var(--footer-ink-2) 0%, var(--footer-ink) 48%, #162536 100%),
+    linear-gradient(180deg, #151b24 0%, var(--footer-ink-2) 42%, var(--footer-ink) 100%),
     url("../assets/images/site/bg-pattern-seigaiha.svg");
   background-size: auto, 120px 60px;
   background-blend-mode: normal, soft-light;
@@ -2064,7 +2064,7 @@ body.is-video-open {
   position: relative;
   z-index: 1;
   padding: 3.8rem 0 calc(2.4rem + var(--mobile-bar));
-  border-top: 1px solid var(--footer-line);
+  border-top: 0;
 }
 .footer-top {
   display: flex;
@@ -2072,15 +2072,15 @@ body.is-video-open {
   align-items: flex-end;
   justify-content: space-between;
   gap: 1.6rem 2rem;
-  padding-bottom: 2rem;
-  margin-bottom: 2rem;
-  border-bottom: 1px solid var(--footer-line);
+  padding-bottom: 2.2rem;
+  margin-bottom: 2.2rem;
+  border-bottom: 0;
 }
 .footer-brand img {
   height: 44px;
   width: auto;
   margin-bottom: 0.85rem;
-  filter: brightness(0) invert(1) sepia(0.12) saturate(0.4);
+  filter: brightness(0) invert(1) opacity(0.92);
 }
 .footer-brand__tag {
   margin: 0;
@@ -2123,12 +2123,12 @@ body.is-video-open {
   color: #fff;
 }
 .footer-cta__btn--tel {
-  background: rgba(247, 242, 234, 0.06);
+  background: transparent;
   color: var(--footer-text-strong);
-  border-color: rgba(224, 200, 154, 0.45);
+  border-color: rgba(203, 184, 146, 0.35);
 }
 .footer-cta__btn--tel:hover {
-  background: rgba(224, 200, 154, 0.14);
+  background: rgba(203, 184, 146, 0.1);
   border-color: var(--footer-gold);
   color: #fff;
 }
@@ -2136,26 +2136,25 @@ body.is-video-open {
 .footer-info {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0;
-  margin: 0 0 2.4rem;
+  column-gap: 2.8rem;
+  row-gap: 1.15rem;
+  margin: 0 0 2.6rem;
   padding: 0;
-  border-top: 1px solid var(--footer-line);
+  border: 0;
 }
 .footer-info__row {
   display: grid;
-  grid-template-columns: 5.5rem minmax(0, 1fr);
-  gap: 0.85rem 1.1rem;
+  grid-template-columns: 5.2rem minmax(0, 1fr);
+  gap: 0.55rem 1rem;
   margin: 0;
-  padding: 1rem 1.1rem 1rem 0;
-  border-bottom: 1px solid var(--footer-line);
+  padding: 0;
+  border: 0;
   align-items: baseline;
 }
-.footer-info__row:nth-child(odd) {
-  padding-right: 1.4rem;
-}
+.footer-info__row:nth-child(odd),
 .footer-info__row:nth-child(even) {
-  padding-left: 1.4rem;
-  border-left: 1px solid rgba(215, 192, 154, 0.14);
+  padding: 0;
+  border: 0;
 }
 .footer-info dt {
   margin: 0;
@@ -2174,7 +2173,7 @@ body.is-video-open {
 .footer-info a {
   color: var(--footer-text-strong);
   text-decoration: none;
-  border-bottom: 1px solid rgba(224, 200, 154, 0.45);
+  border-bottom: 1px solid rgba(203, 184, 146, 0.35);
 }
 .footer-info a:hover {
   color: #fff;
@@ -2190,6 +2189,7 @@ body.is-video-open {
   grid-template-columns: minmax(0, 1.6fr) minmax(10rem, 0.7fr);
   gap: 2rem 2.5rem;
   margin-bottom: 2.2rem;
+  padding-top: 0.4rem;
 }
 .footer-label {
   margin: 0 0 0.95rem;
@@ -2210,7 +2210,7 @@ body.is-video-open {
   padding: 0.15rem 0;
   font-size: 0.86rem;
   letter-spacing: 0.08em;
-  color: rgba(247, 242, 234, 0.72);
+  color: rgba(236, 232, 224, 0.62);
   text-decoration: none;
   border-bottom: 1px solid transparent;
   white-space: nowrap;
@@ -2223,11 +2223,12 @@ body.is-video-open {
 }
 
 .footer-copy {
-  padding-top: 1.4rem;
-  border-top: 1px solid var(--footer-line);
+  padding-top: 1.8rem;
+  margin-top: 0.4rem;
+  border-top: 1px solid rgba(203, 184, 146, 0.12);
   font-size: 0.72rem;
   letter-spacing: 0.06em;
-  color: rgba(247, 242, 234, 0.48);
+  color: rgba(236, 232, 224, 0.38);
   opacity: 1;
 }
 .footer-copy p {

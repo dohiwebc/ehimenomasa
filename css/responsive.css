@@ -917,15 +917,15 @@
 
   .footer-info {
     grid-template-columns: 1fr;
+    row-gap: 1rem;
     margin-bottom: 1.8rem;
   }
 
   .footer-info__row,
   .footer-info__row:nth-child(odd),
   .footer-info__row:nth-child(even) {
-    padding-left: 0;
-    padding-right: 0;
-    border-left: 0;
+    padding: 0;
+    border: 0;
   }
 
   .footer-links {
