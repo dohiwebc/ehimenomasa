@@ -96,32 +96,69 @@
 
 {% macro site_footer(site, access, tel, css_v) -%}
   <footer class="site-footer">
-    <div class="container footer-grid">
-      <div class="footer-brand">
-        <img src="assets/images/site/logo-masachan.webp" alt="愛媛の雅ちゃん" width="400" height="146" loading="lazy" decoding="async">
-        <p>焼き・揚げ鳥 〜愛媛の雅ちゃん〜</p>
-        <p>{{ access.address }}<br>TEL <a href="{{ tel }}">{{ site.phone }}</a></p>
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="assets/images/site/logo-masachan.webp" alt="愛媛の雅ちゃん" width="400" height="146" loading="lazy" decoding="async">
+          <p class="footer-brand__tag">焼き・揚げ鳥 〜愛媛の雅ちゃん〜</p>
+          <p class="footer-brand__place">松山市駅 徒歩1分</p>
+        </div>
+        <div class="footer-cta">
+          <a class="footer-cta__btn footer-cta__btn--reserve" href="reserve.html">ご予約</a>
+          <a class="footer-cta__btn footer-cta__btn--tel" href="{{ tel }}" data-reserve-gate="tel">電話する</a>
+        </div>
       </div>
-      <nav class="footer-nav" aria-label="フッターメニュー">
-        <p class="footer-label">メニュー</p>
-        <a href="index.html">ホーム</a>
-        <a href="menu.html">お品書き・骨付鳥</a>
-        <a href="course.html">宴会・コース</a>
-        <a href="shop.html">店内・アクセス</a>
-        <a href="about.html">雅ちゃんについて</a>
-        <a href="recruit.html">スタッフ募集</a>
-        <a href="takeout.html">テイクアウト</a>
-        <a href="reserve.html">ご予約</a>
-        <a href="privacy.html">プライバシーポリシー</a>
-      </nav>
-      <div class="footer-sns">
-        <p class="footer-label">各種SNS</p>
-        {% if site.instagramUrl %}<a href="{{ site.instagramUrl }}" target="_blank" rel="noopener noreferrer">Instagram</a>{% endif %}
-        {% if site.storesUrl %}<a href="{{ site.storesUrl }}" target="_blank" rel="noopener noreferrer">ネットショップ</a>{% endif %}
+
+      <dl class="footer-info">
+        <div class="footer-info__row">
+          <dt>住所</dt>
+          <dd>{{ access.address }}</dd>
+        </div>
+        <div class="footer-info__row">
+          <dt>TEL</dt>
+          <dd><a href="{{ tel }}">{{ site.phone }}</a></dd>
+        </div>
+        <div class="footer-info__row">
+          <dt>営業時間</dt>
+          <dd>{% if access.hours %}{{ access.hours }}{% else %}17:30〜23:00（LO 22:30）{% endif %}</dd>
+        </div>
+        <div class="footer-info__row">
+          <dt>定休日</dt>
+          <dd>日曜日・祝日</dd>
+        </div>
+        <div class="footer-info__row">
+          <dt>アクセス</dt>
+          <dd>伊予鉄・松山市駅より徒歩1分（北側出口すぐ）</dd>
+        </div>
+      </dl>
+
+      <div class="footer-links">
+        <nav class="footer-nav" aria-label="フッターメニュー">
+          <p class="footer-label">メニュー</p>
+          <div class="footer-nav__list">
+            <a href="index.html">ホーム</a>
+            <a href="menu.html">お品書き</a>
+            <a href="course.html">宴会・コース</a>
+            <a href="shop.html">店内・アクセス</a>
+            <a href="about.html">雅ちゃんについて</a>
+            <a href="recruit.html">スタッフ募集</a>
+            <a href="takeout.html">テイクアウト</a>
+            <a href="reserve.html">ご予約</a>
+            <a href="privacy.html">プライバシーポリシー</a>
+          </div>
+        </nav>
+        <div class="footer-sns">
+          <p class="footer-label">各種SNS</p>
+          <div class="footer-sns__list">
+            {% if site.instagramUrl %}<a href="{{ site.instagramUrl }}" target="_blank" rel="noopener noreferrer">Instagram</a>{% endif %}
+            {% if site.storesUrl %}<a href="{{ site.storesUrl }}" target="_blank" rel="noopener noreferrer">ネットショップ</a>{% endif %}
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="container footer-copy">
-      <p>Copyright © 愛媛の雅ちゃん / 株式会社 雅道</p>
+
+      <div class="footer-copy">
+        <p>Copyright © 愛媛の雅ちゃん / 株式会社 雅道</p>
+      </div>
     </div>
   </footer>
   <div class="mobile-bar" aria-label="スマートフォン用クイックアクション">

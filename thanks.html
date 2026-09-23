@@ -30,8 +30,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Old+Mincho:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/style.css?v=20260923b">
-  <link rel="stylesheet" href="css/responsive.css?v=20260923b">
+  <link rel="stylesheet" href="css/style.css?v=20260923c">
+  <link rel="stylesheet" href="css/responsive.css?v=20260923c">
 </head>
 <body>
   <a class="sr-only" href="#main">本文へスキップ</a>
@@ -95,35 +95,70 @@
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-grid">
-      <div class="footer-brand">
-        <img src="assets/images/site/logo-masachan.webp" alt="愛媛の雅ちゃん" width="400" height="146" loading="lazy" decoding="async">
-        <p>焼き・揚げ鳥 〜愛媛の雅ちゃん〜</p>
-        <p>〒790-0012 愛媛県松山市湊町5丁目4-2 健勝ビル2階<br>TEL <a href="tel:0899131194">089-913-1194</a></p>
+    <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="assets/images/site/logo-masachan.webp" alt="愛媛の雅ちゃん" width="400" height="146" loading="lazy" decoding="async">
+          <p class="footer-brand__tag">焼き・揚げ鳥 〜愛媛の雅ちゃん〜</p>
+          <p class="footer-brand__place">松山市駅 徒歩1分</p>
+        </div>
+        <div class="footer-cta">
+          <a class="footer-cta__btn footer-cta__btn--reserve" href="reserve.html">ご予約</a>
+          <a class="footer-cta__btn footer-cta__btn--tel" href="tel:0899131194" data-reserve-gate="tel">電話する</a>
+        </div>
       </div>
-      <nav class="footer-nav" aria-label="フッターメニュー">
-        <p class="footer-label">メニュー</p>
-        
-        <a href="index.html">ホーム</a>
-        <a href="menu.html">お品書き・骨付鳥</a>
-        <a href="course.html">宴会・コース</a>
-        <a href="shop.html">店内・アクセス</a>
-        <a href="about.html">雅ちゃんについて</a>
-        <a href="recruit.html">スタッフ募集</a>
-        <a href="takeout.html">テイクアウト</a>
-        <a href="reserve.html">ご予約</a>
-        <a href="privacy.html">プライバシーポリシー</a>
 
-      </nav>
-      <div class="footer-sns">
-        <p class="footer-label">各種SNS</p>
-        <a href="https://www.instagram.com/ehimenomasa/" target="_blank" rel="noopener noreferrer">Instagram</a>
-        <a href="https://ehime-masachan.stores.jp/" target="_blank" rel="noopener noreferrer">ネットショップ</a>
+      <dl class="footer-info">
+        <div class="footer-info__row">
+          <dt>住所</dt>
+          <dd>〒790-0012 愛媛県松山市湊町5丁目4-2 健勝ビル2階</dd>
+        </div>
+        <div class="footer-info__row">
+          <dt>TEL</dt>
+          <dd><a href="tel:0899131194">089-913-1194</a></dd>
+        </div>
+        <div class="footer-info__row">
+          <dt>営業時間</dt>
+          <dd>17:30〜23:00（LO 22:30）</dd>
+        </div>
+        <div class="footer-info__row">
+          <dt>定休日</dt>
+          <dd>日曜日・祝日</dd>
+        </div>
+        <div class="footer-info__row">
+          <dt>アクセス</dt>
+          <dd>伊予鉄・松山市駅より徒歩1分（北側出口すぐ）</dd>
+        </div>
+      </dl>
+
+      <div class="footer-links">
+        <nav class="footer-nav" aria-label="フッターメニュー">
+          <p class="footer-label">メニュー</p>
+          <div class="footer-nav__list">
+            <a href="index.html">ホーム</a>
+            <a href="menu.html">お品書き</a>
+            <a href="course.html">宴会・コース</a>
+            <a href="shop.html">店内・アクセス</a>
+            <a href="about.html">雅ちゃんについて</a>
+            <a href="recruit.html">スタッフ募集</a>
+            <a href="takeout.html">テイクアウト</a>
+            <a href="reserve.html">ご予約</a>
+            <a href="privacy.html">プライバシーポリシー</a>
+          </div>
+        </nav>
+        <div class="footer-sns">
+          <p class="footer-label">各種SNS</p>
+          <div class="footer-sns__list">
+            <a href="https://www.instagram.com/ehimenomasa/" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://ehime-masachan.stores.jp/" target="_blank" rel="noopener noreferrer">ネットショップ</a>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="container footer-copy">
-      <p>Copyright © 愛媛の雅ちゃん / 株式会社 雅道</p>
+
+      <div class="footer-copy">
+        <p>Copyright © 愛媛の雅ちゃん / 株式会社 雅道</p>
+      </div>
     </div>
   </footer>
   <div class="mobile-bar" aria-label="スマートフォン用クイックアクション">
@@ -133,7 +168,7 @@
     </div>
   </div>
 
-  <script src="js/main.js?v=20260923b"></script>
-  <script src="js/form-demo.js?v=20260923b"></script>
+  <script src="js/main.js?v=20260923c"></script>
+  <script src="js/form-demo.js?v=20260923c"></script>
 </body>
 </html>
