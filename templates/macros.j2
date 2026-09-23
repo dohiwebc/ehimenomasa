@@ -94,7 +94,7 @@
   </script>
 {%- endmacro %}
 
-{% macro site_footer(site, access, tel, css_v) -%}
+{% macro site_footer(site, access, tel, css_v, mobile_bar='default') -%}
   <footer class="site-footer">
     <div class="container">
       <div class="footer-top">
@@ -163,8 +163,13 @@
   </footer>
   <div class="mobile-bar" aria-label="スマートフォン用クイックアクション">
     <div class="mobile-bar__inner">
+      {% if mobile_bar == 'recruit' %}
+      <a class="mobile-bar__btn mobile-bar__btn--reserve" href="#recruit-apply">WEB応募</a>
+      <a class="mobile-bar__btn mobile-bar__btn--tel" href="{{ tel }}">電話で応募</a>
+      {% else %}
       <a class="mobile-bar__btn mobile-bar__btn--reserve" href="reserve.html">予約する</a>
       <a class="mobile-bar__btn mobile-bar__btn--tel" href="{{ tel }}" data-reserve-gate="tel">電話する</a>
+      {% endif %}
     </div>
   </div>
   <script src="js/main.js?v={{ css_v }}"></script>

@@ -919,6 +919,14 @@
     display: block;
   }
 
+  .page-recruit .recruit-sticky {
+    bottom: calc(var(--mobile-bar) + 0.85rem);
+    right: 0.85rem;
+    min-height: 2.45rem;
+    padding: 0.62rem 1rem;
+    font-size: 0.76rem;
+  }
+
   .site-footer {
     padding: 2.8rem 0 calc(1.8rem + var(--mobile-bar));
   }

@@ -38,6 +38,10 @@
           <span class="recruit-intro__lead-sub">居酒屋のホール・キッチンスタッフ</span>
         </h2>
         <p>スタッフ卒業シーズンに伴い、<br class="recruit-intro__br">NEWスタッフを大募集しています。</p>
+        <p class="recruit-apply">
+          <a class="btn btn--primary" href="#recruit-apply">WEB応募する</a>
+          <a class="btn btn--line" href="tel:0899131194">電話で応募（089-913-1194）</a>
+        </p>
       </div>
 
       <div class="recruit-visual reveal" aria-label="お店の雰囲気">
@@ -66,6 +70,9 @@
         <tr><th>勤務地</th><td>愛媛の雅ちゃん<br>〒790-0012 愛媛県松山市湊町5丁目4-2 健勝ビル2F<br>伊予鉄「松山市駅」より徒歩30秒<br>転勤なし／U・Iターン歓迎</td></tr>
         <tr><th>企業名</th><td>株式会社雅道<br>代表：土肥雅樹</td></tr>
       </table>
+      <p class="recruit-apply">
+        <a class="btn btn--primary" href="#recruit-apply">WEB応募する</a>
+      </p>
     </div>
   </section>
 
@@ -260,7 +267,8 @@
   </section>
   {% endif %}
 </main>
-{{ m.site_footer(site=site, access=access, tel=tel, css_v=css_v) }}
+<a class="recruit-sticky" id="recruit-sticky" href="#recruit-apply">応募する</a>
+{{ m.site_footer(site=site, access=access, tel=tel, css_v=css_v, mobile_bar='recruit') }}
 <script src="js/form-demo.js?v={{ css_v }}"></script>
 </body>
 </html>

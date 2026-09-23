@@ -769,6 +769,23 @@
     });
   }
 
+  function initRecruitSticky() {
+    var sticky = document.getElementById("recruit-sticky");
+    var target = document.getElementById("recruit-apply");
+    if (!sticky || !target || !("IntersectionObserver" in window)) return;
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        var entry = entries[0];
+        if (!entry) return;
+        if (entry.isIntersecting) sticky.classList.add("is-hidden");
+        else sticky.classList.remove("is-hidden");
+      },
+      { root: null, threshold: 0.18, rootMargin: "-10% 0px -20% 0px" }
+    );
+    observer.observe(target);
+  }
+
   ready(function () {
     initHeader();
     initNav();
@@ -778,5 +795,6 @@
     initVideoPopup();
     initReserveGate();
     initFaqAccordion();
+    initRecruitSticky();
   });
 })();
