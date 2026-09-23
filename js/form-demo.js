@@ -178,7 +178,7 @@
     var minuteSel = pair.querySelector("[data-time-minute]");
     if (!minuteSel) return;
     var start = timeToMinutes(pair.getAttribute("data-time-start") || "17:30");
-    var end = timeToMinutes(pair.getAttribute("data-time-end") || "23:00");
+    var end = timeToMinutes(pair.getAttribute("data-time-end") || "22:30");
     var step = parseInt(pair.getAttribute("data-time-step") || "15", 10);
     var prev = minuteSel.value;
     minuteSel.innerHTML = "";
@@ -216,7 +216,7 @@
       if (!hourSel || !minuteSel) return;
 
       var start = timeToMinutes(pair.getAttribute("data-time-start") || "17:30");
-      var end = timeToMinutes(pair.getAttribute("data-time-end") || "23:00");
+      var end = timeToMinutes(pair.getAttribute("data-time-end") || "22:30");
       var step = parseInt(pair.getAttribute("data-time-step") || "15", 10);
       if (start === null || end === null || !(step > 0) || end < start) return;
 
