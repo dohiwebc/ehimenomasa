@@ -528,7 +528,7 @@
       fd.append("メールアドレス", rcEmail || "未入力");
       fd.append("飲食経験", rcExp || "未選択");
       fd.append("自己PR・質問", rcNote || "なし");
-      fd.append("_subject", "【愛媛の雅ちゃん】スタッフ応募　" + fieldValue(form, "name") + "様");
+      fd.append("_subject", "【ホームページ】スタッフ応募　" + fieldValue(form, "name") + "様");
       if (rcEmail) {
         fd.append("email", rcEmail);
         fd.append("_replyto", rcEmail);
@@ -555,7 +555,7 @@
         );
       });
 
-      fd.append("_subject", "【愛媛の雅ちゃん】テイクアウト予約　" + fieldValue(form, "name") + "様");
+      fd.append("_subject", "【ホームページ】テイクアウト予約　" + fieldValue(form, "name") + "様");
       if (toEmail) {
         fd.append("email", toEmail);
         fd.append("_replyto", toEmail);
@@ -577,7 +577,7 @@
     fd.append("ご来店時間", combinedTimeValue(form));
     fd.append("希望コース", course || "席のみ予約");
     fd.append("その他、ご要望・ご相談", note || "なし");
-    fd.append("_subject", "【愛媛の雅ちゃん】ご来店予約　" + fieldValue(form, "name") + "様");
+    fd.append("_subject", "【ホームページ】ご来店予約　" + fieldValue(form, "name") + "様");
     if (email) fd.append("_replyto", email);
     return fd;
   }
