@@ -14,8 +14,16 @@
     takeout: "https://formspree.io/f/xeaoalwl",
     recruit: "https://formspree.io/f/xdekewnn"
   };
+  /**
+   * Cloudflare Turnstile の Site Key
+   * Secret Key は Formspree 管理画面のみに登録（ここには書かない）
+   * 取得後ここに貼る → デプロイ → その後 Formspree で CAPTCHA を有効化
+   */
+  var TURNSTILE_SITE_KEY = window.MASA_TURNSTILE_SITE_KEY || "0x4AAAAAAFAq0m3Vf9w41Ilx";
   var SEND_ERROR_TEXT =
     "送信に失敗しました。通信環境をご確認のうえ、もう一度お試しいただくか、お電話にてお問い合わせください。";
+  var TURNSTILE_WAIT_TEXT =
+    "セキュリティ確認の準備ができていません。数秒待ってからもう一度お試しください。";
 
   function ready(fn) {
     if (document.readyState === "loading") {
@@ -570,6 +578,15 @@
   function submitToFormspree(form, type) {
     var endpoint = FORMSPREE[type] || FORMSPREE.reserve;
     var body = buildFormspreeData(form, type);
+
+    if (TURNSTILE_SITE_KEY) {
+      var token = getTurnstileToken(form);
+      if (!token) {
+        return Promise.reject(new Error("turnstile-missing"));
+      }
+      body.set("cf-turnstile-response", token);
+    }
+
     return fetch(endpoint, {
       method: "POST",
       body: body,
@@ -586,6 +603,93 @@
         return {};
       });
     });
+  }
+
+  function loadTurnstileScript() {
+    return new Promise(function (resolve, reject) {
+      if (!TURNSTILE_SITE_KEY) {
+        resolve(null);
+        return;
+      }
+      if (window.turnstile) {
+        resolve(window.turnstile);
+        return;
+      }
+      var existing = document.querySelector('script[data-turnstile-api]');
+      if (existing) {
+        existing.addEventListener("load", function () {
+          resolve(window.turnstile || null);
+        });
+        existing.addEventListener("error", function () {
+          reject(new Error("turnstile-load-failed"));
+        });
+        return;
+      }
+      var s = document.createElement("script");
+      s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+      s.async = true;
+      s.defer = true;
+      s.setAttribute("data-turnstile-api", "1");
+      s.onload = function () {
+        resolve(window.turnstile || null);
+      };
+      s.onerror = function () {
+        reject(new Error("turnstile-load-failed"));
+      };
+      document.head.appendChild(s);
+    });
+  }
+
+  function getTurnstileToken(form) {
+    if (!form) return "";
+    var hidden = form.querySelector('input[name="cf-turnstile-response"]');
+    if (hidden && hidden.value) return hidden.value;
+    var widgetId = form.getAttribute("data-turnstile-widget-id");
+    if (widgetId !== null && widgetId !== "" && window.turnstile && window.turnstile.getResponse) {
+      try {
+        return window.turnstile.getResponse(widgetId) || "";
+      } catch (err) {
+        return "";
+      }
+    }
+    return "";
+  }
+
+  function resetTurnstile(form) {
+    if (!form || !window.turnstile || !window.turnstile.reset) return;
+    var widgetId = form.getAttribute("data-turnstile-widget-id");
+    if (widgetId === null || widgetId === "") return;
+    try {
+      window.turnstile.reset(widgetId);
+    } catch (err) {
+      /* ignore */
+    }
+  }
+
+  function initTurnstileWidgets() {
+    if (!TURNSTILE_SITE_KEY) return;
+
+    loadTurnstileScript()
+      .then(function (turnstile) {
+        if (!turnstile || !turnstile.render) return;
+        document.querySelectorAll("[data-demo-form]").forEach(function (form) {
+          var mount = form.querySelector("[data-turnstile]");
+          if (!mount || form.getAttribute("data-turnstile-widget-id")) return;
+          try {
+            var id = turnstile.render(mount, {
+              sitekey: TURNSTILE_SITE_KEY,
+              theme: "light",
+              language: "ja"
+            });
+            form.setAttribute("data-turnstile-widget-id", String(id));
+          } catch (err) {
+            /* ignore render errors */
+          }
+        });
+      })
+      .catch(function () {
+        /* スクリプト読込失敗時は送信時にエラー表示 */
+      });
   }
 
   function playSendAnimation(done) {
@@ -796,9 +900,14 @@
         .then(function () {
           finishSuccess();
         })
-        .catch(function () {
+        .catch(function (err) {
           setSendingState(false);
-          setConfirmError(SEND_ERROR_TEXT);
+          resetTurnstile(form);
+          if (err && err.message === "turnstile-missing") {
+            setConfirmError(TURNSTILE_WAIT_TEXT);
+          } else {
+            setConfirmError(SEND_ERROR_TEXT);
+          }
           if (sendBtn) sendBtn.focus();
         });
     });
@@ -1115,5 +1224,6 @@
     initForms();
     initTakeoutOrderItems();
     initThanksPage();
+    initTurnstileWidgets();
   });
 })();

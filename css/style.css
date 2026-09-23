@@ -2789,6 +2789,10 @@ textarea.form-control {
 }
 .form-check { display: flex; gap: 0.55rem; align-items: flex-start; }
 .form-check input { margin-top: 0.3rem; }
+.form-turnstile {
+  margin: 0 0 1.15rem;
+  min-height: 65px;
+}
 .form-actions {
   margin-top: 1.8rem;
   display: flex;
