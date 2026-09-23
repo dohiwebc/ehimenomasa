@@ -2049,16 +2049,22 @@ body.is-video-open {
 
 /* footer */
 .site-footer {
+  --footer-ink: #1c2d42;
+  --footer-ink-2: #243b55;
+  --footer-line: rgba(215, 192, 154, 0.22);
+  --footer-text: rgba(247, 242, 234, 0.82);
+  --footer-text-strong: #f7f2ea;
+  --footer-gold: #e0c89a;
   background:
-    linear-gradient(180deg, rgba(26, 29, 35, 0.96), rgba(18, 20, 26, 0.98)),
+    linear-gradient(165deg, var(--footer-ink-2) 0%, var(--footer-ink) 48%, #162536 100%),
     url("../assets/images/site/bg-pattern-seigaiha.svg");
   background-size: auto, 120px 60px;
   background-blend-mode: normal, soft-light;
-  color: rgba(255, 250, 243, 0.78);
+  color: var(--footer-text);
   position: relative;
   z-index: 1;
   padding: 3.8rem 0 calc(2.4rem + var(--mobile-bar));
-  border-top: 1px solid rgba(215, 192, 154, 0.18);
+  border-top: 1px solid var(--footer-line);
 }
 .footer-top {
   display: flex;
@@ -2068,26 +2074,26 @@ body.is-video-open {
   gap: 1.6rem 2rem;
   padding-bottom: 2rem;
   margin-bottom: 2rem;
-  border-bottom: 1px solid rgba(255, 250, 243, 0.12);
+  border-bottom: 1px solid var(--footer-line);
 }
 .footer-brand img {
   height: 44px;
   width: auto;
   margin-bottom: 0.85rem;
-  filter: brightness(0) invert(1);
+  filter: brightness(0) invert(1) sepia(0.12) saturate(0.4);
 }
 .footer-brand__tag {
   margin: 0;
   font-family: var(--font-serif);
   font-size: 0.95rem;
   letter-spacing: 0.14em;
-  color: rgba(255, 250, 243, 0.92);
+  color: var(--footer-text-strong);
 }
 .footer-brand__place {
   margin: 0.45rem 0 0;
   font-size: 0.78rem;
   letter-spacing: 0.18em;
-  color: #d7c09a;
+  color: var(--footer-gold);
 }
 .footer-cta {
   display: flex;
@@ -2117,12 +2123,13 @@ body.is-video-open {
   color: #fff;
 }
 .footer-cta__btn--tel {
-  background: transparent;
-  color: rgba(255, 250, 243, 0.92);
-  border-color: rgba(255, 250, 243, 0.35);
+  background: rgba(247, 242, 234, 0.06);
+  color: var(--footer-text-strong);
+  border-color: rgba(224, 200, 154, 0.45);
 }
 .footer-cta__btn--tel:hover {
-  border-color: #d7c09a;
+  background: rgba(224, 200, 154, 0.14);
+  border-color: var(--footer-gold);
   color: #fff;
 }
 
@@ -2132,7 +2139,7 @@ body.is-video-open {
   gap: 0;
   margin: 0 0 2.4rem;
   padding: 0;
-  border-top: 1px solid rgba(255, 250, 243, 0.1);
+  border-top: 1px solid var(--footer-line);
 }
 .footer-info__row {
   display: grid;
@@ -2140,7 +2147,7 @@ body.is-video-open {
   gap: 0.85rem 1.1rem;
   margin: 0;
   padding: 1rem 1.1rem 1rem 0;
-  border-bottom: 1px solid rgba(255, 250, 243, 0.1);
+  border-bottom: 1px solid var(--footer-line);
   align-items: baseline;
 }
 .footer-info__row:nth-child(odd) {
@@ -2148,13 +2155,13 @@ body.is-video-open {
 }
 .footer-info__row:nth-child(even) {
   padding-left: 1.4rem;
-  border-left: 1px solid rgba(255, 250, 243, 0.08);
+  border-left: 1px solid rgba(215, 192, 154, 0.14);
 }
 .footer-info dt {
   margin: 0;
   font-size: 0.68rem;
   letter-spacing: 0.22em;
-  color: #d7c09a;
+  color: var(--footer-gold);
   font-weight: 500;
 }
 .footer-info dd {
@@ -2162,12 +2169,12 @@ body.is-video-open {
   font-size: 0.92rem;
   line-height: 1.7;
   letter-spacing: 0.04em;
-  color: rgba(255, 250, 243, 0.9);
+  color: var(--footer-text-strong);
 }
 .footer-info a {
-  color: rgba(255, 250, 243, 0.95);
+  color: var(--footer-text-strong);
   text-decoration: none;
-  border-bottom: 1px solid rgba(240, 196, 176, 0.4);
+  border-bottom: 1px solid rgba(224, 200, 154, 0.45);
 }
 .footer-info a:hover {
   color: #fff;
@@ -2188,7 +2195,7 @@ body.is-video-open {
   margin: 0 0 0.95rem;
   font-size: 0.68rem;
   letter-spacing: 0.22em;
-  color: rgba(240, 196, 176, 0.85);
+  color: var(--footer-gold);
 }
 .footer-nav__list,
 .footer-sns__list {
@@ -2203,7 +2210,7 @@ body.is-video-open {
   padding: 0.15rem 0;
   font-size: 0.86rem;
   letter-spacing: 0.08em;
-  color: rgba(255, 250, 243, 0.72);
+  color: rgba(247, 242, 234, 0.72);
   text-decoration: none;
   border-bottom: 1px solid transparent;
   white-space: nowrap;
@@ -2212,15 +2219,16 @@ body.is-video-open {
 .footer-nav a:hover,
 .footer-sns a:hover {
   color: #fff;
-  border-bottom-color: rgba(199, 75, 42, 0.7);
+  border-bottom-color: rgba(199, 75, 42, 0.75);
 }
 
 .footer-copy {
   padding-top: 1.4rem;
-  border-top: 1px solid rgba(255, 250, 243, 0.1);
+  border-top: 1px solid var(--footer-line);
   font-size: 0.72rem;
   letter-spacing: 0.06em;
-  opacity: 0.5;
+  color: rgba(247, 242, 234, 0.48);
+  opacity: 1;
 }
 .footer-copy p {
   margin: 0;
