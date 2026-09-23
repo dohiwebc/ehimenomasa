@@ -3434,10 +3434,6 @@ textarea.form-control {
   max-width: 28em;
   text-align: left;
 }
-.recruit-intro .recruit-apply {
-  margin-top: 1.85rem;
-  margin-bottom: 0.35rem;
-}
 .recruit-intro .recruit-points li {
   margin: 0 0 0.8rem;
   font-size: clamp(1rem, 1.5vw, 1.12rem);
@@ -3619,6 +3615,12 @@ textarea.form-control {
   flex-wrap: wrap;
   gap: 0.75rem;
   margin: 1.4rem 0 1.8rem;
+  justify-content: center;
+}
+.recruit-intro .recruit-apply {
+  margin-top: 1.85rem;
+  margin-bottom: 0.35rem;
+  justify-content: center;
 }
 #recruit-apply {
   scroll-margin-top: calc(var(--header-h) + 1rem);
