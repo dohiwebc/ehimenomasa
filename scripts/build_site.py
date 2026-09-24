@@ -186,9 +186,24 @@ def main():
         [x for x in menu_items if x["showMeibutsu"]],
         key=lambda x: x["topOrder"] or x["sortOrder"],
     )
+    # ホーム「おすすめお品書き」掲載順（左上から）
+    pick_order = [
+        "刺身3種盛り",
+        "焼鳥・5種盛り合わせ",
+        "厚切り牛タン",
+        "本家直伝とりのたたき",
+        "かわ揚げ秘伝ダレかけ",
+        "ずり揚げ",
+        "ジャンボ串（2本）",
+        "雅ちゃんからあげ（5個）",
+    ]
+    pick_rank = {name: i for i, name in enumerate(pick_order)}
     picks = sorted(
         [x for x in menu_items if x["showPick"]],
-        key=lambda x: x["topOrder"] or x["sortOrder"],
+        key=lambda x: (
+            pick_rank.get(x["name"], 1000),
+            x["topOrder"] or x["sortOrder"],
+        ),
     )
 
     about = {
