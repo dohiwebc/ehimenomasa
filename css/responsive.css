@@ -618,9 +618,24 @@
     pointer-events: none;
   }
 
+  .hero__catch-overlay .hero__catch-stack {
+    width: min(91%, 21.8rem);
+  }
+
+  .hero__catch-overlay .hero__catch-years {
+    transform: translateX(0.55rem);
+    margin-bottom: 0.28rem;
+    font-size: clamp(0.72rem, 3.2vw, 0.88rem);
+    letter-spacing: 0.42em;
+  }
+
+  .hero__catch-overlay .hero__catch-years__num {
+    font-size: 1.65em;
+  }
+
   .hero__catch-overlay__img {
     display: block;
-    width: min(88%, 20.5rem);
+    width: 100%;
     max-width: 100%;
     height: auto;
     transform: translateX(-0.2rem);
@@ -846,6 +861,17 @@
   .section {
     padding: 4.2rem 0;
     overflow-x: hidden;
+  }
+
+  .page-home .section {
+    padding: 2.8rem 0;
+  }
+  .page-home .section-head {
+    margin-bottom: 1.35rem;
+  }
+  .page-home .cta-final.section,
+  .page-home .section--photo {
+    padding: 3.4rem 0;
   }
 
   .site-logo img {

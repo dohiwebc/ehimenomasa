@@ -129,6 +129,18 @@ img {
 .section--compact { padding: 4.5rem 0; }
 .section--flush { padding: 0; }
 
+/* ホーム：セクション間の余白を詰める */
+.page-home .section {
+  padding: 3.6rem 0;
+}
+.page-home .section-head {
+  margin-bottom: 1.7rem;
+}
+.page-home .cta-final.section,
+.page-home .section--photo {
+  padding: 4.2rem 0;
+}
+
 /* セクション背景の濃さは全ページ統一（唐揚げ線画＋基調色のみ） */
 .section--wash,
 .section--tone,
@@ -265,6 +277,18 @@ main > .section:nth-of-type(even):not(.section--photo):not(.section--flush):not(
 .notice-rail__list > li {
   position: relative;
   padding-top: 0.15rem;
+}
+
+/* PCのみ：02を少し左へ・テキスト領域を広げる（スマホ・タブレットは変更なし） */
+@media (min-width: 1180px) {
+  .notice-rail__list {
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.32fr) minmax(0, 0.92fr);
+    gap: 1.4rem 1.55rem;
+  }
+  .notice-rail__list > li:nth-child(2) {
+    margin-left: -0.85rem;
+    padding-right: 0.35rem;
+  }
 }
 .notice-rail__index {
   display: block;
@@ -952,12 +976,49 @@ body.is-menu-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) ro
   color: #fff;
 }
 
+/* キャッチ画像の位置は変えず、その直上に「創業16年」 */
+.hero__catch-stack {
+  position: relative;
+  display: block;
+  width: min(100%, 28rem);
+}
+
+.hero__catch-years {
+  position: absolute;
+  left: 0;
+  bottom: 100%;
+  margin: 0 0 0.35rem;
+  /* 画像より少し右へ */
+  transform: translateX(0.15rem);
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(0.82rem, 1.45vw, 1.02rem);
+  letter-spacing: 0.48em;
+  line-height: 1;
+  color: rgba(255, 248, 238, 0.92);
+  text-indent: 0.12em;
+  white-space: nowrap;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+
+.hero__catch-years__num {
+  display: inline-block;
+  margin: 0 0.04em;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.72em;
+  letter-spacing: 0.04em;
+  vertical-align: -0.06em;
+}
+
 .hero__catch-img {
   display: block;
-  width: min(100%, 26rem);
+  width: 100%;
   max-width: 100%;
   height: auto;
-  margin: 0 0 0 0;
+  margin: 0;
   /* 少し左へ */
   transform: translateX(-0.85rem);
   /* 黒文字→白文字（暗いヒーロー写真の上で読みやすく） */
@@ -2684,6 +2745,45 @@ body.is-video-open {
 }
 .course-detail__list li:last-child {
   border-bottom: none;
+}
+.course-hp-note {
+  margin: 0 0 1.35rem;
+  padding: 0.35rem 0 0.9rem;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  border-top: 0;
+}
+.course-detail:has(+ .course-hp-note) {
+  margin-bottom: 0.45rem;
+}
+.course-hp-note a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+.course-hp-note a:hover {
+  opacity: 0.75;
+}
+/* トップのコース一覧下の短い注記 */
+.section .course-hp-note.note {
+  margin: 1.2rem auto 0;
+  max-width: 36em;
+  text-align: center;
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+@media (max-width: 1024px) {
+  .section .course-hp-note.note {
+    font-size: 0.75rem;
+    line-height: 1.7;
+  }
+}
+@media (min-width: 1025px) {
+  .section .course-hp-note.note {
+    max-width: min(100%, 52em);
+    overflow-wrap: normal;
+  }
 }
 .course-detail__list li::before {
   content: "";

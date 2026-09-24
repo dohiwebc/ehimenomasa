@@ -1,7 +1,7 @@
 {% import 'macros.j2' as m %}
 {{ m.head(
   title='宴会・コース｜松山市駅の飲み放題 愛媛の雅ちゃん',
-  description='松山市駅から徒歩1分「愛媛の雅ちゃん」の宴会・コース。満喫・親雛・揚げ鳥コースと飲み放題。会社宴会・歓送迎会にも。',
+  description='松山市駅から徒歩30秒「愛媛の雅ちゃん」の宴会・コース。満喫・親雛・揚げ鳥コースと飲み放題。会社宴会・歓送迎会にも。',
   canonical='https://ehimenomasa.com/course.html',
   css_v=css_v
 ) }}
@@ -49,7 +49,7 @@
             <h2 class="course-detail__name">{{ c.name }}</h2>
             <p class="price">{{ c.price_label }}</p>
           </div>
-          {% if c.lead %}<p class="course-detail__lead">{{ c.lead }}</p>{% endif %}
+          {% if c.lead %}<p class="course-detail__lead">{{ c.lead }}{% if c.name == '親雛コース' %}（〆ご飯・アイス付き）{% endif %}</p>{% endif %}
           {% if c.lines %}
           <ul class="course-detail__list">
             {% for line in c.lines %}
@@ -59,6 +59,12 @@
           {% endif %}
         </div>
       </article>
+      {% if c.name == '親雛コース' %}
+      <div class="course-hp-note note-box reveal" role="note">
+        <p><strong>5,300円</strong>のコースは、締めのご飯ものとデザート（アイス）が付いた全8品です。</p>
+        <p>【ホットペッパーグルメ限定】親雛コース＋飲み放題120分付＜全6品＞5,000円（〆ご飯・アイス無し）もございます。限定プランをご希望の方は、<a href="https://www.hotpepper.jp/strJ004612520/course/" target="_blank" rel="noopener noreferrer">ホットペッパーグルメ</a>からご予約ください。</p>
+      </div>
+      {% endif %}
       {% endfor %}
 
       <section class="nomihoudai reveal">

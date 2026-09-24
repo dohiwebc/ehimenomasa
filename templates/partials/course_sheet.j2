@@ -8,7 +8,7 @@
     {% endif %}
     <div class="course-line__main">
       <h3 class="course-line__name">{{ c.name }}</h3>
-      {% if c.lead %}<p class="course-line__desc">{{ c.lead }}</p>{% endif %}
+      {% if c.lead %}<p class="course-line__desc">{{ c.lead }}{% if c.name == '親雛コース' %}（〆ご飯・アイス付き）{% endif %}</p>{% endif %}
     </div>
     <p class="course-line__price price">{{ c.price_label }}</p>
   </article>
