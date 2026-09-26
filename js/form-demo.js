@@ -10,9 +10,9 @@
   var STORAGE_KEY = "masa-form-thanks";
   var SENDING_TEXT = "リクエスト送信中...";
   var FORMSPARK = {
-    reserve: "https://submit-form.com/1SJ4gAGyo",
-    takeout: "https://submit-form.com/EtUPrkFfX",
-    recruit: "https://submit-form.com/cZwRgNdl0"
+    reserve: "https://submit-form.com/KMl96CuJU",
+    takeout: "https://submit-form.com/AZAyWudRi",
+    recruit: "https://submit-form.com/F1UKiXXty"
   };
   /**
    * Cloudflare Turnstile の Site Key
