@@ -176,7 +176,7 @@
   function buildMinuteOptions(pair, selectedHour) {
     var minuteSel = pair.querySelector("[data-time-minute]");
     if (!minuteSel) return;
-    var start = timeToMinutes(pair.getAttribute("data-time-start") || "17:30");
+    var start = timeToMinutes(pair.getAttribute("data-time-start") || "17:45");
     var end = timeToMinutes(pair.getAttribute("data-time-end") || "22:30");
     var step = parseInt(pair.getAttribute("data-time-step") || "15", 10);
     var prev = minuteSel.value;
@@ -214,7 +214,7 @@
       var minuteSel = pair.querySelector("[data-time-minute]");
       if (!hourSel || !minuteSel) return;
 
-      var start = timeToMinutes(pair.getAttribute("data-time-start") || "17:30");
+      var start = timeToMinutes(pair.getAttribute("data-time-start") || "17:45");
       var end = timeToMinutes(pair.getAttribute("data-time-end") || "22:30");
       var step = parseInt(pair.getAttribute("data-time-step") || "15", 10);
       if (start === null || end === null || !(step > 0) || end < start) return;
@@ -510,10 +510,27 @@
     return merged;
   }
 
+  /** 送信失敗時の再送用。成功後にクリアする */
+  function getOrCreateManagementId(form) {
+    var existing = form.getAttribute("data-management-id");
+    if (existing) return existing;
+    var id = crypto.randomUUID();
+    form.setAttribute("data-management-id", id);
+    return id;
+  }
+
+  function clearManagementId(form) {
+    if (!form) return;
+    form.removeAttribute("data-management-id");
+  }
+
   /** Formspark送信用 JSON（日本語キーに整形） */
   function buildFormsparkPayload(form, type) {
     var data = {};
     var emailObj = {};
+
+    data.form_type = type;
+    data.management_id = getOrCreateManagementId(form);
 
     if (type === "recruit") {
       var rcEmail = fieldValue(form, "email");
@@ -669,8 +686,9 @@
             err.payload = payload;
             throw err;
           }
-          /* 成功後はトークンを使い捨て済みとしてクリア */
+          /* 成功後はトークン・management_id をクリア（再送時は新規ID） */
           setTurnstileToken(form, "");
+          clearManagementId(form);
           return payload;
         });
     });
