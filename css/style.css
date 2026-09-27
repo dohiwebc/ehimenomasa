@@ -2023,6 +2023,10 @@ body.is-video-open {
 }
 .shop-intro__head .section-title {
   margin-bottom: 0.9rem;
+  width: max-content;
+  max-width: 100%;
+  white-space: nowrap;
+  font-size: clamp(1.15rem, 5.2vw, 2.55rem);
 }
 .shop-collage {
   display: flex;
@@ -3269,11 +3273,17 @@ textarea.form-control {
   padding: 0.2rem 0 0.6rem;
   background: transparent;
 }
+/* 入力欄がページに溶け込まないよう、フォーム本体だけ白いカードにする */
+.reserve-form-block,
+.form-panel--takeout:not(:has(.reserve-quick)),
+.form-panel--recruit {
+  background: var(--surface);
+  border: 1px solid rgba(26, 29, 35, 0.28);
+  box-shadow: 0 10px 28px rgba(26, 29, 35, 0.07);
+  padding: 1.55rem 1.3rem 1.25rem;
+}
 .form-panel--recruit {
   margin: 1.6rem 0 2rem;
-  border: 0;
-  padding: 0;
-  background: transparent;
 }
 .form-panel--recruit .form-actions {
   margin-top: 0.4rem;
@@ -3408,34 +3418,41 @@ textarea.form-control {
 .order-items__error {
   margin-top: 0.65rem;
 }
-.form-panel--takeout .form-control {
-  background: rgba(255, 255, 255, 0.72);
-  border-color: transparent;
-  border-bottom: 1px solid rgba(26, 29, 35, 0.28);
-  padding-left: 0.15rem;
-  padding-right: 0.15rem;
-  transition:
-    border-color 0.25s var(--ease),
-    background-color 0.25s var(--ease);
-}
-.form-panel--takeout .form-control:hover {
-  background: rgba(255, 255, 255, 0.92);
-}
-.form-panel--takeout .form-control:focus {
+.form-panel--takeout .form-control,
+.form-panel--recruit .form-control {
   background: #fff;
-  border-bottom-color: var(--indigo);
-  outline: none;
+  border: 2px solid rgba(26, 29, 35, 0.55);
+  padding: 0.85rem 1rem;
+}
+.form-panel--takeout .form-control:hover,
+.form-panel--recruit .form-control:hover {
+  background: #fff;
+  border-color: rgba(26, 29, 35, 0.75);
+}
+.form-panel--takeout .form-control:focus,
+.form-panel--recruit .form-control:focus {
+  background: #fff;
+  border-color: var(--indigo);
+  outline: 2px solid rgba(36, 59, 85, 0.22);
+  outline-offset: 1px;
   box-shadow: none;
 }
-.form-panel--takeout select.form-control {
-  padding-left: 0.15rem;
+.form-panel--takeout .form-row--time .form-control {
+  padding-left: 0.4rem;
+  padding-right: 0.3rem;
 }
-.form-panel--takeout textarea.form-control {
-  border: 1px solid rgba(26, 29, 35, 0.18);
+.form-panel--takeout select.form-control,
+.form-panel--recruit select.form-control {
+  padding-left: 0.75rem;
+}
+.form-panel--takeout textarea.form-control,
+.form-panel--recruit textarea.form-control {
+  border: 2px solid rgba(26, 29, 35, 0.55);
   padding: 0.85rem 1rem;
-  background: rgba(255, 255, 255, 0.85);
+  background: #fff;
 }
-.form-panel--takeout textarea.form-control:focus {
+.form-panel--takeout textarea.form-control:focus,
+.form-panel--recruit textarea.form-control:focus {
   border-color: var(--indigo);
 }
 

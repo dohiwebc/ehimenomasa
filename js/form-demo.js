@@ -9,14 +9,14 @@
 
   var STORAGE_KEY = "masa-form-thanks";
   var SENDING_TEXT = "リクエスト送信中...";
-  var FORMSPARK = {
-    reserve: "https://submit-form.com/KMl96CuJU",
-    takeout: "https://submit-form.com/AZAyWudRi",
-    recruit: "https://submit-form.com/F1UKiXXty"
+  var FORMSPREE = {
+    reserve: "https://formspree.io/f/moevenzk",
+    takeout: "https://formspree.io/f/xeaoalwl",
+    recruit: "https://formspree.io/f/xdekewnn"
   };
   /**
    * Cloudflare Turnstile の Site Key
-   * Secret Key は Formspark 管理画面のみに登録（ここには書かない）
+   * Secret Key は Formspree 管理画面のみに登録（ここには書かない）
    */
   var TURNSTILE_SITE_KEY = window.MASA_TURNSTILE_SITE_KEY || "0x4AAAAAAFAq0m3Vf9w41Ilx";
   var SEND_ERROR_TEXT =
@@ -510,27 +510,9 @@
     return merged;
   }
 
-  /** 送信失敗時の再送用。成功後にクリアする */
-  function getOrCreateManagementId(form) {
-    var existing = form.getAttribute("data-management-id");
-    if (existing) return existing;
-    var id = crypto.randomUUID();
-    form.setAttribute("data-management-id", id);
-    return id;
-  }
-
-  function clearManagementId(form) {
-    if (!form) return;
-    form.removeAttribute("data-management-id");
-  }
-
-  /** Formspark送信用 JSON（日本語キーに整形） */
-  function buildFormsparkPayload(form, type) {
-    var data = {};
-    var emailObj = {};
-
-    data.form_type = type;
-    data.management_id = getOrCreateManagementId(form);
+  /** Formspree送信用 FormData（日本語キーに整形） */
+  function buildFormspreeData(form, type) {
+    var fd = new FormData();
 
     if (type === "recruit") {
       var rcEmail = fieldValue(form, "email");
@@ -538,20 +520,19 @@
       var rcAge = fieldValue(form, "age");
       var rcExp = fieldValue(form, "experience");
 
-      data["お名前"] = fieldValue(form, "name");
-      data["お電話番号"] = fieldValue(form, "tel");
-      data["年齢"] = rcAge ? rcAge + "歳" : "";
-      data["週の出勤可能日数"] = fieldValue(form, "available_days");
-      data["メールアドレス"] = rcEmail || "未入力";
-      data["飲食経験"] = rcExp || "未選択";
-      data["自己PR・質問"] = rcNote || "なし";
-      emailObj.subject = "【ホームページ】スタッフ応募　" + fieldValue(form, "name") + "様";
+      fd.append("お名前", fieldValue(form, "name"));
+      fd.append("お電話番号", fieldValue(form, "tel"));
+      fd.append("年齢", rcAge ? rcAge + "歳" : "");
+      fd.append("週の出勤可能日数", fieldValue(form, "available_days"));
+      fd.append("メールアドレス", rcEmail || "未入力");
+      fd.append("飲食経験", rcExp || "未選択");
+      fd.append("自己PR・質問", rcNote || "なし");
+      fd.append("_subject", "【ホームページ】スタッフ応募　" + fieldValue(form, "name") + "様");
       if (rcEmail) {
-        data.email = rcEmail;
-        emailObj.replyto = rcEmail;
+        fd.append("email", rcEmail);
+        fd.append("_replyto", rcEmail);
       }
-      data._email = emailObj;
-      return data;
+      return fd;
     }
 
     if (type === "takeout") {
@@ -559,25 +540,26 @@
       var toNote = fieldValue(form, "note");
       var toTime = combinedTimeValue(form);
 
-      data["お名前"] = fieldValue(form, "name");
-      data["お電話番号"] = fieldValue(form, "tel");
-      data["受取日"] = fieldValue(form, "pickup_date");
-      data["受取時間"] = toTime || "指定なし";
-      data["メールアドレス"] = toEmail || "未入力";
-      data["その他ご要望・ご相談"] = toNote || "なし";
+      fd.append("お名前", fieldValue(form, "name"));
+      fd.append("お電話番号", fieldValue(form, "tel"));
+      fd.append("受取日", fieldValue(form, "pickup_date"));
+      fd.append("受取時間", toTime || "指定なし");
+      fd.append("メールアドレス", toEmail || "未入力");
+      fd.append("その他ご要望・ご相談", toNote || "なし");
 
       collectMergedOrders(form).forEach(function (line, i) {
-        data["ご注文 " + (i + 1)] =
-          "商品：" + line.name + "\n個数：" + line.qty + "個";
+        fd.append(
+          "ご注文 " + (i + 1),
+          "商品：" + line.name + "\n個数：" + line.qty + "個"
+        );
       });
 
-      emailObj.subject = "【ホームページ】テイクアウト予約　" + fieldValue(form, "name") + "様";
+      fd.append("_subject", "【ホームページ】テイクアウト予約　" + fieldValue(form, "name") + "様");
       if (toEmail) {
-        data.email = toEmail;
-        emailObj.replyto = toEmail;
+        fd.append("email", toEmail);
+        fd.append("_replyto", toEmail);
       }
-      data._email = emailObj;
-      return data;
+      return fd;
     }
 
     var email = fieldValue(form, "email");
@@ -585,22 +567,21 @@
     var party = fieldValue(form, "party");
     var course = fieldValue(form, "course");
 
-    data["お名前"] = fieldValue(form, "name");
-    data["お電話番号"] = fieldValue(form, "tel");
-    data["メールアドレス"] = email;
-    if (email) data.email = email;
-    data["ご予約人数"] = party ? party + "名" : "";
-    data["ご来店日"] = fieldValue(form, "date");
-    data["ご来店時間"] = combinedTimeValue(form);
-    data["希望コース"] = course || "席のみ予約";
-    data["その他、ご要望・ご相談"] = note || "なし";
-    emailObj.subject = "【ホームページ】ご来店予約　" + fieldValue(form, "name") + "様";
-    if (email) emailObj.replyto = email;
-    data._email = emailObj;
-    return data;
+    fd.append("お名前", fieldValue(form, "name"));
+    fd.append("お電話番号", fieldValue(form, "tel"));
+    fd.append("メールアドレス", email);
+    if (email) fd.append("email", email);
+    fd.append("ご予約人数", party ? party + "名" : "");
+    fd.append("ご来店日", fieldValue(form, "date"));
+    fd.append("ご来店時間", combinedTimeValue(form));
+    fd.append("希望コース", course || "席のみ予約");
+    fd.append("その他、ご要望・ご相談", note || "なし");
+    fd.append("_subject", "【ホームページ】ご来店予約　" + fieldValue(form, "name") + "様");
+    if (email) fd.append("_replyto", email);
+    return fd;
   }
 
-  function parseFormsparkError(payload, status) {
+  function parseFormspreeError(payload, status) {
     if (!payload || typeof payload !== "object") {
       return status ? "送信エラー（" + status + "）" : "";
     }
@@ -635,42 +616,39 @@
       text.indexOf("recaptcha") !== -1
     ) {
       return (
-        "セキュリティ確認が Formspark 側で拒否されました。" +
+        "セキュリティ確認が Formspree 側で拒否されました。" +
         "もう一度チェックを完了してから送信するか、" +
-        "FormsparkのCAPTCHA設定（TurnstileのSecret Key）を確認してください。"
+        "FormspreeのCAPTCHA設定（TurnstileのSecret Key）を確認してください。"
       );
     }
     if (text.indexOf("forbidden") !== -1 || text.indexOf("domain") !== -1) {
       return (
         "このドメインからの送信が許可されていない可能性があります。" +
-        "Formsparkのフォーム設定を確認してください。"
+        "Formspreeのフォーム設定で許可ドメインを確認してください。"
       );
     }
     return SEND_ERROR_TEXT + (raw ? "（" + raw + "）" : "");
   }
 
-  function submitToFormspark(form, type) {
-    var endpoint = FORMSPARK[type] || FORMSPARK.reserve;
-    var body = buildFormsparkPayload(form, type);
+  function submitToFormspree(form, type) {
+    var endpoint = FORMSPREE[type] || FORMSPREE.reserve;
+    var body = buildFormspreeData(form, type);
     var token = getTurnstileToken(form);
 
-    /* Turnstile が挿入する空の cf-turnstile-response は送らない */
+    /* Turnstile が挿入する空の cf-turnstile-response は送らない（空欄だと Formspree が 400） */
     clearTurnstileInputs(form);
 
     if (TURNSTILE_SITE_KEY) {
       if (!token) {
         return Promise.reject(new Error("turnstile-missing"));
       }
-      body["cf-turnstile-response"] = token;
+      body.set("cf-turnstile-response", token);
     }
 
     return fetch(endpoint, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify(body)
+      body: body,
+      headers: { Accept: "application/json" }
     }).then(function (res) {
       return res
         .json()
@@ -679,16 +657,15 @@
         })
         .then(function (payload) {
           if (!res.ok) {
-            var detail = parseFormsparkError(payload, res.status);
-            var err = new Error("formspark-failed");
+            var detail = parseFormspreeError(payload, res.status);
+            var err = new Error("formspree-failed");
             err.detail = detail;
             err.status = res.status;
             err.payload = payload;
             throw err;
           }
-          /* 成功後はトークン・management_id をクリア（再送時は新規ID） */
+          /* 成功後はトークンを使い捨て済みとしてクリア */
           setTurnstileToken(form, "");
-          clearManagementId(form);
           return payload;
         });
     });
@@ -1064,7 +1041,7 @@
         return;
       }
 
-      submitToFormspark(form, type)
+      submitToFormspree(form, type)
         .then(function () {
           finishSuccess();
         })
@@ -1076,7 +1053,7 @@
           } else {
             var detail = err && err.detail ? err.detail : "";
             if (typeof console !== "undefined" && console.warn) {
-              console.warn("[formspark]", err && err.status, err && err.payload);
+              console.warn("[formspree]", err && err.status, err && err.payload);
             }
             setConfirmError(friendlySendError(detail));
           }
