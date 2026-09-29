@@ -82,6 +82,53 @@ def p_tags(*paras: str) -> str:
     return "".join(f"<p>{html_lib.escape(p)}</p>" for p in paras if p)
 
 
+def html_fragment_to_text(fragment: str) -> str:
+    s = re.sub(r"<br\s*/?>", "\n", fragment, flags=re.I)
+    s = re.sub(r"<[^>]+>", "", s)
+    return html_lib.unescape(s).strip()
+
+
+def parse_shop_html_for_access() -> dict[str, str]:
+    """shop.html の店舗紹介・アクセス表から microCMS 用テキストを抽出する。"""
+    path = ROOT / "shop.html"
+    if not path.exists():
+        return {}
+    text = path.read_text(encoding="utf-8")
+    out: dict[str, str] = {}
+
+    lead = re.search(r'class="page-hero__lead"[^>]*>(.*?)</p>', text, re.S)
+    if lead:
+        out["seatInfo"] = html_fragment_to_text(lead.group(1))
+
+    def table_cell(label: str) -> str:
+        cell = re.search(rf"<th>{re.escape(label)}</th>\s*<td>(.*?)</td>", text, re.S)
+        if not cell:
+            return ""
+        raw = cell.group(1)
+        raw = re.sub(r"<a[^>]*>|</a>", "", raw)
+        return html_lib.unescape(re.sub(r"<[^>]+>", "", raw)).strip()
+
+    for key, label in (
+        ("address", "所在地"),
+        ("phone", "TEL"),
+        ("holiday", "定休日"),
+        ("hours", "営業時間"),
+    ):
+        value = table_cell(label)
+        if value:
+            out[key] = value
+
+    notes = re.search(r'class="shop-access__notes"[\s\S]*?<p[^>]*>(.*?)</p>', text, re.S)
+    if notes:
+        out["accessText"] = html_lib.unescape(re.sub(r"<[^>]+>", "", notes.group(1))).strip()
+
+    iframe = re.search(r'(<iframe class="map-embed"[\s\S]*?</iframe>)', text)
+    if iframe:
+        out["mapEmbed"] = iframe.group(1)
+
+    return out
+
+
 def select(field_id, name, items, required=True):
     return {
         "fieldId": field_id,
@@ -242,30 +289,20 @@ def fill_access():
         u = upload(ROOT / p)
         if u:
             gallery.append(u)
+    parsed = parse_shop_html_for_access()
     body = {
         "shopName": "愛媛の雅ちゃん",
-        "address": "〒790-0012 愛媛県松山市湊町5丁目4-2 健勝ビル2階",
-        "phone": "089-913-1194",
-        "holiday": "日曜日・祝日",
-        "hours": "17:30〜22:30／料理L.O.21:40／ドリンクL.O.22:10",
-        "accessText": (
-            "【電車・バスでお越しの方へ】\n"
-            "松山市駅から徒歩30秒。松山市駅・北側出口を出て、すぐの横断歩道を渡りきると正面にございます。"
-            "左側にパチンコ・パワーステーションさん、右側にはひぎりやきさんがございます。\n\n"
-            "【車でお越しの方へ】\n"
-            "伊予鉄高島屋さんの向かい側道路（ひぎりやきさん側）沿いにございます。"
-            "ひぎりやきさんとパチンコ・パワーステーションさんの間のビル2階でございます。"
-            "※申し訳ありませんが、駐車場はございません。"
-            "※お車でのお持ち帰り（テイクアウト）時は、1階までお持ちいたします。"
-        ),
-        "seatInfo": "松山市駅前から徒歩30秒の居酒屋。健勝ビル2階。\nカウンターとテーブルで、仕事帰りから宴会まで。",
-        "mapEmbed": (
-            '<iframe class="map-embed" title="愛媛の雅ちゃんの地図" '
-            'src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3314.0631652958873!2d132.76061451553642!3d33.836481636516176!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x354fe58c75ccb9b5%3A0x82b944c1d5958c67!2z5oSb5aqb44Gu6ZuF44Gh44KD44KT!5e0!3m2!1sja!2sjp!4v1640270590748!5m2!1sja!2sjp" '
-            'loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>'
-        ),
+        "address": parsed.get("address") or "〒790-0012 愛媛県松山市湊町5丁目4-2 健勝ビル2階",
+        "phone": parsed.get("phone") or "089-913-1194",
+        "holiday": parsed.get("holiday") or "日曜日・祝日",
+        "hours": parsed.get("hours") or "17:30〜22:30／料理L.O.21:40／ドリンクL.O.22:10",
+        "accessText": parsed.get("accessText") or "",
+        "seatInfo": parsed.get("seatInfo") or "",
+        "mapEmbed": parsed.get("mapEmbed") or "",
         "gallery": gallery,
     }
+    if not body["accessText"] or not body["seatInfo"]:
+        raise SystemExit("shop.html から seatInfo / accessText を読み取れませんでした。")
     return upsert_list("access", body, "main")
 
 
