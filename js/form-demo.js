@@ -505,8 +505,40 @@
     return merged;
   }
 
+  /** メール件名用（JST）。同じお客様の再送でもスレッドが分かれるようにする */
+  function mailSubjectStamp() {
+    try {
+      return new Intl.DateTimeFormat("ja-JP", {
+        timeZone: "Asia/Tokyo",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false
+      }).format(new Date());
+    } catch (err) {
+      var d = new Date();
+      var pad = function (n) {
+        return String(n).padStart(2, "0");
+      };
+      return (
+        d.getFullYear() +
+        "/" +
+        pad(d.getMonth() + 1) +
+        "/" +
+        pad(d.getDate()) +
+        " " +
+        pad(d.getHours()) +
+        ":" +
+        pad(d.getMinutes())
+      );
+    }
+  }
+
   /** Formspree送信用 FormData（日本語キーに整形） */
   function buildFormspreeData(form, type) {
+    var stamp = mailSubjectStamp();
     var fd = new FormData();
 
     if (type === "recruit") {
@@ -522,7 +554,10 @@
       fd.append("メールアドレス", rcEmail || "未入力");
       fd.append("飲食経験", rcExp || "未選択");
       fd.append("自己PR・質問", rcNote || "なし");
-      fd.append("_subject", "【ホームページ】スタッフ応募　" + fieldValue(form, "name") + "様");
+      fd.append(
+        "_subject",
+        "【ホームページ】スタッフ応募　" + fieldValue(form, "name") + "様　" + stamp
+      );
       if (rcEmail) {
         fd.append("email", rcEmail);
         fd.append("_replyto", rcEmail);
@@ -549,7 +584,10 @@
         );
       });
 
-      fd.append("_subject", "【ホームページ】テイクアウト予約　" + fieldValue(form, "name") + "様");
+      fd.append(
+        "_subject",
+        "【ホームページ】テイクアウト予約　" + fieldValue(form, "name") + "様　" + stamp
+      );
       if (toEmail) {
         fd.append("email", toEmail);
         fd.append("_replyto", toEmail);
@@ -571,7 +609,10 @@
     fd.append("ご来店時間", combinedTimeValue(form));
     fd.append("希望コース", course || "席のみ予約");
     fd.append("その他、ご要望・ご相談", note || "なし");
-    fd.append("_subject", "【ホームページ】ご来店予約　" + fieldValue(form, "name") + "様");
+    fd.append(
+      "_subject",
+      "【ホームページ】ご来店予約　" + fieldValue(form, "name") + "様　" + stamp
+    );
     if (email) fd.append("_replyto", email);
     return fd;
   }
