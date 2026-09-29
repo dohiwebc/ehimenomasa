@@ -522,6 +522,84 @@
   }
 }
 
+/* 903〜1179px：横並びヘッダー帯。画像＋全文が見えるコンパクト横並び */
+@media (min-width: 903px) and (max-width: 1179px) {
+  .course-detail,
+  .course-detail--flip {
+    position: static;
+    display: grid;
+    grid-template-columns: minmax(0, 0.38fr) minmax(0, 0.62fr);
+    align-items: start;
+    overflow: visible;
+  }
+
+  .course-detail__media {
+    width: 100%;
+    margin-left: 0;
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .course-detail__content,
+  .course-detail--flip .course-detail__content {
+    position: static;
+    width: 100%;
+    overflow: visible;
+    grid-column: 2;
+    grid-row: 1;
+    right: auto;
+    left: auto;
+    top: auto;
+    bottom: auto;
+    padding: 0.75rem 0.85rem 0.85rem;
+    justify-content: flex-start;
+  }
+
+  .course-detail--flip .course-detail__media {
+    grid-column: 2;
+    margin-left: 0;
+  }
+
+  .course-detail--flip .course-detail__content {
+    grid-column: 1;
+  }
+
+  .course-detail__head {
+    margin-bottom: 0.2rem;
+    gap: 0.2rem 0.45rem;
+  }
+
+  .course-detail__name {
+    font-size: 1.02rem;
+    letter-spacing: 0.06em;
+  }
+
+  .course-detail__head .price {
+    font-size: 1.02rem;
+  }
+
+  .course-detail__lead {
+    font-size: 0.76rem;
+    line-height: 1.42;
+  }
+
+  .course-detail__list {
+    margin-top: 0.3rem;
+  }
+
+  .course-detail__list li {
+    font-size: 0.7rem;
+    line-height: 1.38;
+    padding: 0.18rem 0 0.18rem 0.65rem;
+    letter-spacing: 0.01em;
+  }
+
+  .course-detail__list li::before {
+    top: 0.72em;
+    width: 3px;
+  }
+}
+
 @media (max-width: 768px) {
   .hero__bg--desktop {
     display: none;
