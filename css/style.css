@@ -279,7 +279,13 @@ main > .section:nth-of-type(even):not(.section--photo):not(.section--flush):not(
   padding-top: 0.15rem;
 }
 
-/* PCのみ：3列＋02を少し左へ（1180px未満は1列） */
+/* 横並びヘッダー（903px〜）：3列。1180px以上で02列を調整 */
+@media (min-width: 903px) {
+  .notice-rail__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.4rem 2.2rem;
+  }
+}
 @media (min-width: 1180px) {
   .notice-rail__list {
     grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.32fr) minmax(0, 0.92fr);

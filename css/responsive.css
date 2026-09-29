@@ -325,50 +325,6 @@
     gap: 0.55rem;
   }
 
-  .notice-rail__list {
-    grid-template-columns: 1fr;
-    gap: 0.55rem;
-  }
-
-  .notice-rail__list > li {
-    display: grid;
-    grid-template-columns: 1.7em minmax(0, 1fr);
-    column-gap: 0.5rem;
-    align-items: start;
-    padding-top: 0;
-    padding-bottom: 0.55rem;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .notice-rail__list > li:last-child {
-    padding-bottom: 0;
-    border-bottom: 0;
-  }
-
-  .notice-rail,
-  .notice-rail--compact {
-    margin-bottom: 1.5rem;
-    padding: 0.85rem 0;
-  }
-
-  .notice-rail--compact {
-    margin-bottom: 1.35rem;
-  }
-
-  .notice-rail__index {
-    font-size: 0.62rem;
-    letter-spacing: 0.14em;
-    margin-bottom: 0;
-    line-height: 1.55;
-    padding-top: 0.05rem;
-  }
-
-  .notice-rail__text {
-    font-size: 0.74rem;
-    line-height: 1.55;
-    letter-spacing: 0.02em;
-  }
-
   .meibutsu-row--flip .meibutsu-row__media,
   .meibutsu-row--flip .meibutsu-row__body {
     order: initial;
@@ -485,8 +441,8 @@
   }
 }
 
-/* 1180px未満（iPad横 1048px 等）：コース詳細は absolute を使わない */
-@media (max-width: 1179px) {
+/* 902px以下（ハンバーガー時）：コース詳細は absolute を使わない */
+@media (max-width: 902px) {
   .course-detail,
   .course-detail--flip {
     position: static;
@@ -519,6 +475,50 @@
     grid-template-columns: minmax(0, 1fr) minmax(140px, 180px);
     gap: 1.25rem;
     padding: 1.45rem 1.2rem 1.35rem;
+  }
+
+  .notice-rail__list {
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
+  }
+
+  .notice-rail__list > li {
+    display: grid;
+    grid-template-columns: 1.7em minmax(0, 1fr);
+    column-gap: 0.5rem;
+    align-items: start;
+    padding-top: 0;
+    padding-bottom: 0.55rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .notice-rail__list > li:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .notice-rail,
+  .notice-rail--compact {
+    margin-bottom: 1.5rem;
+    padding: 0.85rem 0;
+  }
+
+  .notice-rail--compact {
+    margin-bottom: 1.35rem;
+  }
+
+  .notice-rail__index {
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    margin-bottom: 0;
+    line-height: 1.55;
+    padding-top: 0.05rem;
+  }
+
+  .notice-rail__text {
+    font-size: 0.74rem;
+    line-height: 1.55;
+    letter-spacing: 0.02em;
   }
 }
 
