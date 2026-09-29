@@ -9,12 +9,6 @@ var ALLOWED_HOSTS = {
   "ehimenomasa.pages.dev": true
 };
 
-var DEFAULT_FORMSPREE = {
-  reserve: "https://formspree.io/f/moevenzk",
-  takeout: "https://formspree.io/f/xeaoalwl",
-  recruit: "https://formspree.io/f/xdekewnn"
-};
-
 var FIELD_LIMIT = 4000;
 var TOKEN_LIMIT = 2048;
 
@@ -34,7 +28,7 @@ function endpointFor(env, type) {
   if (type === "takeout") fromEnv = env.FORMSPREE_TAKEOUT || "";
   if (type === "recruit") fromEnv = env.FORMSPREE_RECRUIT || "";
   if (/^https:\/\/formspree\.io\/f\/[A-Za-z0-9]+$/.test(fromEnv)) return fromEnv;
-  return DEFAULT_FORMSPREE[type] || "";
+  return "";
 }
 
 function allowedField(type, name) {
