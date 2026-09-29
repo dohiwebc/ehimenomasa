@@ -1457,10 +1457,19 @@ body.is-menu-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) ro
   gap: 3.5rem;
   align-items: center;
 }
+.intro__media,
+.intro-grid__media {
+  max-width: 100%;
+  overflow: hidden;
+}
 .intro__media img,
 .intro-grid__media img {
-  height: 480px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
+  object-position: center;
+  display: block;
 }
 .intro__body p + p { margin-top: 1rem; }
 

@@ -277,8 +277,6 @@
     min-height: 55vh;
   }
 
-  .intro,
-  .intro-grid,
   .meibutsu-row,
   .meibutsu-row--flip,
   .takeout-split,
@@ -398,11 +396,6 @@
     min-height: 260px;
   }
 
-  .intro__media img,
-  .intro-grid__media img {
-    height: 340px;
-  }
-
   /* タブレットもスマホ同様：写真上＋4:3比率（横引きを防ぐ） */
   .menu-list {
     grid-template-columns: 1fr 1fr;
@@ -441,8 +434,24 @@
   }
 }
 
+/* 903〜1179px：横並びヘッダー帯の intro はPC同様2列・画像は4:3 */
+@media (min-width: 903px) and (max-width: 1179px) {
+  .intro,
+  .intro-grid {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(1.5rem, 2.8vw, 2.5rem);
+    align-items: center;
+  }
+}
+
 /* 902px以下（ハンバーガー時）：コース詳細は absolute を使わない */
 @media (max-width: 902px) {
+  .intro,
+  .intro-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
   .course-detail,
   .course-detail--flip {
     position: static;
