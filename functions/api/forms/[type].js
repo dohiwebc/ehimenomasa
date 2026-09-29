@@ -38,8 +38,7 @@ function allowedField(type, name) {
     name === "メールアドレス" ||
     name === "email" ||
     name === "_subject" ||
-    name === "_replyto" ||
-    name === "cf-turnstile-response"
+    name === "_replyto"
   ) {
     return true;
   }
@@ -105,8 +104,8 @@ async function verifyTurnstile(env, token, ip, action) {
   }
 
   if (!result || result.success !== true) return false;
-  if (result.action !== action) return false;
-  if (!ALLOWED_HOSTS[result.hostname]) return false;
+  if (result.action && result.action !== action) return false;
+  if (result.hostname && !ALLOWED_HOSTS[result.hostname]) return false;
   return true;
 }
 
@@ -140,6 +139,11 @@ export async function onRequestPost(context) {
   while (!entry.done) {
     var name = entry.value[0];
     var value = entry.value[1];
+    /* Formspree へは Turnstile を渡さない（ここで siteverify 済み。渡すと二重検証で拒否される） */
+    if (name === "cf-turnstile-response") {
+      entry = entries.next();
+      continue;
+    }
     if (typeof value === "string" && allowedField(type, name) && value.length <= FIELD_LIMIT) {
       forwarded.append(name, value);
     }
