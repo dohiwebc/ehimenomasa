@@ -9,14 +9,9 @@
 
   var STORAGE_KEY = "masa-form-thanks";
   var SENDING_TEXT = "リクエスト送信中...";
-  var FORMSPREE = {
-    reserve: "https://formspree.io/f/moevenzk",
-    takeout: "https://formspree.io/f/xeaoalwl",
-    recruit: "https://formspree.io/f/xdekewnn"
-  };
   /**
    * Cloudflare Turnstile の Site Key
-   * Secret Key は Formspree 管理画面のみに登録（ここには書かない）
+   * Secret Key は Cloudflare Pages の TURNSTILE_SECRET のみ（ここには書かない）
    */
   var TURNSTILE_SITE_KEY = window.MASA_TURNSTILE_SITE_KEY || "0x4AAAAAAFIviRpbRoX8VLnY";
   var SEND_ERROR_TEXT =
@@ -631,7 +626,8 @@
   }
 
   function submitToFormspree(form, type) {
-    var endpoint = FORMSPREE[type] || FORMSPREE.reserve;
+    /* Formspree へは直接送らない。サイト側で Turnstile を確認してから転送する */
+    var endpoint = "/api/forms/" + encodeURIComponent(type);
     var body = buildFormspreeData(form, type);
     var token = getTurnstileToken(form);
 
@@ -804,6 +800,7 @@
           try {
             var id = turnstile.render(mount, {
               sitekey: TURNSTILE_SITE_KEY,
+              action: detectFormType(form),
               theme: "light",
               language: "ja",
               callback: function (token) {
