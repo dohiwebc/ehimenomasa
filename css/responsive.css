@@ -483,8 +483,10 @@
     text-align: left;
     padding-bottom: 0.2rem;
   }
+}
 
-  /* タブレット：コース詳細の absolute レイアウトを解除（文言切れ防止） */
+/* 1180px未満（iPad横 1048px 等）：コース詳細は absolute を使わない */
+@media (max-width: 1179px) {
   .course-detail,
   .course-detail--flip {
     position: static;
