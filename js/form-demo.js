@@ -18,7 +18,7 @@
    * Cloudflare Turnstile の Site Key
    * Secret Key は Formspree 管理画面のみに登録（ここには書かない）
    */
-  var TURNSTILE_SITE_KEY = window.MASA_TURNSTILE_SITE_KEY || "0x4AAAAAAFAq0m3Vf9w41Ilx";
+  var TURNSTILE_SITE_KEY = window.MASA_TURNSTILE_SITE_KEY || "0x4AAAAAAFIviRpbRoX8VLnY";
   var SEND_ERROR_TEXT =
     "送信に失敗しました。通信環境をご確認のうえ、もう一度お試しいただくか、お電話にてお問い合わせください。";
   var TURNSTILE_WAIT_TEXT =
