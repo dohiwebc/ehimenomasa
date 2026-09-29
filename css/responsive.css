@@ -539,6 +539,7 @@
     margin-left: 0;
     grid-column: 1;
     grid-row: 1;
+    align-self: start;
     aspect-ratio: 4 / 3;
   }
 
@@ -557,12 +558,18 @@
     justify-content: flex-start;
   }
 
+  /* 画像は常に狭い列（38%）。flip は列順だけ入れ替え */
+  .course-detail--flip {
+    grid-template-columns: minmax(0, 0.62fr) minmax(0, 0.38fr);
+  }
+
   .course-detail--flip .course-detail__media {
     grid-column: 2;
     grid-row: 1;
     width: 100%;
     max-width: 100%;
     margin-left: 0;
+    align-self: start;
     aspect-ratio: 4 / 3;
   }
 
