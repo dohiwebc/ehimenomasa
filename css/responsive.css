@@ -535,9 +535,11 @@
 
   .course-detail__media {
     width: 100%;
+    max-width: 100%;
     margin-left: 0;
     grid-column: 1;
     grid-row: 1;
+    aspect-ratio: 4 / 3;
   }
 
   .course-detail__content,
@@ -557,11 +559,16 @@
 
   .course-detail--flip .course-detail__media {
     grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+    max-width: 100%;
     margin-left: 0;
+    aspect-ratio: 4 / 3;
   }
 
   .course-detail--flip .course-detail__content {
     grid-column: 1;
+    grid-row: 1;
   }
 
   .course-detail__head {
