@@ -1,6 +1,4 @@
-/**
- * 受付口の環境変数が入っているかだけ返す。アドレス自体は返さない。
- */
+/** 受付口の環境変数が入っているかだけ返す（アドレスは返さない）。 */
 
 function present(value) {
   return /^https:\/\/formspree\.io\/f\/[A-Za-z0-9]+$/.test(String(value || ""));
