@@ -483,6 +483,41 @@
     text-align: left;
     padding-bottom: 0.2rem;
   }
+
+  /* タブレット：コース詳細の absolute レイアウトを解除（文言切れ防止） */
+  .course-detail,
+  .course-detail--flip {
+    position: static;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .course-detail__media {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .course-detail__content,
+  .course-detail--flip .course-detail__content {
+    position: static;
+    width: 100%;
+    overflow: visible;
+    right: auto;
+    left: auto;
+    bottom: auto;
+    top: auto;
+    padding: 1.15rem 1.25rem 1.2rem;
+  }
+
+  .course-detail--flip .course-detail__media {
+    margin-left: 0;
+  }
+
+  .nomihoudai-panel {
+    grid-template-columns: minmax(0, 1fr) minmax(140px, 180px);
+    gap: 1.25rem;
+    padding: 1.45rem 1.2rem 1.35rem;
+  }
 }
 
 @media (max-width: 768px) {
