@@ -61,6 +61,7 @@ function allowedField(type, name) {
   }
   if (type === "recruit") {
     return (
+      name === "希望雇用形態" ||
       name === "年齢" ||
       name === "週の出勤可能日数" ||
       name === "飲食経験" ||

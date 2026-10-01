@@ -1295,7 +1295,28 @@
 
   .page-recruit .page-hero + .section {
     padding-top: 0.9rem;
-    padding-bottom: 4.2rem;
+  }
+
+  .page-recruit .recruit-hub {
+    padding-bottom: 1.75rem;
+  }
+
+  .recruit-switch__frame {
+    padding: 1.1rem 0.85rem 0.95rem;
+  }
+
+  .recruit-switch__tab {
+    min-height: 5.25rem;
+    padding: 0.85rem 0.5rem;
+  }
+
+  .btn-group--recruit-switch {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .btn-group--recruit-switch .btn {
+    width: 100%;
   }
 
   /* スマホは仕事内容横の写真のみ非表示（バナーは表示） */

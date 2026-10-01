@@ -547,6 +547,7 @@
       var rcAge = fieldValue(form, "age");
       var rcExp = fieldValue(form, "experience");
 
+      fd.append("希望雇用形態", fieldValue(form, "employment_type"));
       fd.append("お名前", fieldValue(form, "name"));
       fd.append("お電話番号", fieldValue(form, "tel"));
       fd.append("年齢", rcAge ? rcAge + "歳" : "");

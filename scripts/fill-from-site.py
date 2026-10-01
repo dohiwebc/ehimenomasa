@@ -85,7 +85,10 @@ def p_tags(*paras: str) -> str:
 def html_fragment_to_text(fragment: str) -> str:
     s = re.sub(r"<br\s*/?>", "\n", fragment, flags=re.I)
     s = re.sub(r"<[^>]+>", "", s)
-    return html_lib.unescape(s).strip()
+    s = html_lib.unescape(s).strip()
+    # <br> 直後のソース改行などで \n\n になり、nl2br で空行が出るのを防ぐ
+    s = re.sub(r"\n{2,}", "\n", s)
+    return s
 
 
 def parse_shop_html_for_access() -> dict[str, str]:

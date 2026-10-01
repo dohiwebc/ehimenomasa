@@ -173,7 +173,8 @@ def main():
     # コース写真はローカル画像を優先（CDN差し替えでデザイン崩れを防ぐ）
     local_course_images = {
         "満喫コース": "assets/images/site/course-mankitsu.webp",
-        "親雛コース": "assets/images/site/course-oyahina.webp",
+        "親雛コース＜全8品＞": "assets/images/site/course-oyahina.webp",
+        "親雛コース＜全6品＞": "assets/images/site/course-oyahina.webp",
         "揚げ鳥コース": "assets/images/site/course-agedori.webp",
     }
     for c in courses:
@@ -251,9 +252,11 @@ def main():
 
         if not value:
             return ""
-        # \r\n / \r も統一
+        # \r\n / \r も統一。連続改行・空行は1つの <br> にまとめる（seatInfo 用）
         text = str(value).replace("\r\n", "\n").replace("\r", "\n")
-        return Markup("<br>\n".join(escape(line) for line in text.split("\n")))
+        text = re.sub(r"\n{2,}", "\n", text)
+        lines = [line for line in text.split("\n") if line.strip()]
+        return Markup("<br>\n".join(escape(line) for line in lines))
 
     jinja.filters["nl2br"] = nl2br
     ctx = {

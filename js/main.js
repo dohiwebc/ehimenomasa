@@ -769,6 +769,64 @@
     });
   }
 
+  function initRecruitTabs() {
+    var root = document.querySelector("[data-recruit-switch]");
+    if (!root) return;
+
+    var tabs = root.querySelectorAll("[data-recruit-tab]");
+    var panels = document.querySelectorAll("[data-recruit-panel]");
+    var typeSelect = document.getElementById("rc-type");
+    if (!tabs.length || !panels.length) return;
+
+    function panelFor(name) {
+      for (var i = 0; i < panels.length; i++) {
+        if (panels[i].getAttribute("data-recruit-panel") === name) return panels[i];
+      }
+      return null;
+    }
+
+    function employmentValue(name) {
+      return name === "fulltime"
+        ? "正社員（キッチン・ホール）"
+        : "アルバイト・パート";
+    }
+
+    function activate(name, options) {
+      var opts = options || {};
+      tabs.forEach(function (tab) {
+        var on = tab.getAttribute("data-recruit-tab") === name;
+        tab.classList.toggle("is-active", on);
+        tab.setAttribute("aria-selected", on ? "true" : "false");
+        tab.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach(function (panel) {
+        var on = panel.getAttribute("data-recruit-panel") === name;
+        panel.classList.toggle("is-active", on);
+        if (on) panel.removeAttribute("hidden");
+        else panel.setAttribute("hidden", "");
+      });
+      if (typeSelect && opts.syncForm !== false) {
+        typeSelect.value = employmentValue(name);
+      }
+      if (opts.updateHash !== false && history.replaceState) {
+        history.replaceState(null, "", "#recruit-" + name);
+      }
+    }
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        activate(tab.getAttribute("data-recruit-tab"), { syncForm: true });
+      });
+    });
+
+    var hash = (location.hash || "").replace(/^#recruit-/, "");
+    if (hash === "parttime" || hash === "fulltime") {
+      activate(hash, { syncForm: true, updateHash: false });
+    } else {
+      activate("fulltime", { syncForm: false, updateHash: false });
+    }
+  }
+
   function initRecruitSticky() {
     var sticky = document.getElementById("recruit-sticky");
     var target = document.getElementById("recruit-apply");
@@ -795,6 +853,7 @@
     initVideoPopup();
     initReserveGate();
     initFaqAccordion();
+    initRecruitTabs();
     initRecruitSticky();
   });
 })();
