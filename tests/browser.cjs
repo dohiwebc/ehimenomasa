@@ -72,11 +72,8 @@ async function run() {
         for(const name of await coursePage.locator('.course-detail__name').allTextContents())assert.ok(choices.includes(name));
         await coursePage.close();
       } else {
-        const prices=await page.locator('.takeout-prices').innerText();
-        assert.match(prices,/1,100円/);
-        assert.match(prices,/880円/);
-        assert.match(prices,/1,045円/);
-        assert.match(prices,/935円/);
+        assert.equal(await page.locator('.takeout-prices').count(),0);
+        for(const label of await page.locator('[data-order-select] option').allTextContents())assert.ok(!label.includes('円'));
         await page.locator('[data-order-select]').selectOption({index:1});
         await page.locator('[data-order-qty]').selectOption('1');
         assert.equal(await page.locator('[data-time-pair]').getAttribute('data-time-start'),'17:30');
