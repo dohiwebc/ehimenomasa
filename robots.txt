@@ -3,5 +3,8 @@ Allow: /
 
 # 送信完了ページはインデックス不要
 Disallow: /thanks.html
+Disallow: /thanks
+Disallow: /thanks-recruit
+Disallow: /thanks-recruit.html
 
 Sitemap: https://ehimenomasa.com/sitemap.xml

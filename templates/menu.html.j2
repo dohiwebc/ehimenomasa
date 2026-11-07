@@ -2,7 +2,7 @@
 {{ m.head(
   title='お品書き｜松山 骨付鳥・揚げ足鳥の居酒屋 愛媛の雅ちゃん',
   description='松山市駅すぐ「愛媛の雅ちゃん」のお品書き。丸亀名物の骨付鳥、川之江名物の揚げ足鳥、名古屋名物の手羽先など名物鶏料理のご案内。',
-  canonical='https://ehimenomasa.com/menu.html',
+  canonical='https://ehimenomasa.com/menu',
   css_v=css_v
 ) }}
 <body>
@@ -15,7 +15,7 @@
       <p class="page-hero__lead page-hero__lead--menu">価格は全て税込表示です。【テイクアウト用パック・おやひな1つ50円・その他パック1つ20円をいただきます】</p>
     </div>
   </section>
-{{ m.breadcrumb('お品書き', 'https://ehimenomasa.com/menu.html') }}
+{{ m.breadcrumb('お品書き', 'https://ehimenomasa.com/menu') }}
   <section class="section section--menu"><div class="container">
     <nav class="menu-jump" aria-label="メニューカテゴリ">
       <a class="menu-jump__link" href="#menu-meibutsu">名物</a>
@@ -34,7 +34,7 @@
             </figure>
             {% endif %}
           {% endfor %}
-          <p class="note" style="margin-top:1rem;"><a class="text-link" href="course.html">単品飲み放題の詳細を見る →</a></p>
+          <p class="note" style="margin-top:1rem;"><a class="text-link" href="/course">単品飲み放題の詳細を見る →</a></p>
         </section>
       {% else %}
         <section class="menu-category reveal"{% if cat.id %} id="{{ cat.id }}"{% endif %}>
@@ -66,9 +66,9 @@
     <div class="container reveal">
       <h2 class="section-title">ご来店・テイクアウトもご相談ください</h2>
       <div class="btn-group">
-        <a class="btn btn--primary" href="reserve.html">席を予約する</a>
-        <a class="btn btn--ghost" href="course.html">宴会・コース</a>
-        <a class="btn btn--ghost" href="takeout.html">テイクアウト案内</a>
+        <a class="btn btn--primary" href="/reserve">席を予約する</a>
+        <a class="btn btn--ghost" href="/course">宴会・コース</a>
+        <a class="btn btn--ghost" href="/takeout">テイクアウト案内</a>
       </div>
     </div>
   </section>

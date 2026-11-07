@@ -41,7 +41,7 @@
   <a class="sr-only" href="#main">本文へスキップ</a>
   <header class="site-header{% if on_hero %} site-header--on-hero is-transparent{% else %} is-solid{% endif %}">
     <div class="site-header__inner">
-      <a class="site-logo" href="index.html">
+      <a class="site-logo" href="/">
         <img src="assets/images/site/logo-masachan.webp" alt="愛媛の雅ちゃん" width="400" height="146" decoding="async">
       </a>
       <button class="nav-toggle" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-nav">
@@ -49,14 +49,14 @@
       </button>
       <nav class="site-nav" id="site-nav" aria-label="メインメニュー">
         <ul class="site-nav__list">
-          <li><a class="site-nav__link" href="index.html"{% if current == 'home' %} aria-current="page"{% endif %}>ホーム</a></li>
-          <li><a class="site-nav__link" href="menu.html"{% if current == 'menu' %} aria-current="page"{% endif %}>お品書き</a></li>
-          <li><a class="site-nav__link" href="course.html"{% if current == 'course' %} aria-current="page"{% endif %}>宴会・コース</a></li>
-          <li><a class="site-nav__link" href="shop.html"{% if current == 'shop' %} aria-current="page"{% endif %}>店内・アクセス</a></li>
-          <li><a class="site-nav__link" href="about.html"{% if current == 'about' %} aria-current="page"{% endif %}>雅ちゃんについて</a></li>
-          <li><a class="site-nav__link" href="recruit.html"{% if current == 'recruit' %} aria-current="page"{% endif %}>スタッフ募集</a></li>
-          <li><a class="site-nav__link" href="takeout.html"{% if current == 'takeout' %} aria-current="page"{% endif %}>テイクアウト</a></li>
-          <li><a class="site-nav__link site-nav__reserve" href="reserve.html"{% if current == 'reserve' %} aria-current="page"{% endif %}>ご予約</a></li>
+          <li><a class="site-nav__link" href="/"{% if current == 'home' %} aria-current="page"{% endif %}>ホーム</a></li>
+          <li><a class="site-nav__link" href="/menu"{% if current == 'menu' %} aria-current="page"{% endif %}>お品書き</a></li>
+          <li><a class="site-nav__link" href="/course"{% if current == 'course' %} aria-current="page"{% endif %}>宴会・コース</a></li>
+          <li><a class="site-nav__link" href="/shop"{% if current == 'shop' %} aria-current="page"{% endif %}>店内・アクセス</a></li>
+          <li><a class="site-nav__link" href="/about"{% if current == 'about' %} aria-current="page"{% endif %}>雅ちゃんについて</a></li>
+          <li><a class="site-nav__link" href="/recruit"{% if current == 'recruit' %} aria-current="page"{% endif %}>スタッフ募集</a></li>
+          <li><a class="site-nav__link" href="/takeout"{% if current == 'takeout' %} aria-current="page"{% endif %}>テイクアウト</a></li>
+          <li><a class="site-nav__link site-nav__reserve" href="/reserve"{% if current == 'reserve' %} aria-current="page"{% endif %}>ご予約</a></li>
         </ul>
       </nav>
     </div>
@@ -67,7 +67,7 @@
   <nav class="breadcrumb" aria-label="パンくずリスト">
     <div class="container">
       <ol class="breadcrumb__list">
-        <li class="breadcrumb__item"><a class="breadcrumb__link" href="index.html">ホーム</a></li>
+        <li class="breadcrumb__item"><a class="breadcrumb__link" href="/">ホーム</a></li>
         <li class="breadcrumb__item" aria-current="page">{{ current_name }}</li>
       </ol>
     </div>
@@ -104,7 +104,7 @@
           <p class="footer-brand__place">松山市駅から徒歩30秒</p>
         </div>
         <div class="footer-cta">
-          <a class="footer-cta__btn footer-cta__btn--reserve" href="reserve.html">ご予約</a>
+          <a class="footer-cta__btn footer-cta__btn--reserve" href="/reserve">ご予約</a>
           <a class="footer-cta__btn footer-cta__btn--tel" href="{{ tel }}" data-reserve-gate="tel">電話する（{{ site.phone }}）</a>
         </div>
       </div>
@@ -136,15 +136,15 @@
         <nav class="footer-nav" aria-label="フッターメニュー">
           <p class="footer-label">メニュー</p>
           <div class="footer-nav__list">
-            <a href="index.html">ホーム</a>
-            <a href="menu.html">お品書き</a>
-            <a href="course.html">宴会・コース</a>
-            <a href="shop.html">店内・アクセス</a>
-            <a href="about.html">雅ちゃんについて</a>
-            <a href="recruit.html">スタッフ募集</a>
-            <a href="takeout.html">テイクアウト</a>
-            <a href="reserve.html">ご予約</a>
-            <a href="privacy.html">プライバシーポリシー</a>
+            <a href="/">ホーム</a>
+            <a href="/menu">お品書き</a>
+            <a href="/course">宴会・コース</a>
+            <a href="/shop">店内・アクセス</a>
+            <a href="/about">雅ちゃんについて</a>
+            <a href="/recruit">スタッフ募集</a>
+            <a href="/takeout">テイクアウト</a>
+            <a href="/reserve">ご予約</a>
+            <a href="/privacy">プライバシーポリシー</a>
           </div>
         </nav>
         <div class="footer-sns">
@@ -167,7 +167,7 @@
       <a class="mobile-bar__btn mobile-bar__btn--reserve" href="#recruit-apply">WEB応募</a>
       <a class="mobile-bar__btn mobile-bar__btn--tel" href="{{ tel }}">電話で応募</a>
       {% else %}
-      <a class="mobile-bar__btn mobile-bar__btn--reserve" href="reserve.html">予約する</a>
+      <a class="mobile-bar__btn mobile-bar__btn--reserve" href="/reserve">予約する</a>
       <a class="mobile-bar__btn mobile-bar__btn--tel" href="{{ tel }}" data-reserve-gate="tel">電話する</a>
       {% endif %}
     </div>

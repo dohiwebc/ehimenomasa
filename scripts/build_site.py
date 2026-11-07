@@ -6,6 +6,7 @@ import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from site_urls import normalize_urls
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -280,7 +281,7 @@ def main():
         "privacy.html": "privacy.html.j2",
     }
     for out_name, tmpl in pages.items():
-        html = jinja.get_template(tmpl).render(**ctx)
+        html = normalize_urls(jinja.get_template(tmpl).render(**ctx))
         (ROOT / out_name).write_text(html, encoding="utf-8")
         print("wrote", out_name)
 
@@ -303,7 +304,7 @@ def main():
     index_html = patch_contacts(index_html, site["phone"], tel, site, access)
     index_html = re.sub(r"(css/(?:style|responsive)\.css)\?v=[^\"\']+", rf"\1?v={css_v}", index_html)
     index_html = re.sub(r"(js/main\.js)\?v=[^\"\']+", rf"\1?v={css_v}", index_html)
-    index_path.write_text(index_html, encoding="utf-8")
+    index_path.write_text(normalize_urls(index_html), encoding="utf-8")
     print("wrote index.html (partials)")
 
     # 残ページの電話・SNSも同期
@@ -314,7 +315,7 @@ def main():
         t = patch_contacts(p.read_text(encoding="utf-8"), site["phone"], tel, site, access)
         t = re.sub(r"(css/(?:style|responsive)\.css)\?v=[^\"\']+", rf"\1?v={css_v}", t)
         t = re.sub(r"(js/main\.js)\?v=[^\"\']+", rf"\1?v={css_v}", t)
-        p.write_text(t, encoding="utf-8")
+        p.write_text(normalize_urls(t), encoding="utf-8")
         print("patched", name)
 
     print("build ok")

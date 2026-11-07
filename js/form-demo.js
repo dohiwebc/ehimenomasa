@@ -1047,7 +1047,7 @@
       if (submitBtn) submitBtn.disabled = true;
 
       playSendAnimation(function () {
-        window.location.href = type === "recruit" ? "thanks-recruit.html" : "thanks.html";
+        window.location.href = type === "recruit" ? "/thanks-recruit" : "/thanks";
       });
     }
 
