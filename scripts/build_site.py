@@ -9,7 +9,6 @@ import json
 import hashlib
 from html import escape
 from text_normalization import normalize_data, normalize_html, normalize_text
-from datetime import datetime, timezone
 from pathlib import Path
 from site_urls import normalize_urls
 
@@ -321,6 +320,7 @@ def main():
     }
     for out_name, tmpl in pages.items():
         html = normalize_html(normalize_urls(jinja.get_template(tmpl).render(**ctx)))
+        html = re.sub(r"(js/form-demo\.js)\?v=[^\"\']+", rf"\1?v={css_v}", html)
         (ROOT / out_name).write_text(html, encoding="utf-8")
         print("wrote", out_name)
 
@@ -355,7 +355,7 @@ def main():
         if name == "takeout.html":
             t = takeout_prices(t, menu_items)
         t = re.sub(r"(css/(?:style|responsive)\.css)\?v=[^\"\']+", rf"\1?v={css_v}", t)
-        t = re.sub(r"(js/main\.js)\?v=[^\"\']+", rf"\1?v={css_v}", t)
+        t = re.sub(r"(js/(?:main|form-demo)\.js)\?v=[^\"\']+", rf"\1?v={css_v}", t)
         p.write_text(normalize_html(normalize_urls(t)), encoding="utf-8")
         print("patched", name)
 

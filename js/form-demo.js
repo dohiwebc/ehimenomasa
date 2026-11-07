@@ -19,11 +19,11 @@
   var TURNSTILE_WAIT_TEXT =
     "セキュリティ確認が完了していません。チェックが「成功」になったことを確認してから、もう一度お試しください。";
 
-  // 2026/2027: Cabinet Office calendar. 2028 equinoxes need confirmation in February 2027.
+  // 2026/2027: Cabinet Office calendar. Unannounced 2028 equinoxes are intentionally omitted.
   var HOLIDAYS = (
     "2026-01-01 2026-01-12 2026-02-11 2026-02-23 2026-03-20 2026-04-29 2026-05-03 2026-05-04 2026-05-05 2026-05-06 2026-07-20 2026-08-11 2026-09-21 2026-09-22 2026-09-23 2026-10-12 2026-11-03 2026-11-23 " +
     "2027-01-01 2027-01-11 2027-02-11 2027-02-23 2027-03-21 2027-03-22 2027-04-29 2027-05-03 2027-05-04 2027-05-05 2027-07-19 2027-08-11 2027-09-20 2027-09-23 2027-10-11 2027-11-03 2027-11-23 " +
-    "2028-01-01 2028-01-10 2028-02-11 2028-02-23 2028-03-20 2028-04-29 2028-05-03 2028-05-04 2028-05-05 2028-07-17 2028-08-11 2028-09-18 2028-09-22 2028-10-09 2028-11-03 2028-11-23"
+    "2028-01-01 2028-01-10 2028-02-11 2028-02-23 2028-04-29 2028-05-03 2028-05-04 2028-05-05 2028-07-17 2028-08-11 2028-09-18 2028-10-09 2028-11-03 2028-11-23"
   ).split(" ");
 
   function updateHolidayWarning(el) {
@@ -1296,6 +1296,7 @@
 
       form.addEventListener("input", function (e) {
         if (!e.target || !e.target.classList) return;
+        if (e.target.id && document.getElementById(e.target.id + "-error")) setFieldError(e.target, "");
         if (e.target.matches && e.target.matches('input[type="date"][data-min-today]')) {
           clampDateToToday(e.target, { showError: true });
           return;
@@ -1310,6 +1311,7 @@
       });
       form.addEventListener("change", function (e) {
         if (!e.target || !e.target.classList) return;
+        if (e.target.id && document.getElementById(e.target.id + "-error")) setFieldError(e.target, "");
         if (e.target.matches && e.target.matches('input[type="date"][data-min-today]')) {
           clampDateToToday(e.target, { showError: true });
           return;

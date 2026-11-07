@@ -27,6 +27,8 @@ def normalize_text(text):
 
 def normalize_data(value):
     if isinstance(value, str):
+        if value.startswith(("https://", "http://", "//")):
+            return value
         return normalize_text(value)
     if isinstance(value, list):
         return [normalize_data(item) for item in value]

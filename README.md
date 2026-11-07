@@ -2,7 +2,9 @@
 
 愛媛県松山市の居酒屋「愛媛の雅ちゃん」の公式サイトです。
 
-公開URL: https://ehimenomasa.com/
+現行公開URL: https://ehimenomasa.pages.dev/
+
+切替先の正規URL: https://ehimenomasa.com/
 
 ## サイトの目的
 
@@ -16,9 +18,10 @@
 
 ## 使用技術
 
-- HTML / CSS / JavaScript（静的サイト・GitHub Pages）
+- HTML / CSS / JavaScript（静的サイト・Cloudflare Pages）
 - microCMS（お品書き・コース・店舗情報などのコンテンツ）
 - Python + Jinja2（ビルド時に HTML を生成）
+- Cloudflare Pages Functions（Turnstile 検証・Formspree への中継）
 
 ## Cloudflare Pages（*.pages.dev）
 
@@ -101,16 +104,18 @@ python3 -m venv .venv
 
 ```bash
 cd "愛媛の雅ちゃん"
-python3 -m http.server 8080
+python3 scripts/serve.py --port 8080
 ```
 
-ブラウザで `http://localhost:8080` を開いてください。
+ブラウザで `http://localhost:8080` を開いてください。拡張子なしURLに対応しています。このプレビューではフォームを実送信しません。
 
 ## 予約・テイクアウトフォームについて
 
-`reserve.html` / `takeout.html` のフォームは、現時点ではデモ動作です。
+予約・テイクアウト・応募フォームは `/api/forms/{reserve|takeout|recruit}` へ送信します。Pages Functions が Turnstile を検証し、Formspree へ中継します。
 
-確認画面と送信アニメーションのあと完了ページへ遷移しますが、店舗への実送信（メール送信や予約システム連携）は未実装です。
+Pages の環境変数 `TURNSTILE_SECRET`、`FORMSPREE_RESERVE`、`FORMSPREE_TAKEOUT`、`FORMSPREE_RECRUIT` を設定してください。値をソースやログに記載しないでください。
+
+ドメイン切替は [2026-11-08の修正・検証報告](docs/2026-11-08-site-review.md) を参照してください。`CANONICAL_REDIRECT=1` を設定した場合だけ、本番の `ehimenomasa.pages.dev` を独自ドメインへ301転送します。カスタムドメインとTLSの接続確認後に有効にしてください。
 
 ## 外部予約URL
 
