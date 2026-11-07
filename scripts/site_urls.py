@@ -1,7 +1,6 @@
 """Canonical URLs shared by generated and hand-maintained pages."""
 import re
 from pathlib import Path
-from urllib.parse import urlsplit, urlunsplit
 
 ORIGIN = "https://ehimenomasa.com"
 PAGES = ("index", "menu", "course", "shop", "about", "recruit", "privacy", "reserve", "takeout", "thanks", "thanks-recruit")

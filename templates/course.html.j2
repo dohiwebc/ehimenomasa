@@ -24,15 +24,11 @@
         <ol class="notice-rail__list">
           <li>
             <span class="notice-rail__index" aria-hidden="true">01</span>
-            <p class="notice-rail__text">価格は全て税込表示です。</p>
+            <p class="notice-rail__text">コースメニューは2名様以上の前日予約が必要です。<span class="notice-rail__sub">当日予約希望の場合もご相談ください。</span></p>
           </li>
           <li>
             <span class="notice-rail__index" aria-hidden="true">02</span>
-            <p class="notice-rail__text">コースメニューは2名様以上の前日予約が必要です。<span class="notice-rail__sub">当日予約希望の場合もご相談ください</span></p>
-          </li>
-          <li>
-            <span class="notice-rail__index" aria-hidden="true">03</span>
-            <p class="notice-rail__text">コースメニューの内容は、<br class="br-sp">一部変更になる場合がございます。</p>
+            <p class="notice-rail__text">コースメニューの内容は、一部変更になる場合がございます。</p>
           </li>
         </ol>
       </aside>
@@ -52,6 +48,7 @@
           {% if c.lead %}<p class="course-detail__lead">{{ c.lead }}</p>{% endif %}
           {% if '親雛コース＜全6品＞' in c.name %}
           <p class="note">※女子会コースはこちらです</p>
+          <p class="note">※写真は8品（〆ご飯・アイス付き）の一例です</p>
           {% endif %}
           {% if c.lines %}
           <ul class="course-detail__list">
@@ -78,7 +75,7 @@
               <ul class="nomihoudai-panel__list">
                 <li>お1人様・税込1,815円以上のフードのご注文が必要です（2名様〜利用可能）</li>
                 <li>お通しのカットは出来ません／お通し代は含みません</li>
-                <li>対象受付時間／17:30～20:15（30分前ラストドリンク）</li>
+                <li>飲み放題のお申し込みは17:30〜20:15まで。ラストドリンクは終了30分前です。</li>
                 <li>アサヒスーパードライ・チューハイ・ノンアルコール・ハイボール・カクテル・焼酎・日本酒 等々（40種類以上）</li>
               </ul>
             </div>

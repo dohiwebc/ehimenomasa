@@ -82,9 +82,7 @@ def format_price_jp(n) -> str:
         return str(n)
     if n <= 0:
         return ""
-    s = f"{n:,}"
-    table = str.maketrans("0123456789,", "０１２３４５６７８９，")
-    return s.translate(table) + "円"
+    return f"{n:,}円"
 
 
 def format_price_course(n) -> str:
@@ -93,7 +91,7 @@ def format_price_course(n) -> str:
         n = int(n)
     except (TypeError, ValueError):
         return str(n)
-    return f"{n:,} 円"
+    return f"{n:,}円"
 
 
 def tel_href(phone: str) -> str:

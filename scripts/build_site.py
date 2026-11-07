@@ -6,6 +6,8 @@ import re
 import sys
 import argparse
 import json
+import hashlib
+from text_normalization import normalize_data, normalize_html, normalize_text
 from datetime import datetime, timezone
 from pathlib import Path
 from site_urls import normalize_urls
@@ -171,7 +173,7 @@ def main():
     if not args.snapshot and (not service_id or not api_key):
         sys.exit("MICROCMS_SERVICE_ID / MICROCMS_API_KEY が必要です")
 
-    css_v = datetime.now(timezone.utc).strftime("%Y%m%d%H%M")
+    css_v = hashlib.sha256(b"".join((ROOT / p).read_bytes() for p in ("css/style.css", "css/responsive.css", "js/main.js", "js/form-demo.js"))).hexdigest()[:12]
     if args.snapshot:
         snapshot = json.loads(args.snapshot.read_text(encoding="utf-8"))
         menu_raw, course_raw, about_raw, access_raw, site_raw = (snapshot[k] for k in ("menu", "course", "about", "access", "site"))
@@ -183,7 +185,12 @@ def main():
         access_raw = fetch_one("access", api_key, service_id)
         site_raw = fetch_one("site", api_key, service_id)
 
-    menu_items = [normalize_menu_item(x) for x in menu_raw]
+    menu_items = [normalize_menu_item(normalize_data(x)) for x in menu_raw]
+    rice = next((x for x in menu_items if x["name"] == "ライス（中・大）"), None)
+    if rice:
+        position = menu_items.index(rice)
+        menu_items[position:position + 1] = [dict(rice, name=f"ライス（{size}）", price=price, price_label=format_price_jp(price)) for size, price in (("中", 275), ("大", 385))]
+    course_raw = normalize_data(course_raw)
     courses = sorted([normalize_course(x) for x in course_raw], key=lambda x: x["sortOrder"])
     # コース写真はローカル画像を優先（CDN差し替えでデザイン崩れを防ぐ）
     local_course_images = {
@@ -214,7 +221,7 @@ def main():
         "ジャンボ串（2本）",
         "雅ちゃんからあげ（5個）",
     ]
-    pick_rank = {name: i for i, name in enumerate(pick_order)}
+    pick_rank = {normalize_text(name): i for i, name in enumerate(pick_order)}
     picks = sorted(
         [x for x in menu_items if x["showPick"]],
         key=lambda x: (
@@ -296,7 +303,7 @@ def main():
         "privacy.html": "privacy.html.j2",
     }
     for out_name, tmpl in pages.items():
-        html = normalize_urls(jinja.get_template(tmpl).render(**ctx))
+        html = normalize_html(normalize_urls(jinja.get_template(tmpl).render(**ctx)))
         (ROOT / out_name).write_text(html, encoding="utf-8")
         print("wrote", out_name)
 
@@ -319,18 +326,18 @@ def main():
     index_html = patch_contacts(index_html, site["phone"], tel, site, access)
     index_html = re.sub(r"(css/(?:style|responsive)\.css)\?v=[^\"\']+", rf"\1?v={css_v}", index_html)
     index_html = re.sub(r"(js/main\.js)\?v=[^\"\']+", rf"\1?v={css_v}", index_html)
-    index_path.write_text(normalize_urls(index_html), encoding="utf-8")
+    index_path.write_text(normalize_html(normalize_urls(index_html)), encoding="utf-8")
     print("wrote index.html (partials)")
 
     # 残ページの電話・SNSも同期
-    for name in ("takeout.html", "reserve.html", "thanks.html"):
+    for name in ("takeout.html", "reserve.html", "thanks.html", "thanks-recruit.html"):
         p = ROOT / name
         if not p.exists():
             continue
         t = patch_contacts(p.read_text(encoding="utf-8"), site["phone"], tel, site, access)
         t = re.sub(r"(css/(?:style|responsive)\.css)\?v=[^\"\']+", rf"\1?v={css_v}", t)
         t = re.sub(r"(js/main\.js)\?v=[^\"\']+", rf"\1?v={css_v}", t)
-        p.write_text(normalize_urls(t), encoding="utf-8")
+        p.write_text(normalize_html(normalize_urls(t)), encoding="utf-8")
         print("patched", name)
 
     print("build ok")
