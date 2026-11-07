@@ -1,12 +1,32 @@
-/** Enable only after the custom domain and its TLS certificate are connected. */
-export function onRequest(context) {
+var PRODUCTION_HOSTS = ["ehimenomasa.com", "www.ehimenomasa.com"];
+var PAGE_NAMES = ["menu", "course", "shop", "about", "recruit", "privacy", "reserve", "takeout", "thanks", "thanks-recruit", "404"];
+
+function indexingHeaders(response, url) {
+  var result = new Response(response.body, response);
+  var completion = /^\/thanks(?:-recruit)?(?:\.html|\/)?$/.test(url.pathname);
+  if (completion) result.headers.set("X-Robots-Tag", "noindex, nofollow");
+  else if (response.status === 404 || PRODUCTION_HOSTS.indexOf(url.hostname) === -1) result.headers.set("X-Robots-Tag", "noindex");
+  else result.headers.delete("X-Robots-Tag");
+  return result;
+}
+
+export async function onRequest(context) {
   var url = new URL(context.request.url);
-  if (context.env.CANONICAL_REDIRECT === "1" && url.hostname === "ehimenomasa.pages.dev") {
-    url.protocol = "https:";
-    url.hostname = "ehimenomasa.com";
-    if (url.pathname === "/index.html") url.pathname = "/";
-    else if (url.pathname.endsWith(".html")) url.pathname = url.pathname.slice(0, -5);
-    return Response.redirect(url.toString(), 301);
+  if (context.request.method === "GET" || context.request.method === "HEAD") {
+    var target = new URL(url);
+    if ((context.env.CANONICAL_REDIRECT === "1" && url.hostname === "ehimenomasa.pages.dev") || url.hostname === "www.ehimenomasa.com") {
+      target.protocol = "https:";
+      target.hostname = "ehimenomasa.com";
+    }
+    if (/^\/index(?:\.html|\/)?$/.test(url.pathname)) target.pathname = "/";
+    else {
+      var match = url.pathname.match(/^\/([^/]+?)(?:\.html|\/)$/);
+      if (match && PAGE_NAMES.indexOf(match[1]) !== -1) target.pathname = "/" + match[1];
+    }
+    if (target.toString() !== url.toString()) return indexingHeaders(Response.redirect(target.toString(), 301), url);
   }
-  return context.next();
+  var response = await context.next();
+  // A directly requested error document must not become an indexable 200 page.
+  if (/^\/404(?:\.html|\/)?$/.test(url.pathname)) response = new Response(response.body, {status:404, headers:response.headers});
+  return indexingHeaders(response, url);
 }

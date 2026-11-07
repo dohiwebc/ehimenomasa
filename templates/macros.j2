@@ -1,12 +1,14 @@
 {# 共通マクロ #}
-{% macro head(title, description, canonical, css_v, extra_fonts='', preload_hero=false) -%}
+{% macro head(title, description, canonical, css_v, extra_fonts='', preload_hero=false, robots='') -%}
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ title }}</title>
-  <link rel="canonical" href="{{ canonical }}">
+{% if canonical %}  <link rel="canonical" href="{{ canonical }}">
+{% endif %}{% if robots %}  <meta name="robots" content="{{ robots }}">
+{% endif %}  <!-- TODO: google-site-verification -->
   <meta name="description" content="{{ description }}">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="theme-color" content="#243b55">
@@ -15,8 +17,8 @@
   <meta property="og:locale" content="ja_JP">
   <meta property="og:title" content="{{ title }}">
   <meta property="og:description" content="{{ description }}">
-  <meta property="og:url" content="{{ canonical }}">
-  <meta property="og:image" content="https://ehimenomasa.com/assets/images/site/hero-chicken-dishes.webp">
+{% if canonical %}  <meta property="og:url" content="{{ canonical }}">
+{% endif %}  <meta property="og:image" content="https://ehimenomasa.com/assets/images/site/hero-chicken-dishes.webp">
   <meta property="og:image:width" content="800">
   <meta property="og:image:height" content="600">
   <meta property="og:image:alt" content="愛媛の雅ちゃんの鶏料理">

@@ -73,8 +73,14 @@ def run():
         canonicals = [a.get("href") for t, a in page.tags if t == "link" and a.get("rel") == "canonical"]
         check(len(titles) == 1, f"{name}: title count")
         check(bool(metas.get("description")), f"{name}: missing description")
-        check(canonicals == [canonical], f"{name}: canonical mismatch")
-        check(metas.get("og:url") == canonical, f"{name}: og:url mismatch")
+        if name == "404.html":
+            check(not canonicals and not metas.get("og:url"), f"{name}: error document must not declare a canonical URL")
+            check(metas.get("robots") == "noindex", f"{name}: missing noindex")
+        else:
+            check(canonicals == [canonical], f"{name}: canonical mismatch")
+            check(metas.get("og:url") == canonical, f"{name}: og:url mismatch")
+            if not name.startswith("thanks"):
+                check("noindex" not in metas.get("robots", ""), f"{name}: accidental noindex")
         check(sum(t == "h1" for t, a in page.tags) == 1, f"{name}: h1 count")
         check("pages.dev" not in source, f"{name}: pages.dev remains")
         text = "".join(page.text)

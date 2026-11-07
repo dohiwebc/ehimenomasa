@@ -117,6 +117,14 @@ Pages の環境変数 `TURNSTILE_SECRET`、`FORMSPREE_RESERVE`、`FORMSPREE_TAKE
 
 ドメイン切替は [2026-11-08の修正・検証報告](docs/2026-11-08-site-review.md) を参照してください。`CANONICAL_REDIRECT=1` を設定した場合だけ、本番の `ehimenomasa.pages.dev` を独自ドメインへ301転送します。カスタムドメインとTLSの接続確認後に有効にしてください。
 
+## 本番切替と検索制御
+
+1. PagesのProductionに`ehimenomasa.com`と`www.ehimenomasa.com`を接続し、DNS・TLSを確認します。
+2. 本番2ホストは通常ページのnoindexを外し、その他のホストはnoindex、完了ページ・404は本番でもnoindexにします（Functionsで自動判定）。
+3. 接続後だけProductionの`CANONICAL_REDIRECT=1`を有効化します。Search ConsoleをDNS認証する場合はHTML確認metaは不要です。
+
+詳細・管理画面での作業は[公開前SEO整備報告](docs/2026-11-08-seo-prelaunch.md)を参照してください。
+
 ## 外部予約URL
 
 `js/main.js` 内の `EXTERNAL_RESERVATION_URL` で設定しています（ホットペッパー店舗ページ）。

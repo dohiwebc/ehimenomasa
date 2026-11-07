@@ -10,6 +10,7 @@ import hashlib
 from text_normalization import normalize_data, normalize_html, normalize_text
 from pathlib import Path
 from site_urls import normalize_urls
+from seo import finish_site
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -294,6 +295,7 @@ def main():
     }
 
     pages = {
+        "404.html": "404.html.j2",
         "menu.html": "menu.html.j2",
         "course.html": "course.html.j2",
         "about.html": "about.html.j2",
@@ -303,6 +305,9 @@ def main():
     }
     for out_name, tmpl in pages.items():
         html = normalize_html(normalize_urls(jinja.get_template(tmpl).render(**ctx)))
+        if out_name == "404.html":
+            for prefix in ("assets/", "css/", "js/"):
+                html = html.replace('src="' + prefix, 'src="/' + prefix).replace('href="' + prefix, 'href="/' + prefix)
         html = re.sub(r"(js/form-demo\.js)\?v=[^\"\']+", rf"\1?v={css_v}", html)
         (ROOT / out_name).write_text(html, encoding="utf-8")
         print("wrote", out_name)
@@ -340,6 +345,7 @@ def main():
         p.write_text(normalize_html(normalize_urls(t)), encoding="utf-8")
         print("patched", name)
 
+    finish_site()
     print("build ok")
 
 

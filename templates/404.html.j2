@@ -1,0 +1,24 @@
+{% import 'macros.j2' as m %}
+{{ m.head(
+  title='ページが見つかりません｜愛媛の雅ちゃん',
+  description='お探しのページが見つかりません。愛媛の雅ちゃんのトップページ、お品書き、ご予約はこちらからご確認ください。',
+  canonical='', css_v=css_v, robots='noindex'
+) }}
+<body>
+{{ m.site_header() }}
+<main id="main">
+  <section class="section">
+    <div class="container container--narrow">
+      <p class="kicker">404</p>
+      <h1 class="section-title">お探しのページが見つかりません</h1>
+      <div class="btn-group">
+        <a class="btn btn--primary" href="/">トップページ</a>
+        <a class="btn btn--line" href="/menu">お品書き</a>
+        <a class="btn btn--line" href="/reserve">ご予約</a>
+      </div>
+    </div>
+  </section>
+</main>
+{{ m.site_footer(site=site, access=access, tel=tel, css_v=css_v) }}
+</body>
+</html>
