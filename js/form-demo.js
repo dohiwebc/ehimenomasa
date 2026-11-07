@@ -435,7 +435,7 @@
 
       merged.forEach(function (line, i) {
         rows.push({
-          label: "ご注文 " + (i + 1),
+          label: "ご予約 " + (i + 1),
           value: line.name + " × " + line.qty
         });
       });
@@ -476,13 +476,13 @@
   }
 
   function formResultTitle(type) {
-    if (type === "takeout") return "テイクアウトのご依頼";
+    if (type === "takeout") return "テイクアウト予約";
     if (type === "recruit") return "スタッフ応募";
     return "ご来店予約";
   }
 
   function formConfirmTitle(type) {
-    if (type === "takeout") return "テイクアウト内容の確認";
+    if (type === "takeout") return "テイクアウト予約内容の確認";
     if (type === "recruit") return "応募内容の確認";
     return "ご予約内容の確認";
   }
@@ -600,7 +600,7 @@
 
       collectMergedOrders(form).forEach(function (line, i) {
         fd.append(
-          "ご注文 " + (i + 1),
+          "ご予約 " + (i + 1),
           "商品：" + line.name + "\n個数：" + line.qty + "個"
         );
       });
@@ -1201,7 +1201,7 @@
       ok = false;
       var note = document.createElement("p");
       note.className = "order-items__error";
-      note.textContent = "ご注文内容を1件以上入力してください";
+      note.textContent = "ご予約内容を1件以上入力してください";
       list.parentNode.insertBefore(note, list.nextSibling);
       if (!firstInvalid && items[0]) {
         firstInvalid = items[0].querySelector("[data-order-select]");
@@ -1391,7 +1391,7 @@
           select.name = "item_" + n;
         }
         if (label) {
-          label.textContent = "ご注文 " + n;
+          label.textContent = "ご予約 " + n;
           if (select) label.setAttribute("for", select.id);
         }
         if (qty) {

@@ -56,7 +56,7 @@ function allowedField(type, name) {
       name === "受取日" ||
       name === "受取時間" ||
       name === "その他ご要望・ご相談" ||
-      /^ご注文 \d{1,2}$/.test(name)
+      /^ご(?:予約|注文) \d{1,2}$/.test(name)
     );
   }
   if (type === "recruit") {

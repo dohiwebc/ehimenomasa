@@ -11,6 +11,7 @@ REPLACEMENTS = {
     "株式会社 雅道": "株式会社雅道",
 }
 WIDTH_TABLE = str.maketrans("０１２３４５６７８９，()～", "0123456789,（）〜")
+CONTAINER_FEE = "骨付鳥（おや・ひな）は1つにつき50円、その他のパックは1つにつき20円"
 
 
 def normalize_text(text):
@@ -74,6 +75,9 @@ class DisplayNormalizer(HTMLParser):
 
 
 def normalize_html(source):
+    for old in ("おやひな一つ50円・その他パック一つ20円", "おやひな1つ50円・その他パック1つ20円", "おやひな1つ50円・その他1つ20円"):
+        source = source.replace(old, CONTAINER_FEE)
+    source = source.replace("テイクアウト用パック・", "容器代：")
     parser = DisplayNormalizer()
     parser.feed(source)
     parser.close()

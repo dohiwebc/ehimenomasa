@@ -7,6 +7,7 @@ import sys
 import argparse
 import json
 import hashlib
+from html import escape
 from text_normalization import normalize_data, normalize_html, normalize_text
 from datetime import datetime, timezone
 from pathlib import Path
@@ -160,6 +161,22 @@ def patch_contacts(html: str, phone: str, tel: str, site: dict, access: dict) ->
             "〒790-0012 愛媛県松山市湊町5丁目4-2 健勝ビル2階",
             access["address"],
         )
+    return html
+
+
+def takeout_prices(html: str, menu: list[dict]) -> str:
+    names = ("丸亀名物 骨付鳥（おや）", "丸亀名物 骨付鳥（ひな）", "川之江名物 揚げ足鳥", "ざんぎ（骨付鳥の唐揚げ）", "手羽（グローブ）", "バラエティーセット", "名古屋名物 手羽先（5本）")
+    prices = {item["name"]: item["price_label"] for item in menu if item["price_label"]}
+    rows = []
+    for name in names:
+        price = prices.get(name)
+        if not price:
+            continue
+        rows.append(f"<li>{escape(name)}：{escape(price)}（税込）</li>")
+        pattern = r'(<option value="' + re.escape(name) + r'">)[^<]*(</option>)'
+        html = re.sub(pattern, lambda m: m[1] + escape(name + " " + price + "（税込）") + m[2], html)
+    if "<!-- cms:takeout_prices -->" in html:
+        html = replace_marked(html, "takeout_prices", '<ul class="takeout-prices">' + "\n".join(rows) + '</ul>')
     return html
 
 
@@ -335,6 +352,8 @@ def main():
         if not p.exists():
             continue
         t = patch_contacts(p.read_text(encoding="utf-8"), site["phone"], tel, site, access)
+        if name == "takeout.html":
+            t = takeout_prices(t, menu_items)
         t = re.sub(r"(css/(?:style|responsive)\.css)\?v=[^\"\']+", rf"\1?v={css_v}", t)
         t = re.sub(r"(js/main\.js)\?v=[^\"\']+", rf"\1?v={css_v}", t)
         p.write_text(normalize_html(normalize_urls(t)), encoding="utf-8")
