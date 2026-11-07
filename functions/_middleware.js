@@ -1,5 +1,22 @@
 var PRODUCTION_HOSTS = ["ehimenomasa.com", "www.ehimenomasa.com"];
 var PAGE_NAMES = ["menu", "course", "shop", "about", "recruit", "privacy", "reserve", "takeout", "thanks", "thanks-recruit", "404"];
+// Pages Functions bypass _redirects; tests enforce the same confirmed mapping.
+var LEGACY_REDIRECTS = {
+  "/menu-course": "/menu",
+  "/menu-course/": "/menu",
+  "/corporate": "/about",
+  "/corporate/": "/about",
+  "/gallery": "/shop",
+  "/gallery/": "/shop",
+  "/news": "/",
+  "/news/": "/",
+  "/category/blog": "/",
+  "/category/blog/": "/",
+  "/author/famedemo": "/",
+  "/author/famedemo/": "/",
+  "/sitemap_index.xml": "/sitemap.xml",
+  "/wp-sitemap.xml": "/sitemap.xml"
+};
 
 function indexingHeaders(response, url) {
   var result = new Response(response.body, response);
@@ -18,7 +35,9 @@ export async function onRequest(context) {
       target.protocol = "https:";
       target.hostname = "ehimenomasa.com";
     }
-    if (/^\/index(?:\.html|\/)?$/.test(url.pathname)) target.pathname = "/";
+    var legacy = LEGACY_REDIRECTS[url.pathname];
+    if (legacy) target.pathname = legacy;
+    else if (/^\/index(?:\.html|\/)?$/.test(url.pathname)) target.pathname = "/";
     else {
       var match = url.pathname.match(/^\/([^/]+?)(?:\.html|\/)$/);
       if (match && PAGE_NAMES.indexOf(match[1]) !== -1) target.pathname = "/" + match[1];

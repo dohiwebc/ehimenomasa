@@ -43,6 +43,31 @@ for(const [from,to] of [['/index.html','/'],['/index','/'],['/menu.html','/menu'
 }
 console.log('SEO middleware: host-specific robots, error pages, completion pages, www and clean URL redirects passed.');
 
+const legacyPairs=[['/menu-course','/menu'],['/corporate','/about'],['/gallery','/shop'],['/news','/'],['/category/blog','/'],['/author/famedemo','/'],['/sitemap_index.xml','/sitemap.xml'],['/wp-sitemap.xml','/sitemap.xml']];
+const expectedLegacy=new Map(legacyPairs.flatMap(([from,to])=>from.endsWith('.xml')?[[from,to]]:[[from,to],[from+'/',to]]));
+const redirectLines=(await readFile(new URL('../_redirects',import.meta.url),'utf8')).split('\n').map(s=>s.trim()).filter(s=>s&&!s.startsWith('#')).map(s=>s.split(/\s+/));
+assert.equal(redirectLines.length,14);
+assert.ok(redirectLines.every(([, ,status])=>status==='301'));
+assert.deepEqual(new Map(redirectLines.map(([from,to])=>[from,to])),expectedLegacy);
+const destinations=new Set(['/','/menu','/about','/shop','/sitemap.xml']);
+for(const host of ['ehimenomasa.com','www.ehimenomasa.com','ehimenomasa.pages.dev','preview.ehimenomasa.pages.dev'])for(const method of ['GET','HEAD'])for(const [from,to]of expectedLegacy) {
+  const start='https://'+host+from+'?keep=1';
+  const env={CANONICAL_REDIRECT:'1'};
+  const call=url=>onRequest({request:new Request(url,{method}),env,next:()=>new Response(null,{status:destinations.has(new URL(url).pathname)?200:404})});
+  const response=await call(start);
+  assert.equal(response.status,301);
+  const target=new URL(response.headers.get('location'));
+  assert.equal(target.pathname,to);assert.equal(target.search,'?keep=1');
+  assert.equal(target.hostname,host==='www.ehimenomasa.com'||host==='ehimenomasa.pages.dev'?'ehimenomasa.com':host);
+  assert.notEqual(target.href,start);
+  assert.equal((await call(target.href)).status,200,'must terminate after one redirect');
+}
+for(const host of ['ehimenomasa.com','preview.ehimenomasa.pages.dev']) {
+  const result=await onRequest({request:new Request('https://'+host+'/2021/12/30/markup-html-tags-and-formatting/'),env:{},next:()=>new Response('not found',{status:404})});
+  assert.equal(result.status,404);assert.equal(result.headers.get('location'),null);
+}
+console.log('Legacy redirects: 14 rules match middleware; GET/HEAD x 4 hosts reach final targets in one hop; excluded WordPress article stays 404.');
+
 const {onRequestPost}=await load('../functions/api/forms/[type].js');
 const originalFetch = globalThis.fetch;
 let verification=true;

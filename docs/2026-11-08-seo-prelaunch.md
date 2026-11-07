@@ -1,5 +1,7 @@
 # 本番公開前SEO整備（2026-11-08）
 
+更新：追加指示によりRestaurantのpriceRangeとYouTubeのsameAsを削除し、確認済み旧URLの301を14件追加しました。以下の初回記録より[SEO最終調整の報告](2026-11-08-seo-final.md)を優先してください。
+
 作業ブランチ：`codex/seo-prelaunch`。比較元：`c307f8a`。
 確認用：[プレビュー](https://codex-site-review.ehimenomasa.pages.dev/)、[404の確認](https://codex-site-review.ehimenomasa.pages.dev/this-page-does-not-exist)。
 

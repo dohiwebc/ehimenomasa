@@ -91,7 +91,8 @@ def run():
         if file.name == "index.html":
             restaurant = next(d for d in data.scripts if d.get("@type") == "Restaurant")
             assert restaurant["telephone"] == "+81-89-913-1194"
-            assert restaurant["priceRange"] == "¥1,000〜¥3,000"
+            assert "priceRange" not in restaurant
+            assert restaurant["sameAs"] == ["https://www.instagram.com/ehimenomasa/", "https://www.hotpepper.jp/strJ004612520/", "https://www.google.com/maps?cid=9419635694924827751"]
             assert "aggregateRating" not in restaurant and "review" not in restaurant
             assert restaurant["openingHoursSpecification"][0]["opens"] == "17:30"
             assert restaurant["openingHoursSpecification"][0]["closes"] == "22:30"

@@ -1,5 +1,18 @@
-# Legacy URL redirects: add only after the old URL list is confirmed.
-# Format: /old-path /current-clean-path 301
-# Example (not active): /old-menu /menu 301
+# Confirmed WordPress URLs. Keep functions/_middleware.js in sync (tested).
+/menu-course /menu 301
+/menu-course/ /menu 301
+/corporate /about 301
+/corporate/ /about 301
+/gallery /shop 301
+/gallery/ /shop 301
+/news / 301
+/news/ / 301
+/category/blog / 301
+/category/blog/ / 301
+/author/famedemo / 301
+/author/famedemo/ / 301
+/sitemap_index.xml /sitemap.xml 301
+/wp-sitemap.xml /sitemap.xml 301
+
 # /access -> /shop requires owner confirmation; intentionally not enabled.
 # Keep missing paths as 404; do not add catch-all 200 rewrites.
