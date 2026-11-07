@@ -5304,10 +5304,18 @@ body.is-lightbox-open {
 }
 
 .reveal {
-  opacity: 0; transform: translateY(14px);
+  opacity: 1; transform: none;
   transition: opacity 0.75s var(--ease), transform 0.75s var(--ease);
 }
 .reveal.is-visible { opacity: 1; transform: none; }
+
+.form-row--party { align-items: center; }
+.form-row--party .form-control { flex: 1; min-width: 0; }
+.phone-number, .form-check a { white-space: nowrap; }
+.form-actions .btn[href^="tel:"] { flex-wrap: wrap; }
+.field-error, .date-field__warning { margin-top: 0.5rem; font-size: 0.9rem; line-height: 1.7; }
+.field-error { color: #a32424; }
+.date-field__warning { color: #754800; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

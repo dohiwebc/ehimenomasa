@@ -180,6 +180,11 @@
     items.forEach(function (el) {
       observer.observe(el);
     });
+    // Content must remain reachable even when observation callbacks never arrive.
+    window.setTimeout(function () {
+      items.forEach(function (el) { el.classList.add("is-visible"); });
+      observer.disconnect();
+    }, 1600);
   }
 
   function initExternalReservation() {

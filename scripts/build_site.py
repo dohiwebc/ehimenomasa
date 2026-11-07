@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import re
 import sys
+import argparse
+import json
 from datetime import datetime, timezone
 from pathlib import Path
 from site_urls import normalize_urls
@@ -74,8 +76,13 @@ def normalize_menu_item(raw: dict) -> dict:
 def normalize_course(raw: dict) -> dict:
     desc = raw.get("description") or ""
     lines = [ln.strip() for ln in desc.splitlines() if ln.strip()]
+    name = raw.get("name") or ""
+    if name == "親雛コース＜全8品＞":
+        name += "（〆ご飯・アイス付き）"
+    elif name == "親雛コース＜全6品＞":
+        name += "（〆ご飯・アイスなし）"
     return {
-        "name": raw.get("name") or "",
+        "name": name,
         "price_label": format_price_course(raw.get("price")),
         "lead": raw.get("lead") or "",
         "lines": lines,
@@ -155,19 +162,26 @@ def patch_contacts(html: str, phone: str, tel: str, site: dict, access: dict) ->
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--snapshot", type=Path, help="Read-only CMS snapshot for reproducible verification")
+    args = parser.parse_args()
     env = load_env()
     service_id = env.get("MICROCMS_SERVICE_ID")
     api_key = env.get("MICROCMS_API_KEY") or env.get("MICROCMS_WRITE_API_KEY")
-    if not service_id or not api_key:
+    if not args.snapshot and (not service_id or not api_key):
         sys.exit("MICROCMS_SERVICE_ID / MICROCMS_API_KEY が必要です")
 
     css_v = datetime.now(timezone.utc).strftime("%Y%m%d%H%M")
-    print("fetching microCMS…")
-    menu_raw = fetch_all("menu", api_key, service_id)
-    course_raw = fetch_all("course", api_key, service_id)
-    about_raw = fetch_one("about", api_key, service_id)
-    access_raw = fetch_one("access", api_key, service_id)
-    site_raw = fetch_one("site", api_key, service_id)
+    if args.snapshot:
+        snapshot = json.loads(args.snapshot.read_text(encoding="utf-8"))
+        menu_raw, course_raw, about_raw, access_raw, site_raw = (snapshot[k] for k in ("menu", "course", "about", "access", "site"))
+    else:
+        print("fetching microCMS…")
+        menu_raw = fetch_all("menu", api_key, service_id)
+        course_raw = fetch_all("course", api_key, service_id)
+        about_raw = fetch_one("about", api_key, service_id)
+        access_raw = fetch_one("access", api_key, service_id)
+        site_raw = fetch_one("site", api_key, service_id)
 
     menu_items = [normalize_menu_item(x) for x in menu_raw]
     courses = sorted([normalize_course(x) for x in course_raw], key=lambda x: x["sortOrder"])
@@ -179,8 +193,9 @@ def main():
         "揚げ鳥コース": "assets/images/site/course-agedori.webp",
     }
     for c in courses:
-        if c["name"] in local_course_images:
-            c["image"] = local_course_images[c["name"]]
+        base_name = c["name"].split("（")[0]
+        if base_name in local_course_images:
+            c["image"] = local_course_images[base_name]
 
     categories = group_menu(menu_items)
 

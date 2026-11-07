@@ -50,6 +50,9 @@
             <p class="price">{{ c.price_label }}</p>
           </div>
           {% if c.lead %}<p class="course-detail__lead">{{ c.lead }}</p>{% endif %}
+          {% if '親雛コース＜全6品＞' in c.name %}
+          <p class="note">※女子会コースはこちらです</p>
+          {% endif %}
           {% if c.lines %}
           <ul class="course-detail__list">
             {% for line in c.lines %}

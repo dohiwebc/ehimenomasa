@@ -29,8 +29,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Old+Mincho:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/style.css?v=202610011417">
-  <link rel="stylesheet" href="css/responsive.css?v=202610011417">
+  <link rel="stylesheet" href="css/style.css?v=202611071702">
+  <link rel="stylesheet" href="css/responsive.css?v=202611071702">
 </head>
 <body>
 
@@ -103,7 +103,7 @@
           <section class="reserve-quick" aria-labelledby="reserve-quick-title">
             <p class="form-panel__kicker">Quick Reserve</p>
             <h2 class="form-panel__title" id="reserve-quick-title">すぐ予約する</h2>
-            <p class="form-panel__lead reserve-quick__lead">すぐのご予約はホットペッパーグルメが便利です。お電話・LINEでも受け付けています。</p>
+            <p class="form-panel__lead reserve-quick__lead">すぐのご予約は<a href="https://www.hotpepper.jp/strJ004612520/" target="_blank" rel="noopener noreferrer">ホットペッパーグルメ</a>が便利です。お電話・LINEでも受け付けています。</p>
             <div class="reserve-quick__actions">
               <a class="btn btn--hotpepper btn--hotpepper-lg" data-external-reserve hidden aria-label="ホットペッパーグルメで予約する">
                 <img class="btn--hotpepper__logo" src="assets/icons/logo-hotpepper-gourmet.png" alt="ホットペッパーグルメ" width="264" height="45" decoding="async">
@@ -141,7 +141,7 @@
               </div>
               <div class="form-group">
                 <label for="rs-party">ご予約人数 <span class="req">必須</span></label>
-                <input class="form-control" id="rs-party" name="party" type="number" min="1" required placeholder="2">
+                <div class="form-row form-row--party"><input class="form-control" id="rs-party" name="party" type="number" min="1" step="1" required placeholder="人数を入力" aria-describedby="rs-party-unit"><span id="rs-party-unit">名</span></div>
               </div>
               <div class="form-group">
                 <label for="rs-date">ご来店日 <span class="req">必須</span></label>
@@ -168,10 +168,9 @@
               <select class="form-control" id="rs-course" name="course">
                 <option selected>席のみ予約</option>
                 <option>満喫コース</option>
-                <option>親雛コース（〆ご飯・アイスあり）</option>
-                <option>親雛コース（〆ご飯・アイスなし）</option>
+                <option>親雛コース＜全8品＞（〆ご飯・アイス付き）</option>
+                <option>親雛コース＜全6品＞（〆ご飯・アイスなし）</option>
                 <option>揚げ鳥コース</option>
-                <option>女子会コース</option>
                 <option>単品飲み放題</option>
               </select>
             </div>
@@ -194,7 +193,7 @@
               <button class="btn btn--primary" type="submit">予約内容を送信する</button>
               <a class="btn btn--line" href="tel:0899131194" data-reserve-gate="tel">
                 <span class="btn__icon btn__icon--phone" aria-hidden="true"></span>
-                電話で問い合わせ（089-913-1194）
+                電話で問い合わせ<span class="phone-number">（089-913-1194）</span>
               </a>
             </div>
           </form>
@@ -345,7 +344,7 @@
     </div>
   </div>
 
-<script src="js/main.js?v=202610011417"></script>
+<script src="js/main.js?v=202611071702"></script>
 <script src="js/form-demo.js?v=20260929c"></script>
 </body>
 </html>

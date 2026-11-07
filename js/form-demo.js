@@ -19,6 +19,28 @@
   var TURNSTILE_WAIT_TEXT =
     "セキュリティ確認が完了していません。チェックが「成功」になったことを確認してから、もう一度お試しください。";
 
+  // 2026/2027: Cabinet Office calendar. 2028 equinoxes need confirmation in February 2027.
+  var HOLIDAYS = (
+    "2026-01-01 2026-01-12 2026-02-11 2026-02-23 2026-03-20 2026-04-29 2026-05-03 2026-05-04 2026-05-05 2026-05-06 2026-07-20 2026-08-11 2026-09-21 2026-09-22 2026-09-23 2026-10-12 2026-11-03 2026-11-23 " +
+    "2027-01-01 2027-01-11 2027-02-11 2027-02-23 2027-03-21 2027-03-22 2027-04-29 2027-05-03 2027-05-04 2027-05-05 2027-07-19 2027-08-11 2027-09-20 2027-09-23 2027-10-11 2027-11-03 2027-11-23 " +
+    "2028-01-01 2028-01-10 2028-02-11 2028-02-23 2028-03-20 2028-04-29 2028-05-03 2028-05-04 2028-05-05 2028-07-17 2028-08-11 2028-09-18 2028-09-22 2028-10-09 2028-11-03 2028-11-23"
+  ).split(" ");
+
+  function updateHolidayWarning(el) {
+    var warning = document.getElementById(el.id + "-holiday");
+    if (!warning) {
+      warning = document.createElement("p");
+      warning.id = el.id + "-holiday";
+      warning.className = "date-field__warning";
+      warning.setAttribute("aria-live", "polite");
+      el.closest(".form-group").appendChild(warning);
+      el.setAttribute("aria-describedby", [el.getAttribute("aria-describedby"), warning.id].filter(Boolean).join(" "));
+    }
+    var date = el.value ? new Date(el.value + "T12:00:00") : null;
+    var closed = date && (date.getDay() === 0 || HOLIDAYS.indexOf(el.value) !== -1);
+    warning.textContent = closed ? "日曜日・祝日は定休日です。特別に営業する日もありますが、ご希望に添えない場合があります。お電話（089-913-1194）でもご確認ください。" : "";
+  }
+
   function ready(fn) {
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", fn);
@@ -72,7 +94,7 @@
     el.setAttribute("aria-invalid", "true");
   }
 
-  /** 過去日なら今日に戻す。不正なら true を返す */
+  /** Keep invalid dates visible so the user can correct them. */
   function clampDateToToday(el, opts) {
     opts = opts || {};
     if (!el || el.type !== "date") return false;
@@ -87,7 +109,6 @@
     }
 
     if (isPastDate(el.value, today)) {
-      el.value = today;
       if (opts.showError !== false) {
         setDateFieldError(el, "過去の日付は選択できません。本日以降の日付を選んでください。");
       } else {
@@ -282,19 +303,18 @@
     return { ok: ok, firstInvalid: firstInvalid };
   }
 
-  /** data-min-today の日付欄：初期値を今日・過去日を選択不可に */
+  /** Start empty and disallow dates before today. */
   function initDateMinToday() {
     var today = todayISO();
     var fields = document.querySelectorAll('input[type="date"][data-min-today]');
     Array.prototype.forEach.call(fields, function (el) {
       el.min = today;
       el.setAttribute("min", today);
-      if (!el.value || isPastDate(el.value, today)) {
-        el.value = today;
-      }
+      updateHolidayWarning(el);
 
       function onDateEdit() {
         clampDateToToday(el, { showError: true });
+        updateHolidayWarning(el);
       }
 
       el.addEventListener("change", onDateEdit);
@@ -972,7 +992,7 @@
         '<div class="confirm-overlay__summary">' +
           renderSummaryHtml(rows) +
         "</div>" +
-        '<p class="confirm-overlay__error" data-confirm-error hidden></p>' +
+        '<p class="confirm-overlay__error" data-confirm-error role="alert" hidden></p>' +
         '<div class="confirm-overlay__actions">' +
           '<button type="button" class="btn btn--line" data-confirm-cancel>戻って修正</button>' +
           '<button type="button" class="btn btn--primary" data-confirm-send>この内容で送信する</button>' +
@@ -1136,7 +1156,7 @@
 
   function validateOrderItems(form) {
     var list = form.querySelector("[data-order-items]");
-    if (!list) return true;
+    if (!list) return { ok: true, firstInvalid: null };
 
     clearOrderErrors(form);
 
@@ -1188,59 +1208,71 @@
       }
     }
 
-    if (firstInvalid && firstInvalid.focus) firstInvalid.focus();
-    return ok;
+    return { ok: ok, firstInvalid: firstInvalid };
+  }
+
+  function setFieldError(el, message) {
+    var id = el.id + "-error";
+    var error = document.getElementById(id);
+    if (!error) {
+      error = document.createElement("p");
+      error.id = id;
+      error.className = "field-error";
+      error.setAttribute("aria-live", "polite");
+      (el.closest(".form-group") || el.parentNode).appendChild(error);
+      el.setAttribute("aria-describedby", [el.getAttribute("aria-describedby"), id].filter(Boolean).join(" "));
+    }
+    error.textContent = message;
+    el.classList.toggle("is-invalid", !!message);
+    if (message) el.setAttribute("aria-invalid", "true");
+    else el.removeAttribute("aria-invalid");
   }
 
   function validateRequired(form) {
     var ok = true;
     var firstInvalid = null;
     var today = todayISO();
-    var required = form.querySelectorAll("[required]");
+    var required = form.querySelectorAll('[required], input[type="email"]');
     Array.prototype.forEach.call(required, function (el) {
-      var valid = true;
-      if (el.type === "checkbox") valid = el.checked;
-      else valid = !!(el.value && String(el.value).trim());
+      var message = "";
+      var empty = !String(el.value || "").trim();
+      if (el.required && (el.type === "checkbox" ? !el.checked : empty)) {
+        message = el.type === "checkbox" ? "個人情報の取り扱いへの同意が必要です。" : getFieldLabel(el) + "を入力してください。";
+      } else if (el.type === "email" && !empty && el.validity.typeMismatch) {
+        message = "メールアドレスの形式を確認してください。";
+      } else if (el.type === "number" && !empty && !el.validity.valid) {
+        message = "1以上の整数で入力してください。";
+      }
 
       if (el.type === "date" && el.hasAttribute("data-min-today")) {
         var entered = el.value;
         el.min = today;
         el.setAttribute("min", today);
         if (isPastDate(entered, today)) {
-          valid = false;
-          el.value = today;
-          setDateFieldError(el, "過去の日付は選択できません。本日以降の日付を選んでください。");
+          message = "過去の日付は選択できません。本日以降の日付を選んでください。";
         } else if (!entered) {
-          valid = false;
-          el.value = today;
-          setDateFieldError(el, "日付を選択してください。");
-        } else {
-          setDateFieldError(el, "");
+          message = "日付を選択してください。";
         }
+        setDateFieldError(el, "");
       }
 
-      if (!valid) {
+      setFieldError(el, message);
+      if (message) {
         ok = false;
-        el.classList.add("is-invalid");
         if (!firstInvalid) firstInvalid = el;
-      } else {
-        el.classList.remove("is-invalid");
-        if (el.type === "date" && el.hasAttribute("data-min-today")) {
-          setDateFieldError(el, "");
-        }
       }
     });
 
     var ordersOk = validateOrderItems(form);
-    if (!ordersOk) ok = false;
+    if (!ordersOk.ok) ok = false;
 
     var timeCheck = validateTimePairs(form);
     if (!timeCheck.ok) {
       ok = false;
-      if (!firstInvalid && timeCheck.firstInvalid) firstInvalid = timeCheck.firstInvalid;
     }
 
-    if (firstInvalid && firstInvalid.focus && ordersOk) firstInvalid.focus();
+    firstInvalid = form.querySelector('.is-invalid:not(.order-item)') || firstInvalid || timeCheck.firstInvalid || ordersOk.firstInvalid;
+    if (firstInvalid && firstInvalid.focus) firstInvalid.focus();
     return ok;
   }
 
