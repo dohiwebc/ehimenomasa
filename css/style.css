@@ -1169,14 +1169,14 @@ body.is-menu-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) ro
 .hero-nav__btn--primary {
   min-height: 4.55rem;
   padding: 0.95rem 1.4rem 1.05rem 1.45rem;
-  background: #f3ece0;
-  border-color: #f3ece0;
-  color: #2c2118;
+  background: var(--ember-deep);
+  border-color: var(--ember-deep);
+  color: #fff;
 }
 
 .hero-nav__btn--primary .hero-nav__en {
-  opacity: 0.68;
-  color: #2c2118;
+  opacity: 1;
+  color: inherit;
 }
 
 .hero-nav__btn--primary .hero-nav__label {
@@ -1186,15 +1186,21 @@ body.is-menu-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) ro
 
 .hero-nav__btn--primary:hover,
 .hero-nav__btn--primary:focus-visible {
-  background: #2c2118;
-  border-color: #2c2118;
-  color: #f3ece0;
+  background: var(--ember);
+  border-color: var(--ember);
+  color: #fff;
 }
 
 .hero-nav__btn--primary:hover .hero-nav__en,
 .hero-nav__btn--primary:focus-visible .hero-nav__en {
-  color: #f3ece0;
-  opacity: 0.72;
+  color: inherit;
+  opacity: 1;
+}
+
+.hero-nav__btn--primary:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px var(--ink);
 }
 
 .hero-nav__btn--secondary {
