@@ -1169,8 +1169,8 @@ body.is-menu-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) ro
 .hero-nav__btn--primary {
   min-height: 4.55rem;
   padding: 0.95rem 1.4rem 1.05rem 1.45rem;
-  background: var(--ember-deep);
-  border-color: var(--ember-deep);
+  background: var(--indigo);
+  border-color: var(--indigo);
   color: #fff;
 }
 
@@ -1186,8 +1186,8 @@ body.is-menu-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) ro
 
 .hero-nav__btn--primary:hover,
 .hero-nav__btn--primary:focus-visible {
-  background: var(--ember);
-  border-color: var(--ember);
+  background: var(--indigo-soft);
+  border-color: var(--indigo-soft);
   color: #fff;
 }
 
