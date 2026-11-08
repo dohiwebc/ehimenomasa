@@ -68,7 +68,7 @@ for(const host of ['ehimenomasa.com','preview.ehimenomasa.pages.dev']) {
 }
 console.log('Legacy redirects: 14 rules match middleware; GET/HEAD x 4 hosts reach final targets in one hop; excluded WordPress article stays 404.');
 
-const {onRequestPost}=await load('../functions/api/forms/[type].js');
+const {onRequest:onRequestPost}=await load('../functions/api/forms/[type].js');
 const originalFetch = globalThis.fetch;
 let verification=true;
 let forwards=0;
@@ -84,7 +84,7 @@ try {
   for (const valid of [true,false]) {
     verification=valid;
     const body=new FormData();body.set('cf-turnstile-response','mock-token');body.set('ご予約 1','骨付鳥 1個');
-    const response=await onRequestPost({params:{type:'takeout'},env:{TURNSTILE_SECRET:'test-only',FORMSPREE_TAKEOUT:'https://formspree.io/f/testMock'},request:new Request('https://ehimenomasa.com/api/forms/takeout',{method:'POST',body})});
+    const response=await onRequestPost({params:{type:'takeout'},env:{TURNSTILE_SECRET:'test-only',FORMSPREE_TAKEOUT:'https://formspree.io/f/testMock'},request:new Request('https://ehimenomasa.com/api/forms/takeout',{method:'POST',headers:{Origin:'https://ehimenomasa.com'},body})});
     assert.equal(response.status,valid?200:403);
   }
   assert.equal(forwards,1);

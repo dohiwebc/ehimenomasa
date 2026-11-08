@@ -33,8 +33,8 @@ GitHub に置いた静的ファイルを、Cloudflare Pages で配信できま�
 2. リポジトリ **`dohiwebc/ehimenomasa`** を選択
 3. ビルド設定:
    - Framework preset: **None**
-   - Build command: **空欄**
-   - Build output directory: **`/`**（または `.`）
+   - Build command: **`python3 scripts/export_public.py`**（GitHub Actions生成済みHTMLを使用）
+   - Build output directory: **`dist`**（リポジトリ直下は公開しない）
    - Root directory: 空欄
 4. **Save and Deploy**
 5. 発行された `https://xxxx.pages.dev` が仮公開URL
@@ -43,6 +43,8 @@ GitHub に置いた静的ファイルを、Cloudflare Pages で配信できま�
 
 ### 補足
 
+- `wrangler.toml`の出力先も`dist`です。CLIではリポジトリ直下から`wrangler pages deploy dist`を実行します。`functions/`はFunctionsとしてコンパイルされ、公開静的ファイルには含めません。
+- `dist`には許可したHTML・CSS・JS・画像・robots・sitemap・リダイレクト設定だけを出力します。設定、メモ、テスト、環境変数、元画像はコピーしません。
 - コンテンツ更新はこれまでどおり microCMS → GitHub Actions で `main` に反映
 - Cloudflare Pages は `main` を見て自動デプロイ（Git 連携時）
 - ロリポップの旧サイト・お名前.com のドメイン契約はそのまま触れなくてよい

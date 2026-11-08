@@ -11,6 +11,7 @@ from text_normalization import normalize_data, normalize_html, normalize_text
 from pathlib import Path
 from site_urls import normalize_urls
 from seo import finish_site
+from export_public import export_public
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -346,6 +347,7 @@ def main():
         print("patched", name)
 
     finish_site()
+    export_public()
     print("build ok")
 
 

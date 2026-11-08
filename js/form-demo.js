@@ -54,7 +54,8 @@
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;");
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
   }
 
   /** ローカル日付を YYYY-MM-DD で返す */
@@ -369,6 +370,7 @@
 
     Array.prototype.forEach.call(controls, function (el) {
       if (!el.name) return;
+      if (el.name === "_website") return;
       if (el.type === "submit" || el.type === "button") return;
       if (el.type === "checkbox" && !el.checked) return;
 
@@ -691,6 +693,7 @@
     /* Formspree へは直接送らない。サイト側で Turnstile を確認してから転送する */
     var endpoint = "/api/forms/" + encodeURIComponent(type);
     var body = buildFormspreeData(form, type);
+    body.set("_website", fieldValue(form, "_website"));
     var token = getTurnstileToken(form);
 
     /* Turnstile が挿入する空の cf-turnstile-response は送らない（空欄だと Formspree が 400） */

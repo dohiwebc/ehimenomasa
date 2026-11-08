@@ -29,8 +29,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Old+Mincho:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/style.css?v=e21932485c20">
-  <link rel="stylesheet" href="css/responsive.css?v=e21932485c20">
+  <link rel="stylesheet" href="css/style.css?v=ce48a066fd0b">
+  <link rel="stylesheet" href="css/responsive.css?v=ce48a066fd0b">
   <!-- TODO: google-site-verification -->
 </head>
 <body>
@@ -105,14 +105,15 @@
           <h2 class="form-panel__title">テイクアウト予約フォーム</h2>
           <p class="form-panel__lead">お問い合わせいただきました内容を確認のうえ、スタッフより折り返しご連絡いたします。すぐのご予約はお電話が便利です。</p>
           <form data-demo-form novalidate>
+            <div hidden aria-hidden="true"><input type="text" name="_website" tabindex="-1" autocomplete="off" maxlength="200" data-honeypot></div>
             <div class="form-grid">
               <div class="form-group">
                 <label for="to-name">お名前 <span class="req">必須</span></label>
-                <input class="form-control" id="to-name" name="name" type="text" required autocomplete="name" placeholder="山田 太郎">
+                <input class="form-control" id="to-name" name="name" type="text" maxlength="50" required autocomplete="name" placeholder="山田 太郎">
               </div>
               <div class="form-group">
                 <label for="to-tel">お電話番号 <span class="req">必須</span></label>
-                <input class="form-control" id="to-tel" name="tel" type="tel" required autocomplete="tel" placeholder="090-0000-0000">
+                <input class="form-control" id="to-tel" name="tel" type="tel" maxlength="20" required autocomplete="tel" placeholder="090-0000-0000">
               </div>
               <div class="form-group">
                 <label for="to-date">受取日 <span class="req">必須</span></label>
@@ -134,13 +135,13 @@
               </div>
               <div class="form-group">
                 <label for="to-email">メールアドレス <span class="opt">任意</span></label>
-                <input class="form-control" id="to-email" name="email" type="email" autocomplete="email" placeholder="example@email.com">
+                <input class="form-control" id="to-email" name="email" type="email" maxlength="254" autocomplete="email" placeholder="example@email.com">
               </div>
             </div>
 
             <div class="form-group">
               <label for="to-note">その他ご要望・ご相談 <span class="opt">任意</span></label>
-              <textarea class="form-control" id="to-note" name="note" placeholder="ご要望があればご記入ください"></textarea>
+              <textarea class="form-control" id="to-note" name="note" maxlength="1000" placeholder="ご要望があればご記入ください"></textarea>
             </div>
 
             <div class="form-section">
@@ -366,7 +367,7 @@
     </div>
   </div>
 
-<script src="js/main.js?v=e21932485c20"></script>
-<script src="js/form-demo.js?v=e21932485c20"></script>
+<script src="js/main.js?v=ce48a066fd0b"></script>
+<script src="js/form-demo.js?v=ce48a066fd0b"></script>
 </body>
 </html>

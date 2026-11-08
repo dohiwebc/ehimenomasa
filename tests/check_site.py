@@ -8,6 +8,8 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
+if "--public" in sys.argv:
+    ROOT = ROOT / "dist"
 ORIGIN = "https://ehimenomasa.com"
 
 
