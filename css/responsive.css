@@ -212,6 +212,36 @@
 }
 
 @media (max-width: 1024px) {
+  .hero-nav__btn--primary {
+    background: var(--indigo);
+    border-color: var(--indigo);
+    color: #fff;
+  }
+
+  .hero-nav__btn--primary .hero-nav__en {
+    color: inherit;
+    opacity: 1;
+  }
+
+  .hero-nav__btn--primary:hover,
+  .hero-nav__btn--primary:focus-visible {
+    background: var(--indigo-soft);
+    border-color: var(--indigo-soft);
+    color: #fff;
+  }
+
+  .hero-nav__btn--primary:hover .hero-nav__en,
+  .hero-nav__btn--primary:focus-visible .hero-nav__en {
+    color: inherit;
+    opacity: 1;
+  }
+
+  .hero-nav__btn--primary:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 5px var(--ink);
+  }
+
 
   .footer-info {
     grid-template-columns: 1fr;
