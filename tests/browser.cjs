@@ -39,7 +39,21 @@ async function run() {
       });
       await page.clock.setFixedTime(new Date('2026-11-08T03:00:00+09:00'));
       await page.goto(base+'/'+type);
+      if (type === 'reserve') {
+        assert.equal(await page.getByRole('link', {name:'WEB予約',exact:true}).getAttribute('href'), '#reserve-form');
+        await page.getByRole('link', {name:'ホームページ予約はこちら'}).click();
+        assert.equal(new URL(page.url()).hash, '#reserve-form');
+        assert.ok(await page.locator('#reserve-form').evaluate(el => {
+          const top = el.getBoundingClientRect().top;
+          return top >= parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) && top < innerHeight;
+        }));
+      }
       const date = page.locator('input[type=date]');
+      assert.ok(await date.evaluate(el => {
+        const field = el.getBoundingClientRect();
+        const group = el.closest('.form-group').getBoundingClientRect();
+        return field.width > 0 && field.left >= group.left && field.right <= group.right + 0.5;
+      }), `${type}: date input stays inside its column`);
       assert.equal(await date.inputValue(),'');
       assert.equal(await date.getAttribute('min'),'2026-11-08');
       await page.locator('[type=submit]').click();
