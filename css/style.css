@@ -3361,18 +3361,13 @@ textarea.form-control {
   width: 100%;
 }
 .reserve-quick__form-link {
-  min-height: 44px;
+  min-height: 48px;
   padding: 0.55rem 0.75rem;
-  border-color: var(--indigo);
-  background: var(--surface);
-  color: var(--indigo);
+  gap: 0.6rem;
+  font-size: 0.95rem;
+  font-weight: 700;
   letter-spacing: 0;
   text-align: center;
-}
-.reserve-quick__form-link:hover,
-.reserve-quick__form-link:focus-visible {
-  background: var(--indigo);
-  color: #fff;
 }
 .reserve-quick__form-link svg {
   flex-shrink: 0;
