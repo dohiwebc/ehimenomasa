@@ -35,6 +35,9 @@ async function run() {
       await page.route('**/api/forms/**',route=>{
         sends++;
         assert.equal(route.request().method(),'POST');
+        if (type === 'reserve') {
+          assert.match(route.request().postDataBuffer().toString(), /name="希望コース"\r\n\r\n満喫コース\r\n/);
+        }
         return route.fulfill({status:fail?502:200,contentType:'application/json',body:JSON.stringify(fail?{error:'テスト用の送信失敗'}:{ok:true})});
       });
       await page.clock.setFixedTime(new Date('2026-11-08T03:00:00+09:00'));
@@ -79,11 +82,16 @@ async function run() {
         assert.match(await page.locator('#rs-party-error').innerText(),/1以上/);
         await page.locator('[name=party]').fill('2');
         assert.equal(await page.locator('[name=party]').getAttribute('max'),null);
-        const choices=await page.locator('[name=course] option').allTextContents();
-        assert.ok(!choices.includes('女子会コース'));
+        const choices=await page.locator('[name=course] option').evaluateAll(options=>options.map(option=>[option.value,option.textContent.trim()]));
         const coursePage=await context.newPage();
         await coursePage.goto(base+'/course');
-        for(const name of await coursePage.locator('.course-detail__name').allTextContents())assert.ok(choices.includes(name));
+        const courses=await coursePage.locator('.course-detail__head').evaluateAll(heads=>heads.map(head=>{
+          const name=head.querySelector('.course-detail__name').textContent.trim();
+          return [name,`${name} ${head.querySelector('.price').textContent.trim()}（税込）`];
+        }));
+        const drinkPrice=(await coursePage.locator('.nomihoudai-panel__price-main').textContent()).trim();
+        assert.deepEqual(choices,[['席のみ予約','席のみ予約'],...courses,['単品飲み放題',`単品飲み放題 ${drinkPrice}（税込）`]]);
+        await page.locator('[name=course]').selectOption('満喫コース');
         await coursePage.close();
       } else {
         assert.equal(await page.locator('.takeout-prices').count(),0);

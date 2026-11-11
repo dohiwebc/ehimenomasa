@@ -1,0 +1,5 @@
+                <option selected>席のみ予約</option>
+{% for course in courses %}
+                <option value="{{ course.name }}">{{ course.name }} {{ course.price_label }}（税込）</option>
+{% endfor %}
+                <option value="単品飲み放題">単品飲み放題 {{ nomihoudai_price }}円（税込）</option>

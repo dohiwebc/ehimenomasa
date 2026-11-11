@@ -29,8 +29,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Old+Mincho:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/style.css?v=eefbccca5500">
-  <link rel="stylesheet" href="css/responsive.css?v=eefbccca5500">
+  <link rel="stylesheet" href="css/style.css?v=025325f12a36">
+  <link rel="stylesheet" href="css/responsive.css?v=025325f12a36">
   <!-- TODO: google-site-verification -->
 </head>
 <body>
@@ -173,12 +173,19 @@
             <div class="form-group">
               <label for="rs-course">希望コース <span class="opt">任意</span></label>
               <select class="form-control" id="rs-course" name="course">
+<!-- cms:reserve_course_options -->
                 <option selected>席のみ予約</option>
-                <option>満喫コース</option>
-                <option>親雛コース＜全8品＞（〆ご飯・アイス付き）</option>
-                <option>親雛コース＜全6品＞（〆ご飯・アイスなし）</option>
-                <option>揚げ鳥コース</option>
-                <option>単品飲み放題</option>
+
+                <option value="満喫コース">満喫コース 6,000円（税込）</option>
+
+                <option value="親雛コース＜全8品＞（〆ご飯・アイス付き）">親雛コース＜全8品＞（〆ご飯・アイス付き） 5,300円（税込）</option>
+
+                <option value="親雛コース＜全6品＞（〆ご飯・アイスなし）">親雛コース＜全6品＞（〆ご飯・アイスなし） 5,000円（税込）</option>
+
+                <option value="揚げ鳥コース">揚げ鳥コース 4,800円（税込）</option>
+
+                <option value="単品飲み放題">単品飲み放題 2,475円（税込）</option>
+<!-- /cms:reserve_course_options -->
               </select>
             </div>
 
@@ -351,7 +358,7 @@
     </div>
   </div>
 
-<script src="js/main.js?v=eefbccca5500"></script>
-<script src="js/form-demo.js?v=eefbccca5500"></script>
+<script src="js/main.js?v=025325f12a36"></script>
+<script src="js/form-demo.js?v=025325f12a36"></script>
 </body>
 </html>

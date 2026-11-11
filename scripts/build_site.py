@@ -290,6 +290,7 @@ def main():
         "tel": tel,
         "categories": categories,
         "courses": courses,
+        "nomihoudai_price": "2,475",
         "about": about,
         "meibutsu_rows": chunk_rows(meibutsu),
         "picks": picks,
@@ -341,6 +342,8 @@ def main():
         if not p.exists():
             continue
         t = patch_contacts(p.read_text(encoding="utf-8"), site["phone"], tel, site, access)
+        if name == "reserve.html":
+            t = replace_marked(t, "reserve_course_options", jinja.get_template("partials/reserve_course_options.j2").render(**ctx))
         t = re.sub(r"(css/(?:style|responsive)\.css)\?v=[^\"\']+", rf"\1?v={css_v}", t)
         t = re.sub(r"(js/(?:main|form-demo)\.js)\?v=[^\"\']+", rf"\1?v={css_v}", t)
         p.write_text(normalize_html(normalize_urls(t)), encoding="utf-8")

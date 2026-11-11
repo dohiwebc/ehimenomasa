@@ -621,7 +621,7 @@
     var email = fieldValue(form, "email");
     var note = fieldValue(form, "note");
     var party = fieldValue(form, "party");
-    var course = fieldValue(form, "course");
+    var course = form.elements.course ? form.elements.course.value : "";
 
     fd.append("お名前", fieldValue(form, "name"));
     fd.append("お電話番号", fieldValue(form, "tel"));
