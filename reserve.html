@@ -29,8 +29,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Old+Mincho:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/style.css?v=ce48a066fd0b">
-  <link rel="stylesheet" href="css/responsive.css?v=ce48a066fd0b">
+  <link rel="stylesheet" href="css/style.css?v=025325f12a36">
+  <link rel="stylesheet" href="css/responsive.css?v=025325f12a36">
   <!-- TODO: google-site-verification -->
 </head>
 <body>
@@ -60,7 +60,7 @@
     </div>
   </header>
 <main id="main">
-  <section class="page-hero" style="background-image:url('assets/images/site/store-exterior.webp'); background-position:center 18%;">
+  <section class="page-hero reserve-hero" style="background-image:url('assets/images/site/store-exterior.webp'); background-position:center 18%;">
     <div class="container">
       <p class="kicker">愛媛の雅ちゃん</p>
       <h1 class="page-hero__title">ご予約</h1>
@@ -96,7 +96,7 @@
     ]
   }
   </script>
-<section class="section">
+<section class="section reserve-section">
   <div class="container">
     <div class="takeout-layout">
       <div class="takeout-layout__form reveal">
@@ -115,14 +115,19 @@
                   電話する
                 </a>
                 <a class="btn btn--linesns" href="https://line.me/R/ti/p/@ipp6981e" target="_blank" rel="noopener noreferrer" data-reserve-gate="line">
-                  <img class="btn--linesns__logo" src="assets/icons/logo-line.svg" alt="" width="48" height="48" decoding="async">
+                  <img class="btn--linesns__logo" src="assets/icons/logo-line.svg?v=2" alt="" width="48" height="48" decoding="async">
                   LINEで予約
                 </a>
               </div>
+              <a class="btn btn--primary reserve-quick__form-link" href="#reserve-form">
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4m8-4v4M3 10h18m-12 6 2 2 4-4"/><rect x="3" y="4" width="18" height="18" rx="2"/></svg>
+                ホームページ予約はこちら
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14m-7-7 7 7 7-7"/></svg>
+              </a>
             </div>
           </section>
 
-          <div class="reserve-form-block">
+          <div class="reserve-form-block" id="reserve-form" tabindex="-1">
             <p class="form-panel__kicker">WEB Form</p>
             <h2 class="form-panel__title">ご来店予約フォーム</h2>
             <p class="form-panel__lead">WEBフォームでも受け付けています。内容確認後、スタッフより折り返しご連絡いたします。</p>
@@ -168,12 +173,19 @@
             <div class="form-group">
               <label for="rs-course">希望コース <span class="opt">任意</span></label>
               <select class="form-control" id="rs-course" name="course">
+<!-- cms:reserve_course_options -->
                 <option selected>席のみ予約</option>
-                <option>満喫コース</option>
-                <option>親雛コース＜全8品＞（〆ご飯・アイス付き）</option>
-                <option>親雛コース＜全6品＞（〆ご飯・アイスなし）</option>
-                <option>揚げ鳥コース</option>
-                <option>単品飲み放題</option>
+
+                <option value="満喫コース">満喫コース 6,000円（税込）</option>
+
+                <option value="親雛コース＜全8品＞（〆ご飯・アイス付き）">親雛コース＜全8品＞（〆ご飯・アイス付き） 5,300円（税込）</option>
+
+                <option value="親雛コース＜全6品＞（〆ご飯・アイスなし）">親雛コース＜全6品＞（〆ご飯・アイスなし） 5,000円（税込）</option>
+
+                <option value="揚げ鳥コース">揚げ鳥コース 4,800円（税込）</option>
+
+                <option value="単品飲み放題">単品飲み放題 2,475円（税込）</option>
+<!-- /cms:reserve_course_options -->
               </select>
             </div>
 
@@ -208,7 +220,7 @@
           </figure>
           <p class="line-contact__cta">
             <a class="btn btn--linesns" href="https://line.me/R/ti/p/@ipp6981e" target="_blank" rel="noopener noreferrer" data-reserve-gate="line">
-              <img class="btn--linesns__logo" src="assets/icons/logo-line.svg" alt="" width="22" height="22" loading="lazy" decoding="async">
+              <img class="btn--linesns__logo" src="assets/icons/logo-line.svg?v=2" alt="" width="22" height="22" loading="lazy" decoding="async">
               LINE公式アカウントを開く
             </a>
           </p>
@@ -341,12 +353,12 @@
   </footer>
   <div class="mobile-bar" aria-label="スマートフォン用クイックアクション">
     <div class="mobile-bar__inner">
-      <a class="mobile-bar__btn mobile-bar__btn--reserve" href="/reserve">予約する</a>
+      <a class="mobile-bar__btn mobile-bar__btn--reserve" href="#reserve-form">WEB予約</a>
       <a class="mobile-bar__btn mobile-bar__btn--tel" href="tel:0899131194" data-reserve-gate="tel">電話する</a>
     </div>
   </div>
 
-<script src="js/main.js?v=ce48a066fd0b"></script>
-<script src="js/form-demo.js?v=ce48a066fd0b"></script>
+<script src="js/main.js?v=025325f12a36"></script>
+<script src="js/form-demo.js?v=025325f12a36"></script>
 </body>
 </html>

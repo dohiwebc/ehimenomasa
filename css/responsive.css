@@ -1232,6 +1232,12 @@
     padding: calc(var(--header-h) + 1.8rem) 0 1.8rem;
   }
 
+  .page-hero.reserve-hero {
+    height: auto;
+    min-height: 240px;
+    padding-top: calc(var(--header-h) + 1.3rem);
+  }
+
   .page-hero .kicker {
     margin-bottom: 0.5rem;
   }
@@ -1256,6 +1262,13 @@
   .reserve-quick__sub .btn {
     width: 100%;
     min-width: 0;
+  }
+  .section.reserve-section {
+    padding-top: 2rem;
+  }
+  .reserve-quick {
+    margin-bottom: 1.25rem;
+    padding-bottom: 1.25rem;
   }
   .reserve-quick .btn--hotpepper-lg {
     width: 100%;
@@ -1416,7 +1429,7 @@
   }
 
   .form-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 0;
   }
 
