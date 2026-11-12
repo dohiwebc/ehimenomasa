@@ -374,21 +374,21 @@ main > .section:nth-of-type(even):not(.section--photo):not(.section--flush):not(
   color: #fff;
 }
 
-/* 写真・暗色上の枠線ボタン */
+/* 写真・暗色上の補助ボタン */
 .btn--ghost {
-  background: transparent;
-  color: rgba(255, 255, 255, 0.95);
-  border-color: rgba(255, 255, 255, 0.55);
+  background: var(--bg);
+  color: var(--ink);
+  border-color: var(--bg);
 }
 .btn--ghost:hover {
-  background: transparent;
-  color: #fff;
+  background: #fff;
+  color: var(--ink);
   border-color: #fff;
 }
 
 /* 明るい背景の枠線ボタン */
 .btn--line {
-  background: transparent;
+  background: var(--bg-2);
   color: var(--ink);
   border-color: rgba(26, 29, 35, 0.4);
 }
@@ -625,59 +625,18 @@ main > .section:nth-of-type(even):not(.section--photo):not(.section--flush):not(
 .btn--websub {
   letter-spacing: 0.14em;
 }
-.cta-final .btn--websub,
-.band-photo .btn--websub {
-  border-color: rgba(255, 255, 255, 0.45);
-  color: rgba(255, 255, 255, 0.88);
-}
-.cta-final .btn--websub:hover,
-.band-photo .btn--websub:hover {
-  border-color: #fff;
-  color: #fff;
-  background: transparent;
-}
-
 .btn--ghost .btn__icon,
-.btn--line .btn__icon,
-.cta-final .btn--ghost .btn__icon,
-.band-photo .btn--ghost .btn__icon,
-.section--photo .btn--ghost .btn__icon {
+.btn--line .btn__icon {
   width: 1.1em;
   height: 1.1em;
 }
 
-/* ヒーロー／写真帯：塗りつぶしをやめ、細い白枠に統一 */
+/* 写真上でも主ボタンの輪郭が見えるようにする */
 .hero .btn--primary,
 .cta-final .btn--primary,
 .band-photo .btn--primary,
 .section--photo .btn--primary {
-  background: transparent;
-  border-color: rgba(255, 255, 255, 0.9);
-  color: #fff;
-}
-.hero .btn--primary:hover,
-.cta-final .btn--primary:hover,
-.band-photo .btn--primary:hover,
-.section--photo .btn--primary:hover {
-  background: #fff;
-  border-color: #fff;
-  color: var(--ink);
-}
-
-.hero .btn--ghost,
-.cta-final .btn--ghost,
-.band-photo .btn--ghost,
-.section--photo .btn--ghost {
-  border-color: rgba(255, 255, 255, 0.38);
-  color: rgba(255, 255, 255, 0.9);
-}
-.hero .btn--ghost:hover,
-.cta-final .btn--ghost:hover,
-.band-photo .btn--ghost:hover,
-.section--photo .btn--ghost:hover {
-  border-color: #fff;
-  background: transparent;
-  color: #fff;
+  border-color: var(--bg);
 }
 
 
@@ -2658,12 +2617,12 @@ body.is-video-open {
 }
 .menu-list {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0 2.5rem;
 }
 .menu-row {
   display: grid;
-  grid-template-columns: 108px 1fr auto;
+  grid-template-columns: 108px minmax(0, 1fr) auto;
   gap: 1rem; align-items: center;
   padding: 0.9rem 0; border-bottom: 1px solid var(--line);
 }
@@ -2678,7 +2637,7 @@ body.is-video-open {
   object-fit: cover;
   display: block;
 }
-.menu-row__name { font-weight: 500; color: var(--ink); line-height: 1.5; }
+.menu-row__name { font-weight: 500; color: var(--ink); line-height: 1.5; overflow-wrap: anywhere; }
 .menu-row__opt {
   display: block;
   margin-top: 0.15rem;

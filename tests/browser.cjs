@@ -50,6 +50,12 @@ async function run() {
           const top = el.getBoundingClientRect().top;
           return top >= parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) && top < innerHeight;
         }));
+      } else {
+        await page.locator('a[data-reserve-gate="takeout-tel"]').first().click();
+        const notes = await page.locator('#reserve-gate [data-reserve-gate-notes]').innerText();
+        assert.match(notes, /駐車場はございません/);
+        assert.doesNotMatch(notes, /1階まで/);
+        await page.locator('#reserve-gate button[data-reserve-gate-close]').first().click();
       }
       const date = page.locator('input[type=date]');
       assert.ok(await date.evaluate(el => {
@@ -151,6 +157,14 @@ async function run() {
         await page.setViewportSize({width,height:900});
         await page.goto(base+(name==='index'?'/':'/'+name));
         assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,name+' overflow at '+width);
+        if (name === 'menu') {
+          const clipped = await page.locator('.menu-row, .menu-row__thumb img, .drink-menu-figure img').evaluateAll(elements => elements.filter(el => {
+            const row = el.getBoundingClientRect();
+            const category = el.closest('.menu-category').getBoundingClientRect();
+            return row.left < category.left - 1 || row.right > category.right + 1;
+          }).map(el => el.textContent.trim() || el.getAttribute('alt')));
+          assert.deepEqual(clipped, [], `menu items clipped at ${width}px`);
+        }
       }
     }
     await page.goto(base+'/recruit');

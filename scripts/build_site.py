@@ -7,7 +7,7 @@ import sys
 import argparse
 import json
 import hashlib
-from text_normalization import normalize_data, normalize_html, normalize_text
+from text_normalization import normalize_access_text, normalize_data, normalize_html, normalize_text
 from pathlib import Path
 from site_urls import normalize_urls
 from seo import finish_site
@@ -243,7 +243,7 @@ def main():
     access = {
         "shopName": access_raw.get("shopName") or "",
         "address": access_raw.get("address") or "",
-        "accessText": access_raw.get("accessText") or "",
+        "accessText": normalize_access_text(access_raw.get("accessText") or ""),
         "hours": access_raw.get("hours") or "",
         "holiday": access_raw.get("holiday") or "",
         "phone": access_raw.get("phone") or site_raw.get("phone") or "",

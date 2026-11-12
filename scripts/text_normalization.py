@@ -13,6 +13,23 @@ REPLACEMENTS = {
 }
 WIDTH_TABLE = str.maketrans("０１２３４５６７８９，()～", "0123456789,（）〜")
 CONTAINER_FEE = "骨付鳥（おや・ひな）は1つにつき50円、その他のパックは1つにつき20円"
+WALKING_DIRECTIONS = "松山市駅の北側出口から徒歩30秒。駅前広場を通って、市駅前商店街の健勝ビル2階へお越しください。"
+DEFAULT_ACCESS_TEXT = f"【電車・バスでお越しの方へ】\n{WALKING_DIRECTIONS}\n\n【お車でお越しの方へ】\n駐車場はございません。"
+
+
+def normalize_access_text(text):
+    # Replace the pre-renovation wording still present in older CMS records.
+    text = normalize_text(text)
+    text = text.replace(
+        "松山市駅から徒歩30秒。松山市駅・北側出口を出て、すぐの横断歩道を渡りきると正面にございます。",
+        WALKING_DIRECTIONS,
+    )
+    text = text.replace("左側にパチンコ・パワーステーションさん、右側にはひぎりやきさんがございます。", "")
+    text = text.replace("伊予鉄高島屋さんの向かい側道路（ひぎりやきさん側）沿いにございます。ひぎりやきさんとパチンコ・パワーステーションさんの間のビル2階でございます。", "")
+    text = text.replace("伊予鉄高島屋さんの向かい側道路（ひぎりやきさん側）沿い。", "")
+    text = text.replace("※申し訳ありませんが、駐車場はございません。", "駐車場はございません。")
+    text = text.replace("※お車でのお持ち帰り（テイクアウト）時は、1階までお持ちいたします。", "")
+    return text.replace("お持ち帰り時は1階までお持ちいたします。", "").strip()
 
 
 def normalize_text(text):

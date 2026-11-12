@@ -11,6 +11,8 @@ import time
 import unicodedata
 from pathlib import Path
 
+from text_normalization import DEFAULT_ACCESS_TEXT
+
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "scripts" / ".media-cache.json"
 
@@ -340,11 +342,7 @@ def import_all():
         "phone": "089-913-1194",
         "holiday": "日曜日・祝日",
         "hours": "17:30〜22:30／料理L.O.21:40／ドリンクL.O.22:10",
-        "accessText": (
-            "【電車・バス】松山市駅から徒歩30秒。松山市駅・北側出口を出て、すぐの横断歩道を渡りきると正面にございます。\n"
-            "【車】伊予鉄高島屋さんの向かい側道路（ひぎりやきさん側）沿い。駐車場はございません。"
-            "お持ち帰り時は1階までお持ちいたします。"
-        ),
+        "accessText": DEFAULT_ACCESS_TEXT,
         "seatInfo": "カウンターとテーブル、座敷あり。仕事帰りから宴会まで。",
         "mapEmbed": (
             '<iframe title="愛媛の雅ちゃんの地図" '
