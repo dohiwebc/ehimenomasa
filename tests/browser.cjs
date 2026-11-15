@@ -134,8 +134,23 @@ async function run() {
       const dateGroup = page.locator('.form-group').filter({has:date});
       await dateGroup.evaluate(el=>el.scrollIntoView({block:'center'}));
       await dateGroup.screenshot({path:path.join(OUT,type+'-sunday-375.png')});
+      const popup = new Promise((resolve,reject)=>{
+        page.once('dialog',async dialog=>{
+          const result = {type:dialog.type(),message:dialog.message()};
+          try {
+            await dialog.accept();
+            resolve(result);
+          } catch (error) {
+            reject(error);
+          }
+        });
+      });
       await page.locator('[type=submit]').click();
-      assert.match(await page.locator('#'+await date.getAttribute('id')+'-error').innerText(),/日曜日は定休日/);
+      const notice = await popup;
+      assert.equal(notice.type,'alert');
+      assert.match(notice.message,/日曜日は定休日/);
+      assert.equal(await dateGroup.getByText(notice.message,{exact:true}).count(),1);
+      assert.equal(await date.evaluate(el=>el===document.activeElement),true);
       assert.equal(await page.locator('[data-confirm-send]').isVisible(),false);
       assert.equal(sends,before);
       await date.fill('2026-11-14');

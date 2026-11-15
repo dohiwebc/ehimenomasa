@@ -1257,8 +1257,6 @@
           message = "過去の日付は選択できません。本日以降の日付を選んでください。";
         } else if (!entered) {
           message = "日付を選択してください。";
-        } else if (isBlockedSunday(el)) {
-          message = SUNDAY_ERROR_TEXT;
         }
         setDateFieldError(el, "");
       }
@@ -1288,6 +1286,13 @@
     forms.forEach(function (form) {
       form.addEventListener("submit", function (e) {
         e.preventDefault();
+        var date = form.querySelector('input[type="date"][data-no-sunday]');
+        if (date && isBlockedSunday(date)) {
+          setDateFieldError(date, SUNDAY_ERROR_TEXT);
+          window.alert(SUNDAY_ERROR_TEXT);
+          date.focus();
+          return;
+        }
         if (!validateRequired(form)) return;
         if (TURNSTILE_SITE_KEY && !getTurnstileToken(form)) {
           window.alert(TURNSTILE_WAIT_TEXT);
