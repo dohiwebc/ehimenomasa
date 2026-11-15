@@ -190,6 +190,19 @@ async function handlePost(context, hostname) {
     return json({ error: "セキュリティ確認に失敗しました。ページを再読み込みして、もう一度お試しください。" }, 403);
   }
 
+  if (type === "reserve" || type === "takeout") {
+    var dateField = type === "reserve" ? "ご来店日" : "受取日";
+    var dateValue = incoming.get(dateField) || "";
+    var date = new Date(dateValue + "T00:00:00Z");
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(dateValue) || !Number.isFinite(date.getTime()) ||
+        date.toISOString().slice(0, 10) !== dateValue) {
+      return json({ error: dateField + "を確認してください。" }, 400);
+    }
+    if (date.getUTCDay() === 0) {
+      return json({ error: "日曜日は定休日のため、ホームページからご予約いただけません。別の日をお選びください。" }, 400);
+    }
+  }
+
   var ok = await verifyTurnstile(context.env, token, clientIp(context.request), type, hostname);
   if (!ok) {
     return json({ error: "セキュリティ確認に失敗しました。ページを再読み込みして、もう一度お試しください。" }, 403);

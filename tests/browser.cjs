@@ -69,7 +69,7 @@ async function run() {
       assert.equal(await page.evaluate(()=>document.activeElement.id),type==='reserve'?'rs-name':'to-name');
       assert.ok(await page.locator('.field-error').count() >= 3);
       assert.equal(await date.inputValue(),'');
-      for (const value of ['2026-11-15','2026-11-23','2027-03-22','2028-01-10']) {
+      for (const value of ['2026-11-23','2027-03-22','2028-01-10']) {
         await date.fill(value);
         assert.match(await page.locator('.date-field__warning').innerText(),/日曜日・祝日は定休日/);
         assert.equal(await page.locator('.date-field__warning').getAttribute('aria-live'),'polite');
@@ -128,6 +128,18 @@ async function run() {
       assert.equal(number.whiteSpace,'nowrap');
       assert.equal(await page.locator('.form-check a').evaluate(el=>getComputedStyle(el).whiteSpace),'nowrap');
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth > innerWidth),false);
+      const before = sends;
+      await date.fill('2026-11-15');
+      assert.match(await page.locator('.date-field__error').innerText(),/日曜日は定休日/);
+      const dateGroup = page.locator('.form-group').filter({has:date});
+      await dateGroup.evaluate(el=>el.scrollIntoView({block:'center'}));
+      await dateGroup.screenshot({path:path.join(OUT,type+'-sunday-375.png')});
+      await page.locator('[type=submit]').click();
+      assert.match(await page.locator('#'+await date.getAttribute('id')+'-error').innerText(),/日曜日は定休日/);
+      assert.equal(await page.locator('[data-confirm-send]').isVisible(),false);
+      assert.equal(sends,before);
+      await date.fill('2026-11-14');
+      assert.equal(await date.getAttribute('aria-invalid'),null);
       await page.locator('[type=submit]').click();
       await page.locator('[data-confirm-send]').click();
       await page.locator('[data-confirm-error]:not([hidden])').waitFor();

@@ -71,7 +71,7 @@ function form(entries={}) {
   for(const [key,value]of Object.entries(entries))body.set(key,value);
   return body;
 }
-async function call({type='reserve',method='POST',host='ehimenomasa.com',origin='https://'+host,body=form(),headers={},customEnv=env,request}={}) {
+async function call({type='reserve',method='POST',host='ehimenomasa.com',origin='https://'+host,body=form(type==='reserve'?{'ご来店日':'2026-11-14'}:type==='takeout'?{'受取日':'2026-11-14'}:{}),headers={},customEnv=env,request}={}) {
   const h=new Headers(headers);
   if(origin!==null)h.set('Origin',origin);
   const req=request||new Request('https://'+host+'/api/forms/'+type,{method,headers:h,...(['GET','HEAD'].includes(method)?{}:{body})});
@@ -88,11 +88,24 @@ async function rejected(options,status,{verified=false}={}) {
   return response;
 }
 try {
+  for (const [type,dateField] of [['reserve','ご来店日'],['takeout','受取日']]) {
+    for (const date of ['2026-11-15','2027-01-03']) {
+      const response=await rejected({type,body:form({[dateField]:date})},400);
+      assert.match((await response.json()).error,/日曜日は定休日/);
+    }
+    for (const date of ['', '2026-02-30','2026-11-1']) {
+      const response=await rejected({type,body:form({[dateField]:date})},400);
+      assert.equal((await response.json()).error,dateField+'を確認してください。');
+    }
+    await rejected({type,body:form()},400);
+  }
   for(const type of ['reserve','takeout','recruit']) {
     expectedType=type;
     for(const host of ['ehimenomasa.com','www.ehimenomasa.com','ehimenomasa.pages.dev','codex-site-review.ehimenomasa.pages.dev']) {
       verification={success:true,hostname:host,action:type};
       const body=form({'お名前':'名'.repeat(50),'お電話番号':'1'.repeat(20),'メールアドレス':'a'.repeat(254),[type==='reserve'?'その他、ご要望・ご相談':type==='takeout'?'その他ご要望・ご相談':'自己PR・質問']:'備'.repeat(1000)});
+      if(type==='reserve')body.set('ご来店日','2026-11-23');
+      if(type==='takeout')body.set('受取日','2026-11-23');
       const response=await call({type,host,body});
       assert.equal(response.status,200);
       assert.equal(response.headers.get('Access-Control-Allow-Origin'),'https://'+host);

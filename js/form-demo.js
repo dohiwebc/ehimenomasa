@@ -18,6 +18,7 @@
     "送信に失敗しました。通信環境をご確認のうえ、もう一度お試しいただくか、お電話にてお問い合わせください。";
   var TURNSTILE_WAIT_TEXT =
     "セキュリティ確認が完了していません。チェックが「成功」になったことを確認してから、もう一度お試しください。";
+  var SUNDAY_ERROR_TEXT = "日曜日は定休日のため、ホームページからご予約いただけません。別の日をお選びください。";
 
   // 2026/2027: Cabinet Office calendar. Unannounced 2028 equinoxes are intentionally omitted.
   var HOLIDAYS = (
@@ -36,8 +37,7 @@
       el.closest(".form-group").appendChild(warning);
       el.setAttribute("aria-describedby", [el.getAttribute("aria-describedby"), warning.id].filter(Boolean).join(" "));
     }
-    var date = el.value ? new Date(el.value + "T12:00:00") : null;
-    var closed = date && (date.getDay() === 0 || HOLIDAYS.indexOf(el.value) !== -1);
+    var closed = el.value && !isBlockedSunday(el) && (isSunday(el.value) || HOLIDAYS.indexOf(el.value) !== -1);
     warning.textContent = closed ? "日曜日・祝日は定休日です。特別に営業する日もありますが、ご希望に添えない場合があります。お電話（089-913-1194）でもご確認ください。" : "";
   }
 
@@ -71,6 +71,14 @@
 
   function isPastDate(value, today) {
     return !!(value && today && value < today);
+  }
+
+  function isSunday(value) {
+    return new Date(value + "T00:00:00Z").getUTCDay() === 0;
+  }
+
+  function isBlockedSunday(el) {
+    return el.hasAttribute("data-no-sunday") && isSunday(el.value);
   }
 
   function setDateFieldError(el, message) {
@@ -109,17 +117,11 @@
       return false;
     }
 
-    if (isPastDate(el.value, today)) {
-      if (opts.showError !== false) {
-        setDateFieldError(el, "過去の日付は選択できません。本日以降の日付を選んでください。");
-      } else {
-        setDateFieldError(el, "");
-      }
-      return true;
-    }
-
-    setDateFieldError(el, "");
-    return false;
+    var message = isPastDate(el.value, today)
+      ? "過去の日付は選択できません。本日以降の日付を選んでください。"
+      : isBlockedSunday(el) ? SUNDAY_ERROR_TEXT : "";
+    setDateFieldError(el, opts.showError !== false ? message : "");
+    return !!message;
   }
 
   /** HH:MM を分に変換 */
@@ -1255,6 +1257,8 @@
           message = "過去の日付は選択できません。本日以降の日付を選んでください。";
         } else if (!entered) {
           message = "日付を選択してください。";
+        } else if (isBlockedSunday(el)) {
+          message = SUNDAY_ERROR_TEXT;
         }
         setDateFieldError(el, "");
       }

@@ -83,7 +83,7 @@ globalThis.fetch=async (url,options)=>{
 try {
   for (const valid of [true,false]) {
     verification=valid;
-    const body=new FormData();body.set('cf-turnstile-response','mock-token');body.set('ご予約 1','骨付鳥 1個');
+    const body=new FormData();body.set('cf-turnstile-response','mock-token');body.set('ご予約 1','骨付鳥 1個');body.set('受取日','2026-11-14');
     const response=await onRequestPost({params:{type:'takeout'},env:{TURNSTILE_SECRET:'test-only',FORMSPREE_TAKEOUT:'https://formspree.io/f/testMock'},request:new Request('https://ehimenomasa.com/api/forms/takeout',{method:'POST',headers:{Origin:'https://ehimenomasa.com'},body})});
     assert.equal(response.status,valid?200:403);
   }
