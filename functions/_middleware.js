@@ -59,6 +59,14 @@ function indexingHeaders(response, url, env) {
   if (url.protocol === "https:") result.headers.set("Strict-Transport-Security", "max-age=31536000");
   result.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=()");
   result.headers.set("X-Content-Type-Options", "nosniff");
+  // Never serve mutable URLs as fresh without checking the current deployment.
+  var asset = /^\/(?:assets|css|js)\//.test(url.pathname);
+  var cacheableAsset = asset && response.status === 200;
+  result.headers.set("Cache-Control", cacheableAsset ? "public, no-cache, max-age=0, must-revalidate" : "no-store");
+  result.headers.set("CDN-Cache-Control", "no-store");
+  result.headers.set("Cloudflare-CDN-Cache-Control", "no-store");
+  result.headers.delete("Expires");
+  result.headers.delete("Age");
   var completion = /^\/thanks(?:-recruit)?(?:\.html|\/)?$/.test(url.pathname);
   if (completion) result.headers.set("X-Robots-Tag", "noindex, nofollow");
   else if (response.status === 404 || PRODUCTION_HOSTS.indexOf(url.hostname) === -1) result.headers.set("X-Robots-Tag", "noindex");

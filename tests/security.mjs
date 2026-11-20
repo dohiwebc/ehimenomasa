@@ -40,6 +40,35 @@ assert.ok(!contentSecurityPolicy().includes('unsafe-eval'));
 assert.ok(!contentSecurityPolicy().includes('*'));
 console.log('Security headers: '+cases+' host/mode/status combinations; restricted CSP and no HSTS subdomains.');
 
+for (const method of ['GET','HEAD']) {
+  for (const pathname of ['/', '/about', '/reserve', '/sitemap.xml', '/robots.txt',
+    '/assets/images/site/owner-greeting-portrait.webp', '/assets/images/site/owner-greeting.webp',
+    '/css/style.css', '/js/form-demo.js?v=test', '/api/forms/ready']) {
+    for (const status of [200,404]) {
+      const response = await middleware({
+        request:new Request('https://ehimenomasa.com'+pathname,{method}),env:{},
+        next:()=>new Response(null,{status,headers:{
+          'Cache-Control':'public, max-age=14400',
+          'CDN-Cache-Control':'public, max-age=86400',
+          'Expires':'Fri, 01 Jan 2038 00:00:00 GMT', 'Age':'3600'
+        }})
+      });
+      const asset = /^\/(?:assets|css|js)\//.test(pathname) && status===200;
+      assert.equal(response.headers.get('Cache-Control'),asset?'public, no-cache, max-age=0, must-revalidate':'no-store');
+      assert.equal(response.headers.get('CDN-Cache-Control'),'no-store');
+      assert.equal(response.headers.get('Cloudflare-CDN-Cache-Control'),'no-store');
+      assert.equal(response.headers.get('Expires'),null);
+      assert.equal(response.headers.get('Age'),null);
+    }
+  }
+}
+const indexPhoto=(await readFile(new URL('../index.html',import.meta.url),'utf8')).match(/<img[^>]+owner-greeting[^>]+>/)[0];
+const aboutPhoto=(await readFile(new URL('../about.html',import.meta.url),'utf8')).match(/<img[^>]+owner-greeting[^>]+>/)[0];
+assert.equal(indexPhoto.match(/src="([^"]+)"/)[1],aboutPhoto.match(/src="([^"]+)"/)[1]);
+assert.deepEqual(await readFile(new URL('../assets/images/site/owner-greeting.webp',import.meta.url)),
+  await readFile(new URL('../assets/images/site/owner-greeting-portrait.webp',import.meta.url)));
+console.log('Cache: pages never stored; assets revalidate; CDN freshness overridden; both portraits match.');
+
 const originalFetch = globalThis.fetch;
 let verifies=0, forwards=0;
 let verification={success:true,hostname:'ehimenomasa.com',action:'reserve'};
