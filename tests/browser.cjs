@@ -184,6 +184,17 @@ async function run() {
         await page.setViewportSize({width,height:900});
         await page.goto(base+(name==='index'?'/':'/'+name));
         assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,name+' overflow at '+width);
+        if (name === 'index') {
+          const last = page.locator('.course-sheet .course-line').last();
+          assert.equal(await last.locator('.course-line__name').innerText(),'単品飲み放題');
+          assert.equal(await last.locator('.course-line__price').innerText(),'2,475円');
+          assert.match(await last.locator('.course-line__desc').innerText(),/120分・2名様/);
+          const img=last.locator('img');
+          await img.scrollIntoViewIfNeeded();
+          await img.evaluate(el=>el.decode());
+          assert.equal(await img.evaluate(el=>Math.abs(el.getBoundingClientRect().width/el.getBoundingClientRect().height-el.naturalWidth/el.naturalHeight)<0.01),true);
+          await last.screenshot({path:path.join(OUT,'home-nomihoudai-'+width+'.png')});
+        }
         if (name === 'menu') {
           const clipped = await page.locator('.menu-row, .menu-row__thumb img, .drink-menu-figure img').evaluateAll(elements => elements.filter(el => {
             const row = el.getBoundingClientRect();
